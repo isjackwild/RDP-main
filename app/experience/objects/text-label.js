@@ -3,7 +3,7 @@ import { camera } from '../camera.js';
 
 const textLabel = (parent) => {
 	const span = document.createElement('span');
-	span.innerHTML = parent.contentId;
+	span.innerHTML = parent._aId;
 
 	const { x, y } = toXYCoords(parent, camera);
 	span.style.position = 'fixed';
