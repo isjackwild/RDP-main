@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
 
-const TRIGGER_DURATION = 3;
+const TRIGGER_DURATION = 4;
 const TRIGGER_OFF_DURATION = 1;
 
 export default class StatusIndicator extends Component {
@@ -36,18 +36,17 @@ export default class StatusIndicator extends Component {
 		if (this.focusTween) this.focusTween.kill();
 		const t = { control: this.state.focusControl }
 
-		this.focusTween = TweenLite.to(t, TRIGGER_DURATION, { control: 1, onUpdate: () => this.setState({ focusControl: t.control }) });
+		this.focusTween = TweenLite.to(t, TRIGGER_DURATION, { control: 1, ease: Power1.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
 	}
 
 	onBlur() {
 		if (this.focusTween) this.focusTween.kill();
 		const t = { control: this.state.focusControl }
 
-		this.focusTween = TweenLite.to(t, TRIGGER_OFF_DURATION, { control: 0, onUpdate: () => this.setState({ focusControl: t.control }) });
+		this.focusTween = TweenLite.to(t, TRIGGER_OFF_DURATION, { control: 0, ease: Power4.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
 	}
 
 	render() {
-		console.log(this.state.screenDiameter);
 		return (
 			<div className="status-indicator--wrapper">
 				<svg

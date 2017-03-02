@@ -52,8 +52,17 @@ class Anchor extends THREE.Mesh {
 		this.pathsOut = {};
 		this.theme = theme;
 		this.threadTitle = threadTitle;
+		this.triggerTimeout = undefined;
 
 		this.position.copy(position);
+
+		this.onClickTarget = this.onClickTarget.bind(this);
+		this.onFocusTarget = this.onFocusTarget.bind(this);
+		this.onBlurTarget = this.onBlurTarget.bind(this);
+		this.onFocusTrigger = this.onFocusTrigger.bind(this);
+		this.onFocus = this.onFocus.bind(this);
+		this.onBlur = this.onBlur.bind(this);
+		this.onClick = this.onClick.bind(this);
 	}
 	
 	setup() {
@@ -119,10 +128,16 @@ class Anchor extends THREE.Mesh {
 	onFocus() {
 		if (!this.isActive) return;
 		PubSub.publish('target.focus', { thread: this.threadTitle, theme: this.theme });
+		
+		clearTimeout(this.triggerTimeout);
+		this.triggerTimeout = setTimeout(() => {
+			moveToPosition(this.position);
+		}, 4000);
 	}
 
 	onBlur() {
 		if (!this.isActive) return;
+		clearTimeout(this.triggerTimeout);
 		PubSub.publish('target.blur');
 	}
 
@@ -141,10 +156,21 @@ class Anchor extends THREE.Mesh {
 
 	onFocusTarget(data) {
 		PubSub.publish('target.focus', data);
+		clearTimeout(this.triggerTimeout);
+		this.triggerTimeout = setTimeout(() => {
+			this.onFocusTrigger(data.id);
+		}, 4000);
 	}
 
 	onBlurTarget(anchorToId) {
 		PubSub.publish('target.blur');
+		clearTimeout(this.triggerTimeout);
+	}
+
+	onFocusTrigger(anchorToId) {
+		const path = this.pathsOut[anchorToId];
+		clearTimeout(this.triggerTimeout);
+		moveAlongJumpPath(path);
 	}
 }
 

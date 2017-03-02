@@ -114,7 +114,7 @@ class Artboard extends THREE.Object3D {
 			});
 			target.material.side = THREE.DoubleSide;
 			target.onClick = () => this.onClickTarget(anchorTo._aId);
-			target.onFocus = () => this.onFocusTarget({ thread: anchorTo.threadTitle, theme: anchorTo.theme });
+			target.onFocus = () => this.onFocusTarget({ thread: anchorTo.threadTitle, theme: anchorTo.theme, id: anchorTo._aId });
 			target.onBlur = () => this.onBlurTarget();
 
 			this.updateMatrixWorld();
