@@ -126,7 +126,7 @@ class CameraPath extends THREE.Mesh {
 
 			const control = (Math.cos(((i * step) - Math.PI)) / 2) + 0.5;
 			// const thisWidth = maxWidth * Easing.Sinusoidal.EaseInOut(control);
-			const thisWidth = 0.15;
+			const thisWidth = 1.15;
 			
 			// directionalNormal.multiplyScalar(this.width / 2);
 

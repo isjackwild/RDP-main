@@ -1,4 +1,6 @@
 const THREE = require('three');
+import { convertToRange } from '../MATHS.js';
+import { camera } from '../camera.js';
 
 
 const VERTEX_SHADER = `
@@ -32,6 +34,8 @@ class Skybox extends THREE.Mesh {
 	constructor(args) {
 		super(args);
 		this.radius = args.radius;
+		this.dark = new THREE.Color(0x000000);
+		this.light = new THREE.Color(0xefefef);
 		this.setup();
 	}
 
@@ -41,7 +45,7 @@ class Skybox extends THREE.Mesh {
 			uniforms: {
 				color: {
 					type: "c",
-					value: new THREE.Color(0xefefef)
+					value: this.dark,
 				},
 				opacity: {
 					type: "f",
@@ -59,6 +63,17 @@ class Skybox extends THREE.Mesh {
 			side: THREE.BackSide,
 			// wireframe: true,
 		});
+	}
+
+	update() {
+		const control = convertToRange(camera.position.length(), [0, this.radius], [0, 1]);
+		// const color = this.dark.lerp(this.light, control);
+
+		const dark = new THREE.Color(0xbbbbbb);
+		const light = new THREE.Color(0xefefef);
+		const color = dark.lerp(light, control);
+
+		this.material.uniforms.color.value = color;
 	}
 }
 

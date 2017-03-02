@@ -1,0 +1,67 @@
+$focus-transform-x: 4.5vh;
+$focus-transform-y: 1.5vh;
+
+.viewfinder {
+	position: absolute;
+	width: 14vw;
+	height: 19vh;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.viewfinder__part {
+	width: 6vh;
+	height: 6vh;
+	// background: green;
+	position: absolute;
+	border-width: 3px;
+	border-color: #fff;
+	transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.viewfinder__part--tl {
+	top: 0;
+	left: 0;
+	border-left-style: solid;
+	border-top-style: solid;
+}
+
+.viewfinder__part--tr {
+	top: 0;
+	right: 0;
+	border-top-style: solid;
+	border-right-style: solid;
+}
+
+.viewfinder__part--bl {
+	bottom: 0;
+	left: 0;
+	border-bottom-style: solid;
+	border-left-style: solid;
+}
+
+.viewfinder__part--br {
+	bottom: 0;
+	right: 0;
+	border-bottom-style: solid;
+	border-right-style: solid;
+}
+
+.viewfinder--focused {
+	.viewfinder__part--tl {
+		transform: translate($focus-transform-x, $focus-transform-y);
+	}
+
+	.viewfinder__part--tr {
+		transform: translate(#{$focus-transform-x * -1}, $focus-transform-y);
+	}
+
+	.viewfinder__part--bl {
+		transform: translate($focus-transform-x, #{$focus-transform-y * -1});
+	}
+
+	.viewfinder__part--br {
+		transform: translate(#{$focus-transform-x * -1}, #{$focus-transform-y * -1});
+	}
+}

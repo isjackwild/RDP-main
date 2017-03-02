@@ -35,7 +35,7 @@ const onMouseMove = ({ clientX, clientY }) => {
 	castFocus();
 }
 
-const onDeviceOrientation = ({ clientX, clientY }) => {
+export const onDeviceOrientation = () => {
 	raycaster.setFromCamera(zeroVec, camera);
 	castFocus();
 }
@@ -54,7 +54,7 @@ const onClick = ({ clientX, clientY, touches }) => {
 	castClick();
 }
 
-const castFocus = () => {
+export const castFocus = () => {
 	const intersects = raycaster.intersectObjects(intersectableObjects);
 	if (intersects.length) {
 		if (intersects[0].object.isActive) document.body.classList.add('pointer'); 

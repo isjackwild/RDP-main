@@ -40,10 +40,12 @@ class Artboard extends THREE.Object3D {
 	constructor(args) {
 		super(args);
 
-		const { anchorsTo, onClickTarget } = args;
+		const { anchorsTo, onClickTarget, onFocusTarget, onBlurTarget } = args;
 
 		this.anchorsTo = anchorsTo;
 		this.onClickTarget = onClickTarget;
+		this.onFocusTarget = onFocusTarget;
+		this.onBlurTarget = onBlurTarget;
 		this.setup();
 	}
 	
@@ -112,8 +114,8 @@ class Artboard extends THREE.Object3D {
 			});
 			target.material.side = THREE.DoubleSide;
 			target.onClick = () => this.onClickTarget(anchorTo._aId);
-			target.onFocus = () => {};
-			target.onBlur = () => {};
+			target.onFocus = () => this.onFocusTarget({ thread: anchorTo.threadTitle, theme: anchorTo.theme });
+			target.onBlur = () => this.onBlurTarget();
 
 			this.updateMatrixWorld();
 			const anchorLocalDirection = this.worldToLocal(new THREE.Vector3().copy(anchorTo.position)).normalize();

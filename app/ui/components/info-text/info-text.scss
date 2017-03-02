@@ -1,0 +1,27 @@
+.info-text {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding: 23px 25px;
+}
+
+.info-text__text {
+	display: block;
+	color: white;
+	line-height: 1em;
+	font-family: 'Helvetica', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: 0.02em;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.06), 0 0 20px rgba(0,0,0,0.06);
+}
+
+.info-text__text--thread {
+	font-size: 17px;
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+
+.info-text__text--theme {
+	font-size: 15px;
+	font-weight: 100;
+}

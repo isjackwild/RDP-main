@@ -1,4 +1,5 @@
 const THREE = require('three');
+import PubSub from 'pubsub-js';
 import { moveToAnchor } from '../controls.js';
 import { camera } from '../camera.js';
 import { moveToPosition, moveAlongJumpPath } from '../controls.js';
@@ -39,7 +40,7 @@ const NOISE_FRAGMENT_SHADER = `
 class Anchor extends THREE.Mesh {
 	constructor(args) {
 		super(args);
-		const { position, id, jumpPoints, colors } = args;
+		const { position, id, jumpPoints, colors, theme, threadTitle } = args;
 
 		this._aId = id;
 
@@ -49,6 +50,8 @@ class Anchor extends THREE.Mesh {
 		this.anchorsTo = [];
 		this.anchorsFrom = [];
 		this.pathsOut = {};
+		this.theme = theme;
+		this.threadTitle = threadTitle;
 
 		this.position.copy(position);
 	}
@@ -98,7 +101,9 @@ class Anchor extends THREE.Mesh {
 	setupArtboard() {
 		this.artboard = new Artboard({
 			anchorsTo: this.anchorsTo,
-			onClickTarget: this.onClickTarget.bind(this)
+			onClickTarget: this.onClickTarget.bind(this),
+			onFocusTarget: this.onFocusTarget.bind(this),
+			onBlurTarget: this.onBlurTarget.bind(this),
 		});
 		this.add(this.artboard);
 
@@ -112,20 +117,34 @@ class Anchor extends THREE.Mesh {
 	}
 
 	onFocus() {
+		if (!this.isActive) return;
+		PubSub.publish('target.focus', { thread: this.threadTitle, theme: this.theme });
 	}
 
 	onBlur() {
+		if (!this.isActive) return;
+		PubSub.publish('target.blur');
 	}
 
 	onClick() {
 		if (!this.isActive) return;
 		this.isActive = false;
 		moveToPosition(this.position);
+		PubSub.publish('target.blur');
 	}
 
 	onClickTarget(anchorToId) {
 		const path = this.pathsOut[anchorToId];
 		moveAlongJumpPath(path);
+		PubSub.publish('target.blur');
+	}
+
+	onFocusTarget(data) {
+		PubSub.publish('target.focus', data);
+	}
+
+	onBlurTarget(anchorToId) {
+		PubSub.publish('target.blur');
 	}
 }
 

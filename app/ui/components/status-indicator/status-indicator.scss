@@ -1,0 +1,24 @@
+.status-indicator--wrapper {
+	width: 100%;
+	height: 100%;
+	padding: 12px;
+	position: relative;
+}
+
+.status-indicator {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+
+.status-indicator__inner {
+	width: 100%;
+	height: 100%;
+	stroke-width: 6px;
+	fill: rgba(0, 0, 0, 0);
+	stroke: #fff;
+}
+
+.status-indicator__inner--focus {
+	opacity: 0.4;
+}

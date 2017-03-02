@@ -3,6 +3,9 @@ import { init as initLoop, renderer, onResize as onResizeRenderer } from './expe
 // import { init as initGUI } from './experience/GUI.js';
 import { onResize as onResizeCamera } from './experience/camera.js';
 import _ from 'lodash';
+import React from 'react';
+import { render } from 'react-dom';
+import Interface from './ui/Interface.js';
 
 window.app = window.app || {};
 
@@ -12,9 +15,15 @@ const kickIt = () => {
 	const md = new MobileDetect(window.navigator.userAgent);
 	window.mobile = md.mobile() ? true : false;
 
+
+
 	addEventListeners();
 	onResize();
 	initLoop();
+
+	console.log('render interface');
+	render(<Interface />, document.getElementById('react-root'));
+
 	// initGUI();
 }
 

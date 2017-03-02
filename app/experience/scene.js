@@ -9,6 +9,7 @@ import CameraPath from './objects/CameraPath';
 import Skybox from './objects/Skybox.js';
 import { ANCHOR_SPREAD, ANCHOR_START_SPREAD, ANCHOR_ANGLE_SPREAD, GROUP_RADIUS, SCENE_MAX_RADIUS } from './constants.js';
 import { threads } from './data/CONTENT_STRUCTURE';
+import { convertToRange } from './MATHS.js';
 import { lights } from './lighting.js';
 import { controls } from './controls.js';
 
@@ -35,33 +36,21 @@ export const init = () => {
 		anchorRefs[key].setup();
 	}
 
-	const sceneBox = new THREE.Box3().setFromObject(scene);
-	const sceneRadius = sceneBox.getBoundingSphere().radius;
-	skybox = new Skybox({ radius: sceneRadius * 1.25 });
-	console.log(sceneRadius);
-	scene.add(skybox);
+	requestAnimationFrame(() => {
+		const sceneBox = new THREE.Box3().setFromObject(scene);
+		const sceneRadius = sceneBox.getBoundingSphere().radius;
+		skybox = new Skybox({ radius: sceneRadius });
+		scene.add(skybox);
 
-	addDots(sceneBox);
+		addDots(sceneBox);
+	});
 }
 
 const addDots = (sceneBox) => {
-	const SPACING = 600;
-	// for (let x = -sceneRadius; x < sceneRadius; x += SPACING) {
-	// 	for (let y = -sceneRadius; y < sceneRadius; y += SPACING) {
-	// 		for (let z = -sceneRadius; z < sceneRadius; z += SPACING){
-	// 			const dot = new THREE.Mesh();
-	// 			dot.geometry = new THREE.SphereGeometry(2);
-	// 			dot.material = new THREE.MeshBasicMaterial({
-	// 				color: 0xffffff,
-	// 			});
-	// 			dot.position.set(x, y, z);
-	// 			scene.add(dot);
-	// 		}
-	// 	}
-	// }
+	const SPACING = 800;
 
-	sceneBox.min.multiplyScalar(1.3);
-	sceneBox.max.multiplyScalar(1.3);
+	sceneBox.min.multiplyScalar(1.1);
+	sceneBox.max.multiplyScalar(1.1);
 
 	for (let x = sceneBox.min.x; x < sceneBox.max.x; x += SPACING) {
 		for (let y = sceneBox.min.y; y < sceneBox.max.y; y += SPACING) {
@@ -90,10 +79,10 @@ const addAnchors = () => {
 	// const tmpPrevLevelPosition = new THREE.Vector3().copy(pathStart);
 
 	threads.forEach((thread, iP) => {
-		const pathDirection = new THREE.Vector3(1, 0, 0).applyAxisAngle(up, (iP / threads.length) * Math.PI * 2);
-		console.log(pathDirection);
-		const pathStart = new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD);
-		const tmpPrevLevelPosition = new THREE.Vector3().copy(pathStart);
+		const angle = (iP / threads.length) * Math.PI * 2;
+		const pathDirection = new THREE.Vector3(0, 0, 1).applyAxisAngle(up, angle);
+		// const pathStart = new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD);
+		// const tmpPrevLevelPosition = new THREE.Vector3().copy(pathStart);
 		// const tmpAxis = new THREE.Vector3();
 		let prevAnchorDepth = 0;
 		let prevLevelDepth = 0;
@@ -101,78 +90,45 @@ const addAnchors = () => {
 		let thisLevelCount = 1;
 		let thisLevelItterator = 0;
 
-		// thread.anchors.forEach((anchorData, iA) => {
-		// 	thisLevelItterator++;
-		// 	if (anchorData.depth !== prevAnchorDepth) {
-		// 		thisLevelCount = _.filter(thread.anchors, _anchorData => _anchorData.depth === anchorData.depth).length;
-		// 		// console.log(thisLevelCount);
-		// 		thisLevelItterator = 0;
-		// 		prevAnchorDepth = anchorData.depth;
-		// 		tmpPrevLevelPosition.set(0, 0, 0);
-		// 		prevLevelAnchorPositions.forEach(v => tmpPrevLevelPosition.add(v));
-		// 		tmpPrevLevelPosition.multiplyScalar(1 / prevLevelAnchorPositions.length);
-		// 		prevLevelAnchorPositions = []
-		// 	}
+		const RES = 1000;
+		const conicalSpiralPoints = [];
+		const spiralOffset = Math.random() * Math.PI * 2;
+		for (let i = 0; i < RES; i++) {
+			const t = i / 200;
+			const control = i / RES;
+			const vec = new THREE.Vector3(
+				t * Math.cos((t * 8) + spiralOffset) * 500,
+				t * Math.sin((t * 8) + spiralOffset) * 500,
+				(control * 5000),
+			).applyAxisAngle(up, angle);
+			conicalSpiralPoints.push(vec);
+		}
+		const conicalSpiral = new THREE.CatmullRomCurve3(conicalSpiralPoints);
 
-		// 	const advance = new THREE.Vector3().copy(pathDirection).multiplyScalar((iA === 0 ? 0 : ANCHOR_SPREAD));
-			
-		// 	if (iA !== 0) advance.y += (Math.random() * ANCHOR_SPREAD * 2) - ANCHOR_SPREAD;
+		// const geometry = new THREE.Geometry();
+		// for (let i = 0; i < 1000; i++) {
+		// 	geometry.vertices.push(conicalSpiral.getPoint(i / 1000));
+		// }
+		// const material = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 2 } );
+		// const line = new THREE.Line(geometry, material);
+		// scene.add(line);
 
-			
-		// 	const totalSpread = thisLevelCount - 1 * ANCHOR_ANGLE_SPREAD;
-		// 	const angle = thisLevelCount === 1 ? 0 : ((thisLevelItterator / (thisLevelCount - 1)) * totalSpread) - totalSpread / 2;
-		// 	advance.applyAxisAngle(up, angle);
-			
-		// 	const position = new THREE.Vector3().copy(tmpPrevLevelPosition).add(advance);
-		// 	prevLevelAnchorPositions.push(position);
-
-		// 	const args = {
-		// 		...anchorData,
-		// 		position,
-		// 		colors: thread.colors,
-		// 	}
-		// 	const anchor = new Anchor(args);
-		// 	anchorRefs[anchorData.id] = anchor;
-		// 	scene.add(anchor);
-
-		// 	if (iA === 0) anchor.isActive = true; 
-		// });
-
-		const LEVEL_THRESHOLD = 0.2;
 		thread.anchors.forEach((anchorData, iA) => {
-			thisLevelItterator++;
-
-			if (Math.abs(anchorData.depth - prevLevelDepth) > LEVEL_THRESHOLD) {
-				thisLevelCount = _.filter(thread.anchors, _anchorData => Math.abs(_anchorData.depth - anchorData.depth) < LEVEL_THRESHOLD && _anchorData.depth >= anchorData.depth).length;
-				console.log('new level', thisLevelCount);
-
-				thisLevelItterator = 0;
-				tmpPrevLevelPosition.set(0, 0, 0);
-				prevLevelDepth = anchorData.depth;
-				prevLevelAnchorPositions.forEach(v => tmpPrevLevelPosition.add(v));
-				tmpPrevLevelPosition.multiplyScalar(1 / prevLevelAnchorPositions.length);
-				prevLevelAnchorPositions = []
-			}
-
-			const advance = new THREE.Vector3();
+			const point = convertToRange(anchorData.depth, [0, 1], [0.166, 1])
+			let position;
 			if (iA !== 0) {
-				advance.copy(pathDirection).multiplyScalar(Math.abs(anchorData.depth - prevLevelDepth) * SCENE_MAX_RADIUS);
-				// advance.y += (Math.random() * ANCHOR_SPREAD * 2) - ANCHOR_SPREAD;
-
-				const totalSpread = thisLevelCount - 1 * ANCHOR_ANGLE_SPREAD;
-				const angle = thisLevelCount === 1 ? 0 : ((thisLevelItterator / (thisLevelCount - 1)) * totalSpread) - totalSpread / 2;
-				advance.applyAxisAngle(up, angle);
+				position = conicalSpiral.getPoint(point);
+				// position.applyAxisAngle(up, Math.random() * 0.2);
+				position.add(new THREE.Vector3().copy(pathDirection).multiplyScalar(Math.random() * 700 - 350));
+				position.y += (Math.random() * 700) - 350;
 			} else {
-				advance.set(0, 0, 0);
+				position = new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD);
 			}
-
-			const position = new THREE.Vector3().copy(tmpPrevLevelPosition).add(advance);
-			prevLevelAnchorPositions.push(position);
-			prevAnchorDepth = anchorData.depth;
 
 			const args = {
 				...anchorData,
 				position,
+				threadTitle: thread.title,
 				colors: thread.colors,
 			}
 			const anchor = new Anchor(args);
@@ -181,26 +137,6 @@ const addAnchors = () => {
 
 			if (iA === 0) anchor.isActive = true; 
 		});
-
-		// thread.anchors.forEach((anchorData, iA) => {
-		// 	const position = new THREE.Vector3().copy(pathDirection).multiplyScalar(SCENE_MAX_RADIUS * anchorData.depth).add(pathStart);
-		// 	if (iA !== 0) {
-		// 		position.applyAxisAngle(up, Math.random() * 0.8);
-		// 		position.y += (Math.random() * ANCHOR_SPREAD * 2) - ANCHOR_SPREAD
-		// 	}
-
-		// 	const args = {
-		// 		...anchorData,
-		// 		position,
-		// 		colors: thread.colors,
-		// 	}
-		// 	const anchor = new Anchor(args);
-		// 	anchorRefs[anchorData.id] = anchor;
-		// 	scene.add(anchor);
-
-		// 	if (iA === 0) anchor.isActive = true; 
-		// });
-		// 
 	});
 }
 
@@ -229,5 +165,6 @@ const addCameraPaths = () => {
 }
 
 export const update = (delta) => {
+	if (skybox) skybox.update(delta);
 }
 
