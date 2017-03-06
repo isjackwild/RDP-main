@@ -183,13 +183,13 @@ class Anchor extends THREE.Mesh {
 	}
 
 	onEnter() {
-		setTimeout(() => {
-			this.onAudioEnded();
-		}, 3333);
-		console.log('play audio');
+		window.socket.on('audio-ended', this.onAudioEnded);
+		window.socket.emit('play-audio', this._aId);
 	}
 
-	onAudioEnded() {
+	onAudioEnded(aId) {
+		window.socket.off('audio-ended', this.onAudioEnded);
+		console.log('audio ended', aId);
 		PubSub.publish('target.activate');
 		if (this.artboard) this.artboard.activateTargets();
 	}
