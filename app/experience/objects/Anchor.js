@@ -96,7 +96,7 @@ class Anchor extends THREE.Mesh {
 				},
 				opacity: {
 					type: "f",
-					value: 0.9,
+					value: 0.85,
 				},
 				grainStrength: {
 					type: "f",
@@ -105,7 +105,7 @@ class Anchor extends THREE.Mesh {
 			},
 			vertexShader: VERTEX_SHADER,
 			fragmentShader: NOISE_FRAGMENT_SHADER,
-			// transparent: true,
+			transparent: true,
 			side: THREE.BackSide,
 		});
 	}

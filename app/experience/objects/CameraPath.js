@@ -100,7 +100,7 @@ class CameraPath extends THREE.Mesh {
 		const tmp = new THREE.Vector3(0, 0, 0);
 		const tmp2 = new THREE.Vector3(0, 0, 0);
 		const up = new THREE.Vector3(0, 1, 0);
-		const maxWidth = 22;
+		const maxWidth = 1.5;
 
 		const noise = new Noise(Math.random());
 		const SCALE = 0.0018;
@@ -125,8 +125,8 @@ class CameraPath extends THREE.Mesh {
 			tmp.add(offset);
 
 			const control = (Math.cos(((i * step) - Math.PI)) / 2) + 0.5;
-			// const thisWidth = maxWidth * Easing.Sinusoidal.EaseInOut(control);
-			const thisWidth = 1.15;
+			const thisWidth = maxWidth * Easing.Sinusoidal.EaseInOut(control);
+			// const thisWidth = 1.15;
 			
 			// directionalNormal.multiplyScalar(this.width / 2);
 

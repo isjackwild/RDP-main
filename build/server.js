@@ -35,6 +35,11 @@ io.sockets.on('connection', (client) => {
 	client.on('audio-ended', (aId) => {
 		client.broadcast.emit('audio-ended', aId);
 	});
+
+	client.on('audio-time', (control) => {
+		console.log('audio-time', control);
+		client.broadcast.emit('audio-time', control);
+	});
 });
 
 

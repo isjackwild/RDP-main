@@ -87,7 +87,7 @@ class Artboard extends THREE.Object3D {
 		this.anchorsTo.forEach((anchorTo, i) => {
 			const target = new THREE.Mesh();
 			// target.geometry = new THREE.PlaneGeometry(ANCHOR_BASE_WIDTH / 5, ANCHOR_BASE_WIDTH / 5);
-			target.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH / 10, 16, 16);
+			target.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH / 10, 8, 8);
 			target.material = new THREE.ShaderMaterial({
 				uniforms: {
 					color: {
@@ -106,11 +106,14 @@ class Artboard extends THREE.Object3D {
 				vertexShader: VERTEX_SHADER,
 				fragmentShader: NOISE_FRAGMENT_SHADER,
 				// transparent: true,
+				// depthWrite: false,
+				// depthTest: false,
 				side: THREE.BackSide,
 			});
 			target.material.side = THREE.DoubleSide;
 			target.scale.x = 0.001;
 			target.scale.y = 0.001;
+			target.scale.z = 0.001;
 			target.onClick = () => { if (this.isActive) this.onClickTarget(anchorTo._aId) };
 			target.onFocus = () => { if (this.isActive) this.onFocusTarget({ thread: anchorTo.threadTitle, theme: anchorTo.theme, id: anchorTo._aId }) };
 			target.onBlur = () => { if (this.isActive) this.onBlurTarget() };
@@ -133,7 +136,7 @@ class Artboard extends THREE.Object3D {
 
 
 		this.children.forEach((child) => {
-			TweenLite.to(child.scale, 0.66, { x: 1, y: 1, ease: Back.easeOut.config(1.5) });
+			TweenLite.to(child.scale, 0.66, { x: 1, y: 1, z: 1, ease: Back.easeOut.config(1.5) });
 		});
 		this.isActive = true;
 	}
@@ -141,7 +144,7 @@ class Artboard extends THREE.Object3D {
 	deactivateTargets() {
 		console.log('DEactivateTargets');
 		this.children.forEach((child) => {
-			TweenLite.to(child.scale, 0.66, { x: 0.001, y: 0.001, ease: Back.easeIn.config(1.5) });
+			TweenLite.to(child.scale, 0.66, { x: 0.001, y: 0.001, z: 0.001, ease: Back.easeIn.config(1.5) });
 		});
 		this.isActive = false;
 	}

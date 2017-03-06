@@ -6,7 +6,7 @@ import _ from 'lodash';
 import React from 'react';
 import { render } from 'react-dom';
 import Interface from './ui/Interface.js';
-// import socket from 'socket.io';
+import io from 'socket.io-client';
 
 window.app = window.app || {};
 

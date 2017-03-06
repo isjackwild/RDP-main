@@ -31,6 +31,13 @@ export default class StatusIndicator extends Component {
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
+		window.socket.on('audio-time', (control) => {
+			console.log('control', control);
+			this.setState({ audioControl: control });
+		});
+		window.socket.on('audio-ended', () => {
+			this.setState({ audioControl: 0 });
+		});
 	}
 
 	componentWillUnmount() {
@@ -53,7 +60,7 @@ export default class StatusIndicator extends Component {
 	}
 
 	onTargetsActivated() {
-		this.setState({ targetsActivated: true });
+		this.setState({ targetsActivated: true, audioControl: 0 });
 	}
 
 	onTargetsDeactivated() {

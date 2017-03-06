@@ -49,7 +49,7 @@ export const threads = [
 		]
 	},
 	{
-		title: "Jane and Matteu",
+		title: "Cecilia",
 		colors: {
 			anchor: '#c4a7a1', //orange
 			jump: '#fc7d67',
@@ -57,11 +57,23 @@ export const threads = [
 			line: '#ffffff',
 		},
 		anchors: [
-			{id: 'c0', depth: 0, jumpPoints: ['c1', 'c2', 'c3']},
-			{id: 'c1', depth: 0.2, jumpPoints: ['c4']},
-			{id: 'c2', depth: 0.3, jumpPoints: ['c4']},
-			{id: 'c3', depth: 0.8, jumpPoints: ['a1', 'a2']},
-			{id: 'c4', depth: 1, jumpPoints: []},
+			{id: 'C1', theme: 'Volunteer', depth: 0, jumpPoints: ['C2']},
+			{id: 'C2', theme: 'Project', depth: 0.2, jumpPoints: ['C3']},
+			{id: 'C3', theme: 'Government', depth: 0.25, jumpPoints: ['C2']},
+			{id: 'C4', theme: 'Volunteer, government', depth: 0.3, jumpPoints: ['C2', 'C1']},
+			{id: 'C5', theme: 'Volunteer, personal', depth: 0.35, jumpPoints: ['C4']},
+			{id: 'C6', theme: 'Project', depth: 0.4, jumpPoints: ['C2']},
+			{id: 'C7', theme: 'Government', depth: 0.45, jumpPoints: ['C4', 'C16']},
+			{id: 'C8', theme: 'Architecture, project', depth: 0.5, jumpPoints: ['C2', 'C6']},
+			{id: 'C9', theme: 'Personal', depth: 0.55, jumpPoints: ['C5']},
+			{id: 'C10', theme: 'Personal', depth: 0.6, jumpPoints: ['C9']},
+			{id: 'C11', theme: 'Social, Reconstruction', depth: 0.65, jumpPoints: ['C12']},
+			{id: 'C12', theme: 'Project, Future', depth: 0.7, jumpPoints: ['C8']},
+			{id: 'C13', theme: 'Project, volunteer, future', depth: 0.75, jumpPoints: ['C12']},
+			{id: 'C14', theme: 'Social', depth: 0.8, jumpPoints: ['C11', 'C13']},
+			{id: 'C15', theme: 'Project, future', depth: 0.9, jumpPoints: ['C13']},
+			{id: 'C16', theme: 'Future, project, government', depth: 0.95, jumpPoints: ['C15']},
+			{id: 'C17', theme: 'Project', depth: 1, jumpPoints: ['C16']},
 		]
 	},
 	{
@@ -86,9 +98,9 @@ export const threads = [
 			line: '#ffffff',
 		},
 		anchors: [
-			{id: 'e0', depth: 0, jumpPoints: ['d1', 'c3', 'e1']},
+			{id: 'e0', depth: 0, jumpPoints: ['d1', 'e1']},
 			{id: 'e1', depth: 0.1, jumpPoints: ['e3']},
-			{id: 'e2', depth: 0.2, jumpPoints: ['e4', 'e5', 'c4']},
+			{id: 'e2', depth: 0.2, jumpPoints: ['e4', 'e5']},
 			{id: 'e3', depth: 0.4, jumpPoints: ['a2']},
 			{id: 'e4', depth: 0.8, jumpPoints: ['e5', 'e5']},
 			{id: 'e5', depth: 1, jumpPoints: ['b2']},
