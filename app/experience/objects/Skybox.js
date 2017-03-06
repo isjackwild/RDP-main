@@ -40,7 +40,7 @@ class Skybox extends THREE.Mesh {
 	}
 
 	setup() {
-		this.geometry = new THREE.SphereGeometry(this.radius, 20, 20);
+		this.geometry = new THREE.SphereGeometry(this.radius, 10, 10);
 		this.material = new THREE.ShaderMaterial({
 			uniforms: {
 				color: {

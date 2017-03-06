@@ -5,6 +5,7 @@ import { moveToPosition } from '../controls.js';
 import { fibonacciSphere } from '../UTIL.js';
 import textLabel from './text-label.js';
 import { intersectableObjects } from '../input-handler.js';
+import TweenLite from 'gsap';
 // import JumpPoint from './JumpPoint.js';
 import { ANCHOR_BASE_WIDTH, ANCHOR_WIDTH_PER_LINK, OPACITY, FOCUS_OPACITY } from '../CONSTANTS.js';
 
@@ -46,52 +47,47 @@ class Artboard extends THREE.Object3D {
 		this.onClickTarget = onClickTarget;
 		this.onFocusTarget = onFocusTarget;
 		this.onBlurTarget = onBlurTarget;
+		this.isActive = false;
 		this.setup();
 	}
 	
 	setup() {
-		// this.setupBackground();
 		this.setupTargets();
 	}
 
-	setupBackground() {
-		this.background = new THREE.Mesh();
-		this.background.scale.y = 0.5625;
-		this.background.geometry = new THREE.PlaneGeometry(ANCHOR_BASE_WIDTH, ANCHOR_BASE_WIDTH);
-		// this.background.material = new THREE.MeshLambertMaterial({
-		// 	color: 0xfcd8d6,
-		// 	opacity: 0.8,
-		// 	transparent: true,
-		// });
+	// setupBackground() {
+	// 	this.background = new THREE.Mesh();
+	// 	this.background.scale.y = 0.5625;
+	// 	this.background.geometry = new THREE.PlaneGeometry(ANCHOR_BASE_WIDTH, ANCHOR_BASE_WIDTH);
 
-		this.background.material = new THREE.ShaderMaterial({
-			uniforms: {
-				color: {
-					type: "c",
-					value: new THREE.Color(0xfcd8d6)
-				},
-				opacity: {
-					type: "f",
-					value: 1
-				},
-				grainStrength: {
-					type: "f",
-					value: 9,
-				}
-			},
-			vertexShader: VERTEX_SHADER,
-			fragmentShader: NOISE_FRAGMENT_SHADER,
-			transparent: true,
-			side: THREE.BackSide,
-		});
-		this.add(this.background);
-	}
+	// 	this.background.material = new THREE.ShaderMaterial({
+	// 		uniforms: {
+	// 			color: {
+	// 				type: "c",
+	// 				value: new THREE.Color(0xfcd8d6)
+	// 			},
+	// 			opacity: {
+	// 				type: "f",
+	// 				value: 1
+	// 			},
+	// 			grainStrength: {
+	// 				type: "f",
+	// 				value: 9,
+	// 			}
+	// 		},
+	// 		vertexShader: VERTEX_SHADER,
+	// 		fragmentShader: NOISE_FRAGMENT_SHADER,
+	// 		// transparent: true,
+	// 		side: THREE.BackSide,
+	// 	});
+	// 	this.add(this.background);
+	// }
 
 	setupTargets() {
 		this.anchorsTo.forEach((anchorTo, i) => {
 			const target = new THREE.Mesh();
 			// target.geometry = new THREE.PlaneGeometry(ANCHOR_BASE_WIDTH / 5, ANCHOR_BASE_WIDTH / 5);
-			target.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH / 10, 20, 20);
+			target.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH / 10, 16, 16);
 			target.material = new THREE.ShaderMaterial({
 				uniforms: {
 					color: {
@@ -109,13 +105,15 @@ class Artboard extends THREE.Object3D {
 				},
 				vertexShader: VERTEX_SHADER,
 				fragmentShader: NOISE_FRAGMENT_SHADER,
-				transparent: true,
+				// transparent: true,
 				side: THREE.BackSide,
 			});
 			target.material.side = THREE.DoubleSide;
-			target.onClick = () => this.onClickTarget(anchorTo._aId);
-			target.onFocus = () => this.onFocusTarget({ thread: anchorTo.threadTitle, theme: anchorTo.theme, id: anchorTo._aId });
-			target.onBlur = () => this.onBlurTarget();
+			target.scale.x = 0.001;
+			target.scale.y = 0.001;
+			target.onClick = () => { if (this.isActive) this.onClickTarget(anchorTo._aId) };
+			target.onFocus = () => { if (this.isActive) this.onFocusTarget({ thread: anchorTo.threadTitle, theme: anchorTo.theme, id: anchorTo._aId }) };
+			target.onBlur = () => { if (this.isActive) this.onBlurTarget() };
 
 			this.updateMatrixWorld();
 			const anchorLocalDirection = this.worldToLocal(new THREE.Vector3().copy(anchorTo.position)).normalize();
@@ -128,6 +126,24 @@ class Artboard extends THREE.Object3D {
 			this.add(target);
 			intersectableObjects.push(target);
 		});
+	}
+
+	activateTargets() {
+		console.log('activateTargets');
+
+
+		this.children.forEach((child) => {
+			TweenLite.to(child.scale, 0.66, { x: 1, y: 1, ease: Back.easeOut.config(1.5) });
+		});
+		this.isActive = true;
+	}
+
+	deactivateTargets() {
+		console.log('DEactivateTargets');
+		this.children.forEach((child) => {
+			TweenLite.to(child.scale, 0.66, { x: 0.001, y: 0.001, ease: Back.easeIn.config(1.5) });
+		});
+		this.isActive = false;
 	}
 }
 

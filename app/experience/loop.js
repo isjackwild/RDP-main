@@ -46,7 +46,7 @@ export const onResize = (w, h) => {
 const update = (delta) => {
 	updateScene(delta);
 	updateControls(delta);
-	onDeviceOrientation();
+	// onDeviceOrientation();
 }
 
 const render = () => {

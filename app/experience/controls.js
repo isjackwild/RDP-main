@@ -23,14 +23,13 @@ const setOrientationControls = (e) => {
 	controls.update();
 }
 
-export const moveToPosition = (position) => {
+export const moveToPosition = (position, callback) => {
 	const dist = new THREE.Vector3().copy(position).sub(camera.position).length();
 	const dir = new THREE.Vector3().copy(position).sub(camera.position).normalize();
 	const toPosition = new THREE.Vector3().copy(position).sub(dir);
 	const { x, y, z } = toPosition;
 
 	const targetToPosition = new THREE.Vector3().copy(position).add(dir);
-
 
 	TweenLite.to(
 		camera.position,
@@ -40,9 +39,11 @@ export const moveToPosition = (position) => {
 			y,
 			z,
 			ease: Sine.EaseInOut,
+			onComplete: callback,
 		}
 	);
 
+	if (!controls.target) return
 	TweenLite.to(
 		controls.target,
 		CAMERA_MOVE_SPEED,
@@ -55,7 +56,7 @@ export const moveToPosition = (position) => {
 	);
 }
 
-export const moveAlongJumpPath = (path) => {
+export const moveAlongJumpPath = (path, callback) => {
 	const dist = path.getLength();
 	const dur = dist / 500;
 
@@ -66,7 +67,7 @@ export const moveAlongJumpPath = (path) => {
 		const pos = path.getPoint(control.t);
 		dir.copy(pos).sub(camera.position).normalize().multiplyScalar(0.01);
 		camera.position.copy(pos);
-		controls.target.copy(pos.add(dir));
+		if (controls.target) controls.target.copy(pos.add(dir));
 	}
 
 	TweenLite.to(
@@ -76,6 +77,7 @@ export const moveAlongJumpPath = (path) => {
 			t: 1,
 			ease: Expo.EaseInOut,
 			onUpdate: setCamera,
+			onComplete: callback,
 		}
 	);
 }

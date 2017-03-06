@@ -1,5 +1,6 @@
 const THREE = require('three');
 import PubSub from 'pubsub-js';
+import _ from 'lodash';
 import { moveToAnchor } from '../controls.js';
 import { camera } from '../camera.js';
 import { moveToPosition, moveAlongJumpPath } from '../controls.js';
@@ -63,6 +64,8 @@ class Anchor extends THREE.Mesh {
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
 		this.onClick = this.onClick.bind(this);
+		this.onEnter = this.onEnter.bind(this);
+		this.onAudioEnded = this.onAudioEnded.bind(this);
 	}
 	
 	setup() {
@@ -73,7 +76,7 @@ class Anchor extends THREE.Mesh {
 
 	setupDebugMesh() {
 		// this.geometry = new THREE.CubeGeometry(ANCHOR_BASE_WIDTH, ANCHOR_BASE_WIDTH, ANCHOR_BASE_WIDTH);
-		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 20, 20);
+		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 16, 16);
 		// this.material = new THREE.MeshStandardMaterial({
 		// 	color: this.colors.anchor, 
 		// 	opacity: 1,
@@ -102,7 +105,7 @@ class Anchor extends THREE.Mesh {
 			},
 			vertexShader: VERTEX_SHADER,
 			fragmentShader: NOISE_FRAGMENT_SHADER,
-			transparent: true,
+			// transparent: true,
 			side: THREE.BackSide,
 		});
 	}
@@ -131,7 +134,7 @@ class Anchor extends THREE.Mesh {
 		
 		clearTimeout(this.triggerTimeout);
 		this.triggerTimeout = setTimeout(() => {
-			moveToPosition(this.position);
+			this.onClick();
 		}, 4000);
 	}
 
@@ -144,14 +147,14 @@ class Anchor extends THREE.Mesh {
 	onClick() {
 		if (!this.isActive) return;
 		this.isActive = false;
-		moveToPosition(this.position);
+		// this.onEnter();
+		PubSub.publish('target.deactivate');
+		moveToPosition(this.position, this.onEnter);
 		PubSub.publish('target.blur');
 	}
 
 	onClickTarget(anchorToId) {
-		const path = this.pathsOut[anchorToId];
-		moveAlongJumpPath(path);
-		PubSub.publish('target.blur');
+		this.onFocusTrigger(anchorToId)
 	}
 
 	onFocusTarget(data) {
@@ -170,7 +173,25 @@ class Anchor extends THREE.Mesh {
 	onFocusTrigger(anchorToId) {
 		const path = this.pathsOut[anchorToId];
 		clearTimeout(this.triggerTimeout);
-		moveAlongJumpPath(path);
+
+		const anchorTo = _.find(this.anchorsTo, a => a._aId === anchorToId);
+
+		PubSub.publish('target.deactivate');
+		moveAlongJumpPath(path, anchorTo.onEnter);
+		PubSub.publish('target.blur');
+		if (this.artboard) this.artboard.deactivateTargets();
+	}
+
+	onEnter() {
+		setTimeout(() => {
+			this.onAudioEnded();
+		}, 3333);
+		console.log('play audio');
+	}
+
+	onAudioEnded() {
+		PubSub.publish('target.activate');
+		if (this.artboard) this.artboard.activateTargets();
 	}
 }
 

@@ -9,17 +9,22 @@ export default class InfoText extends Component {
 		this.state = {
 			theme: null,
 			thread: null,
+			targetsActivated: true,
 		}
 
 		this.subs = [];
 
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
+		this.onTargetsActivated = this.onTargetsActivated.bind(this);
+		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
 	}
 
 	componentDidMount() {
 		this.subs.push(PubSub.subscribe('target.focus', this.onFocus));
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
+		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
+		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
 	}
 
 	componentWillUnmount() {
@@ -32,7 +37,15 @@ export default class InfoText extends Component {
 	}
 
 	onBlur() {
-		this.setState({ theme: null, thread: null });
+		if (this.state.targetsActivated) this.setState({ theme: null, thread: null });
+	}
+
+	onTargetsActivated() {
+		this.setState({ targetsActivated: true, theme: null, thread: null });
+	}
+
+	onTargetsDeactivated() {
+		this.setState({ targetsActivated: false });
 	}
 
 	render() {

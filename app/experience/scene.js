@@ -47,7 +47,7 @@ export const init = () => {
 }
 
 const addDots = (sceneBox) => {
-	const SPACING = 800;
+	const SPACING = 1000;
 
 	sceneBox.min.multiplyScalar(1.1);
 	sceneBox.max.multiplyScalar(1.1);

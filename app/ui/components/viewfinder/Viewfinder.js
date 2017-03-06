@@ -8,17 +8,22 @@ export default class Viewfinder extends Component {
 
 		this.state = {
 			isFocused: false,
+			targetsActivated: true,
 		}
 
 		this.subs = [];
 
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
+		this.onTargetsActivated = this.onTargetsActivated.bind(this);
+		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
 	}
 
 	componentDidMount() {
 		this.subs.push(PubSub.subscribe('target.focus', this.onFocus));
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
+		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
+		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
 	}
 
 	componentWillUnmount() {
@@ -26,7 +31,6 @@ export default class Viewfinder extends Component {
 	}
 
 	onFocus(e, data) {
-		console.log(data);
 		this.setState({ isFocused: true });
 	}
 
@@ -34,9 +38,17 @@ export default class Viewfinder extends Component {
 		this.setState({ isFocused: false });
 	}
 
+	onTargetsActivated() {
+		this.setState({ targetsActivated: true });
+	}
+
+	onTargetsDeactivated() {
+		this.setState({ targetsActivated: false });
+	}
+
 	render() {
 		return (
-			<div className={`viewfinder ${this.state.isFocused ? 'viewfinder--focused' : ''}`}>
+			<div className={`viewfinder ${this.state.isFocused ? 'viewfinder--focused' : ''} ${!this.state.targetsActivated ? 'viewfinder--inactive' : ''}`}>
 				<div className="viewfinder__part viewfinder__part--tl"></div>
 				<div className="viewfinder__part viewfinder__part--tr"></div>
 				<div className="viewfinder__part viewfinder__part--bl"></div>
