@@ -184,7 +184,7 @@ class Anchor extends THREE.Mesh {
 
 	onEnter() {
 		window.socket.on('audio-ended', this.onAudioEnded);
-		window.socket.emit('play-audio', this._aId);
+		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.anchor });
 	}
 
 	onAudioEnded(aId) {

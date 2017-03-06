@@ -5,11 +5,13 @@ const kickIt = () => {
 	console.log('desktop');
 	window.socket = io();
 
-	window.socket.on('play-audio', (aId) => {
-		console.log('play audio', aId);
+	window.socket.on('play-audio', (data) => {
+		console.log('play audio', data.aId);
+		document.body.style.background = data.color;
 
 		setTimeout(() => {
-			window.socket.emit('audio-ended');
+			window.socket.emit('audio-ended', data.aId);
+			document.body.style.background = '';
 		}, 4000);
 	});
 }

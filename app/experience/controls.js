@@ -18,6 +18,7 @@ export const init = () => {
 const setOrientationControls = (e) => {
 	window.removeEventListener('deviceorientation', setOrientationControls, true);
 	if (!e.alpha) return;
+	if (controls) controls.dispose();
 	controls = new THREE.DeviceOrientationControls(camera, true);
 	controls.connect();
 	controls.update();
