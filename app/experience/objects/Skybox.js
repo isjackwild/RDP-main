@@ -41,27 +41,32 @@ class Skybox extends THREE.Mesh {
 
 	setup() {
 		this.geometry = new THREE.SphereGeometry(this.radius, 10, 10);
-		this.material = new THREE.ShaderMaterial({
-			uniforms: {
-				color: {
-					type: "c",
-					value: this.dark,
-				},
-				opacity: {
-					type: "f",
-					value: 1
-				},
-				grainStrength: {
-					type: "f",
-					value: 3.0,
-				}
-			},
-			vertexShader: VERTEX_SHADER,
-			fragmentShader: NOISE_FRAGMENT_SHADER,
-			transparent: true,
-			shading: THREE.SmoothShading,
+		// this.material = new THREE.ShaderMaterial({
+		// 	uniforms: {
+		// 		color: {
+		// 			type: "c",
+		// 			value: 0x4c4c4c,
+		// 		},
+		// 		opacity: {
+		// 			type: "f",
+		// 			value: 1
+		// 		},
+		// 		grainStrength: {
+		// 			type: "f",
+		// 			value: 3.0,
+		// 		}
+		// 	},
+		// 	vertexShader: VERTEX_SHADER,
+		// 	fragmentShader: NOISE_FRAGMENT_SHADER,
+		// 	transparent: true,
+		// 	shading: THREE.SmoothShading,
+		// 	side: THREE.BackSide,
+		// 	// wireframe: true,
+		// });
+
+		this.material = new THREE.MeshLambertMaterial({
+			color: 0x4c4c4c,
 			side: THREE.BackSide,
-			// wireframe: true,
 		});
 	}
 
@@ -69,11 +74,11 @@ class Skybox extends THREE.Mesh {
 		const control = convertToRange(camera.position.length(), [0, this.radius], [0, 1]);
 		// const color = this.dark.lerp(this.light, control);
 
-		const dark = new THREE.Color(0xbbbbbb);
+		const dark = new THREE.Color(0x4c4c4c);
 		const light = new THREE.Color(0xefefef);
 		const color = dark.lerp(light, control);
 
-		this.material.uniforms.color.value = color;
+		this.material.color = color;
 	}
 }
 

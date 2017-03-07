@@ -49,7 +49,8 @@ export const threads = [
 		]
 	},
 	{
-		title: "The Mayor — Cecilia",
+		title: "Cecilia",
+		subtitle: "Mayor of Fonteca",
 		colors: {
 			anchor: '#c4a7a1', //orange
 			jump: '#fc7d67',
@@ -59,9 +60,9 @@ export const threads = [
 		anchors: [
 			{	
 				id:'C1',
-				theme: 'Community helping one-another',
+				theme: 'A community helping one-another',
 				depth: 0,
-				jumpPoints: ['C2', 'C5']
+				jumpPoints: ['C2', 'C5', 'C9']
 			},
 			{
 				id: 'C2',
@@ -91,7 +92,7 @@ export const threads = [
 				id: 'C6',
 				theme: 'A new community',
 				depth: 0.4,
-				jumpPoints: ['C7']
+				jumpPoints: ['C7', 'C12']
 			},
 			{
 				id: 'C7',
@@ -103,7 +104,7 @@ export const threads = [
 				id: 'C8', 
 				theme: 'Houses made of straw',
 				depth: 0.5,
-				jumpPoints: ['C9']
+				jumpPoints: ['C9', 'C10']
 			},
 			{
 				id: 'C9',
@@ -151,7 +152,7 @@ export const threads = [
 				id: 'C16',
 				theme: 'Removing temporary accommodation',
 				depth: 0.95,
-				jumpPoints: []
+				jumpPoints: ['C17']
 			},
 			{
 				id: 'C17',

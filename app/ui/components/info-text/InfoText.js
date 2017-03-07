@@ -9,6 +9,7 @@ export default class InfoText extends Component {
 		this.state = {
 			theme: null,
 			thread: null,
+			subtitle: null,
 			targetsActivated: true,
 		}
 
@@ -32,16 +33,16 @@ export default class InfoText extends Component {
 	}
 
 	onFocus(e, data) {
-		const { theme, thread } = data
-		this.setState({ theme, thread });
+		const { theme, thread, subtitle } = data
+		this.setState({ theme, thread, subtitle });
 	}
 
 	onBlur() {
-		if (this.state.targetsActivated) this.setState({ theme: null, thread: null });
+		if (this.state.targetsActivated) this.setState({ theme: null, thread: null, subtitle: null });
 	}
 
 	onTargetsActivated() {
-		this.setState({ targetsActivated: true, theme: null, thread: null });
+		this.setState({ targetsActivated: true, theme: null, thread: null, subtitle: null });
 	}
 
 	onTargetsDeactivated() {
@@ -51,7 +52,10 @@ export default class InfoText extends Component {
 	render() {
 		return (
 			<div className="info-text">
-				<span className="info-text__text info-text__text--thread">{ this.state.thread }</span>
+				<span className="info-text__text info-text__text--thread">
+					<span className="info-text__thread--title">{ this.state.thread }</span>
+					<span className="info-text__thread--subtitle">{ this.state.subtitle }</span>
+				</span>
 				<span className="info-text__text info-text__text--theme">{ this.state.theme }</span>
 			</div>
 		);

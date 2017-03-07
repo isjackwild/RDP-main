@@ -12,7 +12,7 @@ let currentAnchor = null;
 export const init = () => {
 	controls = new THREE.OrbitControls(camera);
 	controls.target.set(0, 0, 0);
-	// window.addEventListener('deviceorientation', setOrientationControls, true);
+	window.addEventListener('deviceorientation', setOrientationControls, true);
 }
 
 const setOrientationControls = (e) => {

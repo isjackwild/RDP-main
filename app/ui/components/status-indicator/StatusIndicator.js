@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
+import { TARGET_TRIGGER_DURATION, TARGET_TRIGGER_OFF_DURATION } from '../../../experience/constants.js';
 
-const TRIGGER_DURATION = 4;
-const TRIGGER_OFF_DURATION = 1;
 
 export default class StatusIndicator extends Component {
 	constructor(args) {
@@ -34,7 +33,6 @@ export default class StatusIndicator extends Component {
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
 		window.socket.on('audio-time', (control) => {
-			console.log('control', control);
 			this.setState({ audioControl: control });
 		});
 		window.socket.on('audio-ended', () => {
@@ -55,7 +53,7 @@ export default class StatusIndicator extends Component {
 		if (this.focusTween) this.focusTween.kill();
 		const t = { control: this.state.focusControl }
 
-		this.focusTween = TweenLite.to(t, TRIGGER_DURATION, { control: 1, ease: Power1.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
+		this.focusTween = TweenLite.to(t, TARGET_TRIGGER_DURATION * 0.001, { control: 1, ease: Power1.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
 	}
 
 	onBlur() {
@@ -63,7 +61,7 @@ export default class StatusIndicator extends Component {
 		if (this.focusTween) this.focusTween.kill();
 		const t = { control: this.state.focusControl }
 
-		this.focusTween = TweenLite.to(t, TRIGGER_OFF_DURATION, { control: 0, ease: Power4.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
+		this.focusTween = TweenLite.to(t, TARGET_TRIGGER_OFF_DURATION * 0.001, { control: 0, ease: Power4.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
 	}
 
 	onTargetsActivated() {

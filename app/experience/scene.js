@@ -26,7 +26,7 @@ export const init = () => {
 	// scene.fog = new THREE.FogExp2(0x55524a, 0.0006);
 	scene.add(camera);
 	lights.forEach( light => scene.add(light) );
-	scene.add(lights[1].target);
+	// scene.add(lights[1].target);
 	const up = new THREE.Vector3(0, 1, 0);
 
 	addAnchors();
@@ -97,8 +97,8 @@ const addAnchors = () => {
 			const t = i / 200;
 			const control = i / RES;
 			const vec = new THREE.Vector3(
-				t * Math.cos((t * 8) + spiralOffset) * 500,
-				t * Math.sin((t * 8) + spiralOffset) * 500,
+				t * Math.cos((t * 8) + spiralOffset) * 350,
+				t * Math.sin((t * 8) + spiralOffset) * 350,
 				(control * 5000),
 			).applyAxisAngle(up, angle);
 			conicalSpiralPoints.push(vec);
@@ -128,7 +128,9 @@ const addAnchors = () => {
 			const args = {
 				...anchorData,
 				position,
+				pathDirection,
 				threadTitle: thread.title,
+				threadSubtitle: thread.subtitle,
 				colors: thread.colors,
 			}
 			const anchor = new Anchor(args);

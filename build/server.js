@@ -37,7 +37,6 @@ io.sockets.on('connection', (client) => {
 	});
 
 	client.on('audio-time', (control) => {
-		console.log('audio-time', control);
 		client.broadcast.emit('audio-time', control);
 	});
 });

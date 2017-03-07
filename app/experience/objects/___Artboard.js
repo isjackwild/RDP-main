@@ -41,13 +41,14 @@ class Artboard extends THREE.Object3D {
 	constructor(args) {
 		super(args);
 
-		const { anchorsTo, onClickTarget, onFocusTarget, onBlurTarget } = args;
+		const { anchorsTo, onClickTarget, onFocusTarget, onBlurTarget, pathDirection } = args;
 
 		this.anchorsTo = anchorsTo;
 		this.onClickTarget = onClickTarget;
 		this.onFocusTarget = onFocusTarget;
 		this.onBlurTarget = onBlurTarget;
 		this.isActive = false;
+		this.pathDirection = pathDirection;
 		this.setup();
 	}
 	
@@ -87,27 +88,31 @@ class Artboard extends THREE.Object3D {
 		this.anchorsTo.forEach((anchorTo, i) => {
 			const target = new THREE.Mesh();
 			// target.geometry = new THREE.PlaneGeometry(ANCHOR_BASE_WIDTH / 5, ANCHOR_BASE_WIDTH / 5);
-			target.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH / 10, 8, 8);
-			target.material = new THREE.ShaderMaterial({
-				uniforms: {
-					color: {
-						type: "c",
-						value: new THREE.Color(anchorTo.colors.jump),
-					},
-					opacity: {
-						type: "f",
-						value: 1,
-					},
-					grainStrength: {
-						type: "f",
-						value: 2.0,
-					}
-				},
-				vertexShader: VERTEX_SHADER,
-				fragmentShader: NOISE_FRAGMENT_SHADER,
-				// transparent: true,
-				// depthWrite: false,
-				// depthTest: false,
+			target.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH / 10, 16, 16);
+			// target.material = new THREE.ShaderMaterial({
+			// 	uniforms: {
+			// 		color: {
+			// 			type: "c",
+			// 			value: new THREE.Color(anchorTo.colors.jump),
+			// 		},
+			// 		opacity: {
+			// 			type: "f",
+			// 			value: 1,
+			// 		},
+			// 		grainStrength: {
+			// 			type: "f",
+			// 			value: 2.0,
+			// 		}
+			// 	},
+			// 	vertexShader: VERTEX_SHADER,
+			// 	fragmentShader: NOISE_FRAGMENT_SHADER,
+			// 	// transparent: true,
+			// 	// depthWrite: false,
+			// 	// depthTest: false,
+			// 	side: THREE.BackSide,
+			// });
+			target.material = new THREE.MeshLambertMaterial({
+				color: anchorTo.colors.jump,
 				side: THREE.BackSide,
 			});
 			target.material.side = THREE.DoubleSide;
