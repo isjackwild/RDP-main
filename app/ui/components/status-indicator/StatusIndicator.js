@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
 
@@ -22,6 +23,7 @@ export default class StatusIndicator extends Component {
 		this.onBlur = this.onBlur.bind(this);
 		this.onTargetsActivated = this.onTargetsActivated.bind(this);
 		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
+		this.onResize = this.onResize.bind(this);
 
 		this.focusTween = undefined;
 	}
@@ -38,10 +40,15 @@ export default class StatusIndicator extends Component {
 		window.socket.on('audio-ended', () => {
 			this.setState({ audioControl: 0 });
 		});
+		window.addEventListener('resize', _.debounce(this.onResize, 16.666));
 	}
 
 	componentWillUnmount() {
 		this.subs.forEach(s => PubSub.unsubscribe(s));
+	}
+
+	onResize() {
+		this.setState({ screenDiameter: window.innerWidth * 2 + window.innerHeight * 2 });
 	}
 
 	onFocus() {

@@ -96,7 +96,7 @@ class Anchor extends THREE.Mesh {
 				},
 				opacity: {
 					type: "f",
-					value: 0.85,
+					value: 1,
 				},
 				grainStrength: {
 					type: "f",
@@ -105,7 +105,7 @@ class Anchor extends THREE.Mesh {
 			},
 			vertexShader: VERTEX_SHADER,
 			fragmentShader: NOISE_FRAGMENT_SHADER,
-			transparent: true,
+			// transparent: true,
 			side: THREE.BackSide,
 		});
 	}
@@ -183,6 +183,7 @@ class Anchor extends THREE.Mesh {
 	}
 
 	onEnter() {
+		// TODO: Make transparent only on enter
 		window.socket.on('audio-ended', this.onAudioEnded);
 		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.anchor });
 	}

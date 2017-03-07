@@ -49,7 +49,7 @@ export const threads = [
 		]
 	},
 	{
-		title: "Cecilia",
+		title: "The Mayor — Cecilia",
 		colors: {
 			anchor: '#c4a7a1', //orange
 			jump: '#fc7d67',
@@ -57,23 +57,108 @@ export const threads = [
 			line: '#ffffff',
 		},
 		anchors: [
-			{id: 'C1', theme: 'Volunteer', depth: 0, jumpPoints: ['C2']},
-			{id: 'C2', theme: 'Project', depth: 0.2, jumpPoints: ['C3']},
-			{id: 'C3', theme: 'Government', depth: 0.25, jumpPoints: ['C2']},
-			{id: 'C4', theme: 'Volunteer, government', depth: 0.3, jumpPoints: ['C2', 'C1']},
-			{id: 'C5', theme: 'Volunteer, personal', depth: 0.35, jumpPoints: ['C4']},
-			{id: 'C6', theme: 'Project', depth: 0.4, jumpPoints: ['C2']},
-			{id: 'C7', theme: 'Government', depth: 0.45, jumpPoints: ['C4', 'C16']},
-			{id: 'C8', theme: 'Architecture, project', depth: 0.5, jumpPoints: ['C2', 'C6']},
-			{id: 'C9', theme: 'Personal', depth: 0.55, jumpPoints: ['C5']},
-			{id: 'C10', theme: 'Personal', depth: 0.6, jumpPoints: ['C9']},
-			{id: 'C11', theme: 'Social, Reconstruction', depth: 0.65, jumpPoints: ['C12']},
-			{id: 'C12', theme: 'Project, Future', depth: 0.7, jumpPoints: ['C8']},
-			{id: 'C13', theme: 'Project, volunteer, future', depth: 0.75, jumpPoints: ['C12']},
-			{id: 'C14', theme: 'Social', depth: 0.8, jumpPoints: ['C11', 'C13']},
-			{id: 'C15', theme: 'Project, future', depth: 0.9, jumpPoints: ['C13']},
-			{id: 'C16', theme: 'Future, project, government', depth: 0.95, jumpPoints: ['C15']},
-			{id: 'C17', theme: 'Project', depth: 1, jumpPoints: ['C16']},
+			{	
+				id:'C1',
+				theme: 'Community helping one-another',
+				depth: 0,
+				jumpPoints: ['C2', 'C5']
+			},
+			{
+				id: 'C2',
+				theme: 'A project for the community',
+				depth: 0.2,
+				jumpPoints: ['C3', 'C14']
+			},
+			{
+				id: 'C3',
+				theme: 'No public funding',
+				depth: 0.25,
+				jumpPoints: ['C4', 'C5', 'C7']
+			},
+			{
+				id: 'C4',
+				theme: 'Building temporary homes',
+				depth: 0.3,
+				jumpPoints: ['C5', 'C15']
+			},
+			{
+				id: 'C5',
+				theme: 'Volunteer workers',
+				depth: 0.35,
+				jumpPoints: ['C6']
+			},
+			{
+				id: 'C6',
+				theme: 'A new community',
+				depth: 0.4,
+				jumpPoints: ['C7']
+			},
+			{
+				id: 'C7',
+				theme: 'Challenges in building',
+				depth: 0.45,
+				jumpPoints: ['C8']
+			},
+			{
+				id: 'C8', 
+				theme: 'Houses made of straw',
+				depth: 0.5,
+				jumpPoints: ['C9']
+			},
+			{
+				id: 'C9',
+				theme: 'Moving to the earthquake zone',
+				depth: 0.55,
+				jumpPoints: ['C10']
+			},
+			{
+				id: 'C10',
+				theme: 'Rebuilding homes',
+				depth: 0.6,
+				jumpPoints: ['C11', 'C14', 'C12']
+			},
+			{
+				id: 'C11',
+				theme: 'Rebuilding lives',
+				depth: 0.65,
+				jumpPoints: ['C12']
+			},
+			{
+				id: 'C12',
+				theme: 'Changes in occupancy',
+				depth: 0.7,
+				jumpPoints: ['C13', 'C17']
+			},
+			{
+				id: 'C13',
+				theme: 'Building more new houses',
+				depth: 0.75,
+				jumpPoints: ['C14']
+			},
+			{
+				id: 'C14',
+				theme: 'Common property of the village',
+				depth: 0.8,
+				jumpPoints: ['C15', 'C17']
+			},
+			{
+				id: 'C15',
+				theme: 'From temporary to permanent',
+				depth: 0.9,
+				jumpPoints: ['C16']
+			},
+			{
+				id: 'C16',
+				theme: 'Removing temporary accommodation',
+				depth: 0.95,
+				jumpPoints: []
+			},
+			{
+				id: 'C17',
+				theme: 'Sharing property and profits',
+				depth: 1,
+				jumpPoints: []
+			},
 		]
 	},
 	{
