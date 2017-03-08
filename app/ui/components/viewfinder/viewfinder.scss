@@ -9,10 +9,11 @@ $focus-transform-y: 8px;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	transition: opacity 0.33s ease-in-out;
+	opacity: 0;
 }
 
-.viewfinder--inactive {
-	opacity: 0;
+.viewfinder--visible {
+	opacity: 1;
 }
 
 

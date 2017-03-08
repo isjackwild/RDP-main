@@ -2,7 +2,7 @@
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	padding: 26px 28px;
+	padding: 28px 30px;
 }
 
 .info-text__text {
@@ -10,14 +10,14 @@
 	color: white;
 	line-height: 1em;
 	-webkit-font-smoothing: antialiased;
-	letter-spacing: 0.02em;
+	// letter-spacing: 0.02em;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.06), 0 0 20px rgba(0,0,0,0.06);
 	text-rendering: optimizeLegibility;
 }
 
 .info-text__text--thread {
 	margin-bottom: 2px;
-	font-size: 26px;
+	font-size: 28px;
 	line-height: 1em;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .info-text__text--theme {
-	font-size: 19px;
+	font-size: 23px;
 	font-weight: 300;
 	font-family: 'Work Sans', sans-serif;
 	font-family: 'Open Sans', sans-serif;

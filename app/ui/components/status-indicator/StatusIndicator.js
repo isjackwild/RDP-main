@@ -11,7 +11,7 @@ export default class StatusIndicator extends Component {
 
 		this.state = {
 			focusControl: 0,
-			audioControl: 0,
+			audioControl: 1,
 			screenDiameter: window.innerWidth * 2 + window.innerHeight * 2,
 			targetsActivated: true,
 		}
@@ -23,26 +23,39 @@ export default class StatusIndicator extends Component {
 		this.onTargetsActivated = this.onTargetsActivated.bind(this);
 		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
 		this.onResize = this.onResize.bind(this);
+		this.onIntroFinished = this.onIntroFinished.bind(this);
+		this.onReset = this.onReset.bind(this);
 
 		this.focusTween = undefined;
 	}
 
 	componentDidMount() {
+		window.addEventListener('resize', _.debounce(this.onResize, 16.666));
+		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+	}
+
+	componentWillUnmount() {
+		this.subs.forEach(s => PubSub.unsubscribe(s));
+	}
+
+	onIntroFinished() {
 		this.subs.push(PubSub.subscribe('target.focus', this.onFocus));
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
+		this.setState({ audioControl: 0 });
 		window.socket.on('audio-time', (control) => {
 			this.setState({ audioControl: control });
 		});
 		window.socket.on('audio-ended', () => {
 			this.setState({ audioControl: 0 });
 		});
-		window.addEventListener('resize', _.debounce(this.onResize, 16.666));
 	}
 
-	componentWillUnmount() {
+	onReset() {
 		this.subs.forEach(s => PubSub.unsubscribe(s));
+		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+		this.setState({ audioControl: 1 });
 	}
 
 	onResize() {

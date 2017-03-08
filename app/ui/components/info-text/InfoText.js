@@ -19,17 +19,29 @@ export default class InfoText extends Component {
 		this.onBlur = this.onBlur.bind(this);
 		this.onTargetsActivated = this.onTargetsActivated.bind(this);
 		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
+		this.onIntroFinished = this.onIntroFinished.bind(this);
+		this.onReset = this.onReset.bind(this);
 	}
 
 	componentDidMount() {
+		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+	}
+
+	componentWillUnmount() {
+		this.subs.forEach(s => PubSub.unsubscribe(s));
+	}
+
+	onIntroFinished() {
 		this.subs.push(PubSub.subscribe('target.focus', this.onFocus));
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
 	}
 
-	componentWillUnmount() {
+	onReset() {
 		this.subs.forEach(s => PubSub.unsubscribe(s));
+		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+		this.setState({ isVisible: false, targetsActivated: false, isFocused: false });
 	}
 
 	onFocus(e, data) {

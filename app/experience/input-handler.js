@@ -11,10 +11,12 @@ export const ray = raycaster.ray;
 export const intersectableObjects = [];
 const zeroVec = new THREE.Vector2(0, 0);
 let focusedObject = null;
+let isActive = false;
 
 
 export const init = () => {
 	addEventListeners();
+	PubSub.subscribe('intro.finish', () => isActive = true);
 }
 
 const addEventListeners = () => {
@@ -41,6 +43,7 @@ export const onDeviceOrientation = () => {
 }
 
 const onClick = ({ clientX, clientY, touches }) => {
+	if (!isActive) return;
 	let x, y;
 	if (touches) {
 		x = 2 * (touches[0].clientX / window.innerWidth) - 1;
@@ -55,6 +58,7 @@ const onClick = ({ clientX, clientY, touches }) => {
 }
 
 export const castFocus = () => {
+	if (!isActive) return;
 	const intersects = raycaster.intersectObjects(intersectableObjects);
 	if (intersects.length) {
 		if (intersects[0].object.isActive) document.body.classList.add('pointer'); 

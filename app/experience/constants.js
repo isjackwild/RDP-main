@@ -14,5 +14,5 @@ export const CAMERA_MOVE_SPEED = 0.5;
 
 export const SCENE_MAX_RADIUS = 7000;
 export const TARGET_SPREAD = Math.PI * 0.23;
-export const TARGET_TRIGGER_DURATION = 10000;
+export const TARGET_TRIGGER_DURATION = 5000;
 export const TARGET_TRIGGER_OFF_DURATION = 1000;

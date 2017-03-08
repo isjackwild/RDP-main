@@ -187,30 +187,30 @@ class CameraPath extends THREE.Mesh {
 
 		
 
-		this.material = new THREE.ShaderMaterial({
-			uniforms: {
-				colorFrom: {
-					type: "c",
-					value: new THREE.Color(this.from.colors.jump)
-				},
-				colorTo: {
-					type: "c",
-					value: new THREE.Color(this.to.colors.jump)
-				},
-				opacity: {
-					type: "f",
-					value: 1
-				},
-				grainStrength: {
-					type: "f",
-					value: 3.5,
-				}
-			},
-			vertexShader: VERTEX_SHADER,
-			fragmentShader: NOISE_FRAGMENT_SHADER,
-			side: THREE.DoubleSide,
-			transparent: true,
-		});
+		// this.material = new THREE.ShaderMaterial({
+		// 	uniforms: {
+		// 		colorFrom: {
+		// 			type: "c",
+		// 			value: new THREE.Color(this.from.colors.jump)
+		// 		},
+		// 		colorTo: {
+		// 			type: "c",
+		// 			value: new THREE.Color(this.to.colors.jump)
+		// 		},
+		// 		opacity: {
+		// 			type: "f",
+		// 			value: 1
+		// 		},
+		// 		grainStrength: {
+		// 			type: "f",
+		// 			value: 3.5,
+		// 		}
+		// 	},
+		// 	vertexShader: VERTEX_SHADER,
+		// 	fragmentShader: NOISE_FRAGMENT_SHADER,
+		// 	side: THREE.DoubleSide,
+		// 	transparent: true,
+		// });
 		// this.material = new THREE.MeshStandardMaterial({
 		// 	color: new THREE.Color(this.to.colors.jump), 
 		// 	side: THREE.DoubleSide,
@@ -218,6 +218,10 @@ class CameraPath extends THREE.Mesh {
 		// 	roughness: 0.3,
 		// 	metalness: 0.0,
 		// });
+		this.material = new THREE.MeshLambertMaterial({
+			color: this.to.colors.jump,
+			side: THREE.DoubleSide,
+		});
 	}
 
 	update() {
