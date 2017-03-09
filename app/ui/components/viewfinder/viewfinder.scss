@@ -20,11 +20,9 @@ $focus-transform-y: 8px;
 .viewfinder__part {
 	width: 25px;
 	height: 25px;
-	// background: green;
 	position: absolute;
 	border-width: 3px;
 	border-color: #fff;
-	transition: transform 0.25s cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 .viewfinder__part--tl {
@@ -55,20 +53,20 @@ $focus-transform-y: 8px;
 	border-right-style: solid;
 }
 
-.viewfinder--focused {
-	.viewfinder__part--tl {
-		transform: translate($focus-transform-x, $focus-transform-y);
-	}
+// .viewfinder--focused {
+// 	.viewfinder__part--tl {
+// 		transform: translate($focus-transform-x, $focus-transform-y);
+// 	}
 
-	.viewfinder__part--tr {
-		transform: translate(#{$focus-transform-x * -1}, $focus-transform-y);
-	}
+// 	.viewfinder__part--tr {
+// 		transform: translate(#{$focus-transform-x * -1}, $focus-transform-y);
+// 	}
 
-	.viewfinder__part--bl {
-		transform: translate($focus-transform-x, #{$focus-transform-y * -1});
-	}
+// 	.viewfinder__part--bl {
+// 		transform: translate($focus-transform-x, #{$focus-transform-y * -1});
+// 	}
 
-	.viewfinder__part--br {
-		transform: translate(#{$focus-transform-x * -1}, #{$focus-transform-y * -1});
-	}
-}
+// 	.viewfinder__part--br {
+// 		transform: translate(#{$focus-transform-x * -1}, #{$focus-transform-y * -1});
+// 	}
+// }

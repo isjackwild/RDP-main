@@ -31,13 +31,15 @@ export default class Intro extends Component {
 		return (
 			<div className={`intro ${this.state.isVisible ? 'intro--visible' : ''}`}>
 				<div className="intro__inner">
-					<div className="intro__section intro__section--grow"></div>
 					<div className="intro__section">
-						<span className="intro__span intro__span--event">
-							In 2009, an earthquake devisated the Antigua region in Northern Italy leaving communities irriversably changed
+						<span className="intro__span intro__span--title">
+							Earthquake
 						</span>
 						<span className="intro__span intro__span--app">
-							This app explores the interconnected stories of those effected, and how they have started to rebuild their lives
+							Explore the interconnected stories of the 2009 L'Aquila earthquake
+						</span>
+						<span className="intro__span intro__span--event">
+							In April 2009, an earthquake devisated the Abruzzo region in central Italy leaving communities irriversably changed. In the eight years since, the community have had to come together to rebuild their lives.
 						</span>
 					</div>
 					<div className="intro__section intro__section--grow">

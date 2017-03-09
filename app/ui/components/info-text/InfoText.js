@@ -73,3 +73,13 @@ export default class InfoText extends Component {
 		);
 	}
 }
+
+
+
+/*<div className="info-text">
+				<span className="info-text__text info-text__text--thread">
+					<span className="info-text__thread--title">{ this.state.thread }</span>
+					<span className="info-text__thread--subtitle">{ this.state.subtitle }</span>
+				</span>
+				<span className="info-text__text info-text__text--theme">{ this.state.theme }</span>
+			</div>*/

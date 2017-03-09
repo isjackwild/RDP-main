@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
+import TweenLite from 'gsap';
 
+const EASE_FOCUS = Back.easeOut.config(1.9);
+const EASE_BLUR = Back.easeOut.config(2.3);
+const DUR = 0.35;
 
 export default class Viewfinder extends Component {
 	constructor(args) {
@@ -13,6 +17,7 @@ export default class Viewfinder extends Component {
 		}
 
 		this.subs = [];
+		this.tweens = [];
 
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
@@ -20,6 +25,7 @@ export default class Viewfinder extends Component {
 		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
 		this.onIntroFinished = this.onIntroFinished.bind(this);
 		this.onReset = this.onReset.bind(this);
+
 	}
 
 	componentDidMount() {
@@ -46,10 +52,20 @@ export default class Viewfinder extends Component {
 
 	onFocus(e, data) {
 		this.setState({ isFocused: true });
+		this.tweens.forEach(t => t.kill());
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR, { x: 20, y: 8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR, { x: -20, y: 8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR, { x: 20, y: -8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR, { x: -20, y: -8, ease: EASE_FOCUS }));
 	}
 
 	onBlur() {
 		this.setState({ isFocused: false });
+		this.tweens.forEach(t => t.kill());
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
 	}
 
 	onTargetsActivated() {
@@ -63,10 +79,10 @@ export default class Viewfinder extends Component {
 	render() {
 		return (
 			<div className={`viewfinder ${this.state.isFocused ? 'viewfinder--focused' : ''} ${this.state.isVisible ? 'viewfinder--visible' : ''}`}>
-				<div className="viewfinder__part viewfinder__part--tl"></div>
-				<div className="viewfinder__part viewfinder__part--tr"></div>
-				<div className="viewfinder__part viewfinder__part--bl"></div>
-				<div className="viewfinder__part viewfinder__part--br"></div>
+				<div className="viewfinder__part viewfinder__part--tl" ref="tl"></div>
+				<div className="viewfinder__part viewfinder__part--tr" ref="tr"></div>
+				<div className="viewfinder__part viewfinder__part--bl" ref="bl"></div>
+				<div className="viewfinder__part viewfinder__part--br" ref="br"></div>
 			</div>
 		);
 	}

@@ -53,6 +53,7 @@ export const threads = [
 		subtitle: "Mayor of Fonteca",
 		colors: {
 			anchor: '#c4a7a1', //orange
+			lighting: '#870b00',
 			jump: '#fc7d67',
 			renderer: '#243869',
 			line: '#ffffff',
@@ -68,7 +69,7 @@ export const threads = [
 				id: 'C2',
 				theme: 'A project for the community',
 				depth: 0.2,
-				jumpPoints: ['C3', 'C14']
+				jumpPoints: ['C3', 'C14', 'S2']
 			},
 			{
 				id: 'C3',
@@ -86,7 +87,7 @@ export const threads = [
 				id: 'C5',
 				theme: 'Volunteer workers',
 				depth: 0.35,
-				jumpPoints: ['C6']
+				jumpPoints: ['C6', 'S7']
 			},
 			{
 				id: 'C6',
@@ -98,7 +99,7 @@ export const threads = [
 				id: 'C7',
 				theme: 'Challenges in building',
 				depth: 0.45,
-				jumpPoints: ['C8']
+				jumpPoints: ['C8', 'S9']
 			},
 			{
 				id: 'C8', 
@@ -110,7 +111,7 @@ export const threads = [
 				id: 'C9',
 				theme: 'Moving to the earthquake zone',
 				depth: 0.55,
-				jumpPoints: ['C10']
+				jumpPoints: ['C10', 'S12']
 			},
 			{
 				id: 'C10',
@@ -122,7 +123,7 @@ export const threads = [
 				id: 'C11',
 				theme: 'Rebuilding lives',
 				depth: 0.65,
-				jumpPoints: ['C12']
+				jumpPoints: ['C12', 'S2', 'S16']
 			},
 			{
 				id: 'C12',
@@ -134,7 +135,7 @@ export const threads = [
 				id: 'C13',
 				theme: 'Building more new houses',
 				depth: 0.75,
-				jumpPoints: ['C14']
+				jumpPoints: ['C14', 'S17']
 			},
 			{
 				id: 'C14',
@@ -158,21 +159,123 @@ export const threads = [
 				id: 'C17',
 				theme: 'Sharing property and profits',
 				depth: 1,
-				jumpPoints: []
+				jumpPoints: ['S17']
 			},
 		]
 	},
 	{
-		title: "Pat and Harry",
+		title: "Sabrina",
+		subtitle: "Architect",
 		colors: {
 			anchor: '#85968c',
+			lighting: '#005924',
 			jump: '#76e2cd', //green
 			renderer: '#243869',
 			line: '#ffffff',
 		},
 		anchors: [
-			{id: 'd0', depth: 0, jumpPoints: ['d1']},
-			{id: 'd1', depth: 0.8, jumpPoints: []},
+			{	
+				id:'S1',
+				theme: 'More than moving walls',
+				depth: 0,
+				jumpPoints: ['S2', 'C2']
+			},
+			{	
+				id:'S2',
+				theme: 'Everything is moving',
+				depth: 0.05,
+				jumpPoints: ['S3', 'S15']
+			},
+			{	
+				id:'S3',
+				theme: 'Restoring the architecture',
+				depth: 0.12,
+				jumpPoints: ['S4', 'S5', 'C7']
+			},
+			{	
+				id:'S4',
+				theme: 'Respecting cultural heritage',
+				depth: 0.18,
+				jumpPoints: ['S5', 'C9']
+			},
+			{	
+				id:'S5',
+				theme: 'Preserving monuments',
+				depth: 0.2,
+				jumpPoints: ['S6', 'S13']
+			},
+			{	
+				id:'S6',
+				theme: 'Staying in the wonderful landscape',
+				depth: 0.23,
+				jumpPoints: ['S7', 'S16']
+			},
+			{	
+				id:'S7',
+				theme: 'Cannot forget',
+				depth: 0.25,
+				jumpPoints: ['S8']
+			},
+			{	
+				id:'S8',
+				theme: 'Private and public buildings',
+				depth: 0.4,
+				jumpPoints: ['S9', 'S14', 'C8']
+			},
+			{	
+				id:'S9',
+				theme: 'Seperating work and memories',
+				depth: 0.5,
+				jumpPoints: ['S10']
+			},
+			{	
+				id:'S10',
+				theme: 'We have to go on',
+				depth: 0.6,
+				jumpPoints: ['S11', 'C11']
+			},
+			{	
+				id:'S11',
+				theme: 'Moving on from the past',
+				depth: 0.65,
+				jumpPoints: ['S12', 'S15']
+			},
+			{	
+				id:'S12',
+				theme: 'Learning something useful',
+				depth: 0.69,
+				jumpPoints: ['S13', 'C16']
+			},
+			{	
+				id:'S13',
+				theme: 'A duty of reconstruction',
+				depth: 0.72,
+				jumpPoints: ['S14', 'S17']
+			},
+			{	
+				id:'S14',
+				theme: 'Building a new community',
+				depth: 0.8,
+				jumpPoints: ['S15']
+			},
+			{	
+				id:'S15',
+				theme: 'Generational differences',
+				depth: 0.86,
+				jumpPoints: ['S16', 'C11']
+			},
+			{	
+				id:'S16',
+				theme: 'Social value of culture',
+				depth: 0.95,
+				jumpPoints: ['S17']
+			},
+			{	
+				id:'S17',
+				theme: 'Importance of environment',
+				depth: 1,
+				jumpPoints: ['C17']
+			}
 		]
 	},
 	{
@@ -184,7 +287,7 @@ export const threads = [
 			line: '#ffffff',
 		},
 		anchors: [
-			{id: 'e0', depth: 0, jumpPoints: ['d1', 'e1']},
+			{id: 'e0', depth: 0, jumpPoints: ['e1']},
 			{id: 'e1', depth: 0.1, jumpPoints: ['e3']},
 			{id: 'e2', depth: 0.2, jumpPoints: ['e4', 'e5']},
 			{id: 'e3', depth: 0.4, jumpPoints: ['a2']},

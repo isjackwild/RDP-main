@@ -174,7 +174,7 @@ class Anchor extends THREE.Mesh {
 	onEnter() {
 		// TODO: Make transparent only on enter
 		window.socket.on('audio-ended', this.onAudioEnded);
-		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.anchor });
+		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.lighting });
 		this.material.transparent = true;
 		TweenLite.to(this.material, 0.5, { opacity: 0.93 });
 	}

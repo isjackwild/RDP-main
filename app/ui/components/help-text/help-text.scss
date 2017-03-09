@@ -7,13 +7,13 @@
 	transform: translate(-50%, 12px);
 	color: white;
 	font-weight: 300;
-	font-size: 16px;
-	letter-spacing: 0.04em;
-	margin-top: -2px;
+	font-size: 18px;
+	letter-spacing: 0.015em;
 	opacity: 0;
-	margin-top: 47px;
+	margin-top: 55px;
 	transition: opacity 0.15s ease-in-out, transform 0s ease-in-out 0.15s;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.1), 0 0 20px rgba(0,0,0,0.06);
+	width: 100%;
 }
 
 .help-text--visible {

@@ -23,11 +23,12 @@ const randomAngle = () => {
 
 export const init = () => {
 	scene = new THREE.Scene();
-	// scene.fog = new THREE.FogExp2(0x55524a, 0.0006);
+	scene.fog = new THREE.FogExp2(0x55524a, 0.0003);
 	scene.add(camera);
 	lights.forEach( light => scene.add(light) );
 	// scene.add(lights[1].target);
 	const up = new THREE.Vector3(0, 1, 0);
+	console.log(scene.fog, '<<<');
 
 	addAnchors();
 	addCameraPaths();
@@ -59,6 +60,7 @@ const addDots = (sceneBox) => {
 				dot.geometry = new THREE.SphereGeometry(5);
 				dot.material = new THREE.MeshBasicMaterial({
 					color: 0xffffff,
+					fog: false,
 				});
 				dot.position.set(x, y, z);
 				scene.add(dot);
@@ -97,8 +99,8 @@ const addAnchors = () => {
 			const t = i / 200;
 			const control = i / RES;
 			const vec = new THREE.Vector3(
-				t * Math.cos((t * 8) + spiralOffset) * 350,
-				t * Math.sin((t * 8) + spiralOffset) * 350,
+				t * Math.cos((t * 8) + spiralOffset) * 666,
+				t * Math.sin((t * 8) + spiralOffset) * 222,
 				(control * 5000),
 			).applyAxisAngle(up, angle);
 			conicalSpiralPoints.push(vec);
@@ -119,8 +121,8 @@ const addAnchors = () => {
 			if (iA !== 0) {
 				position = conicalSpiral.getPoint(point);
 				// position.applyAxisAngle(up, Math.random() * 0.2);
-				position.add(new THREE.Vector3().copy(pathDirection).multiplyScalar(Math.random() * 700 - 350));
-				position.y += (Math.random() * 700) - 350;
+				position.add(new THREE.Vector3().copy(pathDirection).multiplyScalar(Math.random() * 1000 - 500));
+				position.y += (Math.random() * 2000) - 1000;
 			} else {
 				position = new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD);
 			}
@@ -167,6 +169,10 @@ const addCameraPaths = () => {
 }
 
 export const update = (delta) => {
-	if (skybox) skybox.update(delta);
+	if (skybox) {
+		skybox.update(delta);
+		scene.fog.color = skybox.material.color;
+	}
+
 }
 
