@@ -13,31 +13,6 @@ import Target from './target.js';
 import { ANCHOR_BASE_WIDTH, ANCHOR_WIDTH_PER_LINK, OPACITY, FOCUS_OPACITY, TARGET_SPREAD, TARGET_RADIUS, TARGET_TRIGGER_DURATION } from '../CONSTANTS.js';
 import TweenLite from 'gsap';
 
-const VERTEX_SHADER = `
-  varying vec2 vUv;
-
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const NOISE_FRAGMENT_SHADER = `
-	uniform vec3 color;
-	uniform float opacity;
-	uniform float grainStrength;
-
-	varying vec2 vUv;
-
-	void main() {
-		float strength = grainStrength;
-
-    	float x = (vUv.x + 4.0) * (vUv.y + 4.0) * 10.0;
-		vec4 grain = vec4(mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * strength;
-
-		gl_FragColor = vec4(color + grain.xyz, opacity);
-	}`;
-
 
 class Anchor extends THREE.Mesh {
 	constructor(args) {
@@ -46,7 +21,6 @@ class Anchor extends THREE.Mesh {
 
 		this._aId = id;
 
-		// this.isActive = false;
 		this.isTargetsActive = false;
 		this.colors = colors;
 		this.anchorsToIds = jumpPoints;
@@ -57,31 +31,22 @@ class Anchor extends THREE.Mesh {
 
 		this.position.copy(position);
 
-		// this.onClickTarget = this.onClickTarget.bind(this);
-		// this.onFocusTarget = this.onFocusTarget.bind(this);
-		// this.onBlurTarget = this.onBlurTarget.bind(this);
-		// this.onFocusTrigger = this.onFocusTrigger.bind(this);
-		// this.onFocus = this.onFocus.bind(this);
-		// this.onBlur = this.onBlur.bind(this);
-		// this.onClick = this.onClick.bind(this);
+		this.theme = theme;
+		this.threadTitle = threadTitle;
+		this.threadSubtitle = threadSubtitle;
+
 		this.onEnter = this.onEnter.bind(this);
 		this.onAudioEnded = this.onAudioEnded.bind(this);
 	}
 	
 	setup() {
-		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 16, 16);
+		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 12, 12);
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.colors.anchor,
 			side: THREE.BackSide,
 		});
-		// this.setupDebugMesh();
-		// if (this.anchorsTo.length) this.setupArtboard();
 		if (this.anchorsTo.length) this.addTargets();
-		// intersectableObjects.push(this);
 	}
-
-	// setupDebugMesh() {
-	// }
 
 	addTargets() {
 		const up = new THREE.Vector3(0, 1, 0);
@@ -90,66 +55,11 @@ class Anchor extends THREE.Mesh {
 		position.applyAxisAngle(up, totalSpread * -0.5);
 
 		this.anchorsTo.forEach((anchorTo, i) => {
-			const target = new Target({ position, anchorTo, path: this.pathsOut[anchorTo._aId] });
+			const target = new Target({ position, anchorTo, cameraPath: this.pathsOut[anchorTo._aId] });
 			this.add(target);
 			position.applyAxisAngle(up, TARGET_SPREAD);
 		});
 	}
-
-	// onFocus() {
-	// 	if (!this.isActive) return;
-	// 	PubSub.publish('target.focus', { thread: this.threadTitle, subtitle: this.threadSubtitle, theme: this.theme });
-		
-	// 	clearTimeout(this.triggerTimeout);
-	// 	this.triggerTimeout = setTimeout(() => {
-	// 		this.onClick();
-	// 	}, TARGET_TRIGGER_DURATION);
-	// }
-
-	// onBlur() {
-	// 	if (!this.isActive) return;
-	// 	clearTimeout(this.triggerTimeout);
-	// 	PubSub.publish('target.blur');
-	// }
-
-	// onClick() {
-	// 	if (!this.isActive) return;
-	// 	this.isActive = false;
-	// 	// this.onEnter();
-	// 	PubSub.publish('target.deactivate');
-	// 	moveToPosition(this.position, this.onEnter);
-	// 	PubSub.publish('target.blur');
-	// }
-
-	// onClickTarget(anchorToId) {
-	// 	this.onFocusTrigger(anchorToId)
-	// }
-
-	// onFocusTarget(data) {
-	// 	PubSub.publish('target.focus', data);
-	// 	clearTimeout(this.triggerTimeout);
-	// 	this.triggerTimeout = setTimeout(() => {
-	// 		this.onFocusTrigger(data.id);
-	// 	}, TARGET_TRIGGER_DURATION);
-	// }
-
-	// onBlurTarget(anchorToId) {
-	// 	PubSub.publish('target.blur');
-	// 	clearTimeout(this.triggerTimeout);
-	// }
-
-	// onFocusTrigger(anchorToId) {
-	// 	const path = this.pathsOut[anchorToId];
-	// 	clearTimeout(this.triggerTimeout);
-	// 	TweenLite.to(this.material, 0.5, { opacity: 1, onComplete: () => this.material.transparent = false });
-
-	// 	const anchorTo = _.find(this.anchorsTo, a => a._aId === anchorToId);
-
-	// 	PubSub.publish('target.deactivate');
-	// 	moveAlongJumpPath(path, anchorTo.onEnter);
-	// 	PubSub.publish('target.blur');
-	// 	if (this.children.length) this.deactivateTargets();
-	// }
 
 	onEnter() {
 		window.socket.on('audio-ended', this.onAudioEnded);
@@ -171,19 +81,13 @@ class Anchor extends THREE.Mesh {
 	}
 
 	activateTargets() {
-		this.children.forEach(c => c.activate);
-		// this.children.forEach((child) => {
-		// 	TweenLite.to(child.scale, 0.66, { x: 1, y: 1, z: 1, ease: Back.easeOut.config(1.5) });
-		// });
-		// this.isTargetsActive = true;
+		console.log('activate targets');
+		this.children.forEach(c => c.activate());
 	}
 
 	deactivateTargets() {
-		this.children.forEach(c => c.deactivate);
-		// this.children.forEach((child) => {
-		// 	TweenLite.to(child.scale, 0.66, { x: 0.001, y: 0.001, z: 0.001, ease: Back.easeIn.config(1.5) });
-		// });
-		// this.isTargetsActive = false;
+		console.log('DEactivate targets');
+		this.children.forEach(c => c.deactivate());
 	}
 }
 

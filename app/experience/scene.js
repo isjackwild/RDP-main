@@ -47,7 +47,7 @@ export const init = () => {
 }
 
 const addDots = (sceneBox) => {
-	const SPACING = 1000;
+	const SPACING = 2000;
 
 	sceneBox.min.multiplyScalar(1.1);
 	sceneBox.max.multiplyScalar(1.1);
@@ -100,7 +100,7 @@ const addAnchors = () => {
 		// scene.add(line);
 
 		thread.anchors.forEach((anchorData, iA) => {
-			const point = convertToRange(anchorData.depth, [0, 1], [0.08, 1])
+			const point = convertToRange(anchorData.depth, [0, 1], [0.2, 1])
 			let position;
 			position = conicalSpiral.getPoint(point);
 			position.add(new THREE.Vector3().copy(pathDirection).multiplyScalar(Math.random() * 1000 - 500));
@@ -120,7 +120,7 @@ const addAnchors = () => {
 		
 			if (iA === 0) {
 				const target = new Target({ position: new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD), anchorTo: anchor, isActive: true });
-				scene.add(target);
+				scene.add(target)
 			}
 		});
 	});
@@ -144,7 +144,7 @@ const addCameraPaths = () => {
 
 			
 			anchorFrom.anchorsTo.push(anchorTo);
-			anchorFrom.pathsOut[anchorId] = cameraPath.path;
+			anchorFrom.pathsOut[anchorId] = cameraPath;
 			anchorTo.anchorsFrom.push(anchorFrom);
 		});
 	}

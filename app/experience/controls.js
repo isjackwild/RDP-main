@@ -57,15 +57,15 @@ export const moveToPosition = (position, callback) => {
 	);
 }
 
-export const moveAlongJumpPath = (path, callback) => {
-	const dist = path.getLength();
-	const dur = dist / 300;
+export const moveAlongJumpPath = (cameraPath, callback) => {
+	const dist = cameraPath.path.getLength();
+	const dur = dist / 200;
 
 	const control = { t: 0 };
 	const dir = new THREE.Vector3();
 
 	const setCamera = () => {
-		const pos = path.getPoint(control.t);
+		const pos = cameraPath.path.getPoint(control.t);
 		dir.copy(pos).sub(camera.position).normalize().multiplyScalar(0.01);
 		camera.position.copy(pos);
 		if (controls.target) controls.target.copy(pos.add(dir));

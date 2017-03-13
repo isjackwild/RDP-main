@@ -12,7 +12,7 @@ export default class StatusIndicator extends Component {
 		this.state = {
 			focusControl: 0,
 			audioControl: 1,
-			screenDiameter: window.innerWidth * 2 + window.innerHeight * 2,
+			screenDiameter: (window.innerWidth - 20) * 2 + (window.innerHeight - 20) * 2,
 			targetsActivated: true,
 		}
 
@@ -59,7 +59,7 @@ export default class StatusIndicator extends Component {
 	}
 
 	onResize() {
-		this.setState({ screenDiameter: window.innerWidth * 2 + window.innerHeight * 2 });
+		this.setState({ screenDiameter: (window.innerWidth - 20) * 2 + (window.innerHeight - 20) * 2 });
 	}
 
 	onFocus() {

@@ -6,11 +6,11 @@ export const TARGET_RADIUS = 17;
 
 export const JUMP_POINT_RADIUS = 5;
 export const ANCHOR_SPREAD = 1333;
-export const ANCHOR_START_SPREAD = 100;
+export const ANCHOR_START_SPREAD = 70;
 export const ANCHOR_ANGLE_SPREAD = 1.5; //radians
 export const OPACITY = 0.2;
 export const FOCUS_OPACITY = 0.5;
-export const CAMERA_MOVE_SPEED = 0.5;
+export const CAMERA_MOVE_SPEED = 1;
 
 export const SCENE_MAX_RADIUS = 7000;
 export const TARGET_SPREAD = Math.PI * 0.23;

@@ -3,36 +3,6 @@ import { Noise } from 'noisejs';
 import Easing from '../EASINGS.js';
 import { ribbonRefs } from '../scene.js';
 
-const VERTEX_SHADER = `
-  varying vec2 vUv;
-  varying float colMix;
-
-  void main() {
-  	colMix = 0.0;
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const NOISE_FRAGMENT_SHADER = `
-	uniform vec3 colorTo;
-	uniform vec3 colorFrom;
-	uniform float opacity;
-	uniform float grainStrength;
-
-	varying vec2 vUv;
-	varying float colMix;
-
-	void main() {
-		float strength = grainStrength;
-		vec3 color = mix(colorTo, colorFrom, colMix);
-
-    	float x = (vUv.x + 4.0) * (vUv.y + 4.0) * 10.0;
-		vec4 grain = vec4(mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * strength;
-
-		gl_FragColor = vec4(colorTo + grain.xyz, opacity);
-	}`;
-
 const createCurvedLine = (start, end) => {
 	const dir = new THREE.Vector3().copy(end).sub(start);
 	const dist = dir.length();
@@ -52,9 +22,7 @@ const createCurvedLine = (start, end) => {
 
 
 function assignUVs(geometry) {
-
     geometry.faceVertexUvs[0] = [];
-
     geometry.faces.forEach(function(face) {
 
         var components = ['x', 'y', 'z'].sort(function(a, b) {
@@ -91,7 +59,7 @@ class CameraPath extends THREE.Mesh {
 	setup() {
 		this.path = createCurvedLine(this.from.position, this.to.position);
 
-		const segs = Math.ceil(this.path.getLength() / 5);
+		const segs = Math.ceil(this.path.getLength() / 10);
 		const points = this.path.getPoints(segs);
 
 		this.geometry = new THREE.Geometry({
@@ -109,7 +77,6 @@ class CameraPath extends THREE.Mesh {
 
 		const angleTo = this.from.position.angleTo(this.to.position);
 		const directionalNormal = new THREE.Vector3().copy(this.to.position).sub(this.from.position).normalize().applyAxisAngle(up, Math.PI / 2);
-		// const directionalNormal = new THREE.Vector3(1, 0, 0);
 
 		const colourMixAttrs = [];
 
@@ -126,14 +93,9 @@ class CameraPath extends THREE.Mesh {
 
 			const control = (Math.cos(((i * step) - Math.PI)) / 2) + 0.5;
 			const thisWidth = maxWidth * Easing.Sinusoidal.EaseInOut(control);
-			// const thisWidth = 1.15;
-			
-			// directionalNormal.multiplyScalar(this.width / 2);
 
 			tmp2.copy(directionalNormal);
 			tmp2.multiplyScalar(thisWidth / 2);
-			// tmp2.set(thisWidth / 2, 0, 0);
-			// tmp2.applyAxisAngle(up, angleTo);
 			const v1 = new THREE.Vector3().copy(tmp).add(tmp2);
 			const v2 = new THREE.Vector3().copy(tmp).sub(tmp2);
 			this.geometry.vertices.push(v1, v2);
@@ -157,70 +119,10 @@ class CameraPath extends THREE.Mesh {
 		this.geometry.uvsNeedUpdate = true;
 		this.geometry.normalsNeedUpdate = true;
 
-		// this.material = new THREE.MeshBasicMaterial({
-		// 	color: 0xff0000,
-		// 	opacity: 1,
-		// 	// transparent: true,
-		// 	// wireframe: true,
-		// 	side: THREE.DoubleSide,
-		// });
-		// 
-		
-		// this.geometry.computeBoundingBox();
-		// const max = this.geometry.boundingBox.max;
-		// const min = this.geometry.boundingBox.min;
-		// const offset = new THREE.Vector2(0 - min.x, 0 - min.y);
-		// const range = new THREE.Vector2(max.x - min.x, max.y - min.y);
-		// const faces = this.geometry.faces;
-
-		// faces.forEach((face, i) => {
-		// 	const v1 = face.a;
-		// 	const v2 = face.b;
-		// 	const v3 = face.c;
-
-		// 	this.geometry.faceVertexUvs[0].push([
-		// 		new THREE.Vector2((v1.x + offset.x)/range.x, (v1.y + offset.y)/range.y),
-		// 		new THREE.Vector2((v2.x + offset.x)/range.x, (v2.y + offset.y)/range.y),
-		// 		new THREE.Vector2((v3.x + offset.x)/range.x, (v3.y + offset.y)/range.y)
-		// 	]);
-		// });
-
-		
-
-		// this.material = new THREE.ShaderMaterial({
-		// 	uniforms: {
-		// 		colorFrom: {
-		// 			type: "c",
-		// 			value: new THREE.Color(this.from.colors.jump)
-		// 		},
-		// 		colorTo: {
-		// 			type: "c",
-		// 			value: new THREE.Color(this.to.colors.jump)
-		// 		},
-		// 		opacity: {
-		// 			type: "f",
-		// 			value: 1
-		// 		},
-		// 		grainStrength: {
-		// 			type: "f",
-		// 			value: 3.5,
-		// 		}
-		// 	},
-		// 	vertexShader: VERTEX_SHADER,
-		// 	fragmentShader: NOISE_FRAGMENT_SHADER,
-		// 	side: THREE.DoubleSide,
-		// 	transparent: true,
-		// });
-		// this.material = new THREE.MeshStandardMaterial({
-		// 	color: new THREE.Color(this.to.colors.jump), 
-		// 	side: THREE.DoubleSide,
-		// 	shading: THREE.SmoothShading,
-		// 	roughness: 0.3,
-		// 	metalness: 0.0,
-		// });
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.to.colors.jump,
 			side: THREE.DoubleSide,
+			// visible: false,
 		});
 	}
 
