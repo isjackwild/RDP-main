@@ -2,6 +2,10 @@
 	box-sizing: border-box;
 }
 
+body, html {
+	overflow: hidden;
+}
+
 .interface { 
 	position: absolute;
 	top: 0;

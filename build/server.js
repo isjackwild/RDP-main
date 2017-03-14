@@ -28,8 +28,8 @@ io.sockets.on('connection', (client) => {
 
 	console.log('new client connected');
 
-	client.on('play-audio', (aId) => {
-		client.broadcast.emit('play-audio', aId);
+	client.on('play-audio', (data) => {
+		client.broadcast.emit('play-audio', data);
 	});
 
 	client.on('audio-ended', (aId) => {
@@ -38,6 +38,11 @@ io.sockets.on('connection', (client) => {
 
 	client.on('audio-time', (control) => {
 		client.broadcast.emit('audio-time', control);
+	});
+
+	client.on('trigger-focus', (data) => {
+		console.log('focus');
+		client.broadcast.emit('trigger-focus', data);
 	});
 });
 

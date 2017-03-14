@@ -25,6 +25,7 @@ const kickIt = () => {
 	console.log('render interface');
 	render(<Interface />, document.getElementById('react-root'));
 
+	window.addEventListener('touchmove', e => e.preventDefault());
 	// initGUI();
 }
 

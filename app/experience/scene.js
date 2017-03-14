@@ -47,7 +47,7 @@ export const init = () => {
 }
 
 const addDots = (sceneBox) => {
-	const SPACING = 2000;
+	const SPACING = 1500;
 
 	sceneBox.min.multiplyScalar(1.1);
 	sceneBox.max.multiplyScalar(1.1);
@@ -121,6 +121,7 @@ const addAnchors = () => {
 			if (iA === 0) {
 				const target = new Target({ position: new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD), anchorTo: anchor, isActive: true });
 				scene.add(target)
+				startTargets.push(target);
 			}
 		});
 	});
@@ -157,5 +158,10 @@ export const update = (delta) => {
 		scene.fog.color = skybox.material.color;
 	}
 
+	for (let key in anchorRefs) {
+		anchorRefs[key].update(delta);
+	}
+
+	startTargets.forEach(t => t.update(delta));
 }
 

@@ -122,7 +122,6 @@ class CameraPath extends THREE.Mesh {
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.to.colors.jump,
 			side: THREE.DoubleSide,
-			// visible: false,
 		});
 	}
 

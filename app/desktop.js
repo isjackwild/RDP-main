@@ -11,9 +11,8 @@ let audioTimeInterval = null;
 const kickIt = () => {
 	window.socket = io();
 
-	window.socket.on('play-audio', (data) => {
-		onPlayAudio(data);
-	});
+	window.socket.on('play-audio', onPlayAudio);
+	window.socket.on('trigger-focus', onTriggerFocus);
 }
 
 const onResize = () => {
@@ -42,13 +41,22 @@ const onPlayAudio = (data) => {
 	}
 
 	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: rgb.r, g: rgb.g, b: rgb.b, onUpdate: updateColor, ease: Power2.easeOut });
-	// setTimeout(onEndAudio, 4000);
 }
 
 const onEndAudio = () => {
 	clearInterval(audioTimeInterval);
 	window.socket.emit('audio-ended');
 	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: 255, g: 255, b: 255, onUpdate: updateColor, ease: Power2.easeIn });
+}
+
+const onTriggerFocus = (data) => {
+	console.log('on trigger focus');
+	const rgb = hexToRgb(data.color);
+
+	const tl = new TimelineLite();
+	tl
+		.to(currentColor, 0.15, { r: rgb.r, g: rgb.g, b: rgb.b, onUpdate: updateColor, ease: Power2.easeOut })
+		.to(currentColor, 1.66, { r: 255, g: 255, b: 255, onUpdate: updateColor, ease: Sine.easeOut })
 }
 
 const updateColor = () => {

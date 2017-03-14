@@ -73,7 +73,7 @@ export default class HelpText extends Component {
 	render() {
 		return (
 			<span className={`help-text ${this.state.isVisible ? 'help-text--visible' : ''}`}>
-				Hold focus on a sphere to explore a narrative
+				Hold focus on a trigger to explore a narrative
 			</span>
 		);
 	}

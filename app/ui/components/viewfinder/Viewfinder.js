@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
 
-const EASE_FOCUS = Back.easeOut.config(1.9);
+const EASE_FOCUS = Back.easeOut.config(2);
 const EASE_BLUR = Back.easeOut.config(2.3);
-const DUR = 0.35;
+const DUR_OUT = 0.55;
+const DUR_IN = 0.55;
 
 export default class Viewfinder extends Component {
 	constructor(args) {
@@ -53,19 +54,19 @@ export default class Viewfinder extends Component {
 	onFocus(e, data) {
 		this.setState({ isFocused: true });
 		this.tweens.forEach(t => t.kill());
-		this.tweens.push(TweenLite.to(this.refs.tl, DUR, { x: 20, y: 8, ease: EASE_FOCUS }));
-		this.tweens.push(TweenLite.to(this.refs.tr, DUR, { x: -20, y: 8, ease: EASE_FOCUS }));
-		this.tweens.push(TweenLite.to(this.refs.bl, DUR, { x: 20, y: -8, ease: EASE_FOCUS }));
-		this.tweens.push(TweenLite.to(this.refs.br, DUR, { x: -20, y: -8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR_IN, { x: 20, y: 8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR_IN, { x: -20, y: 8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR_IN, { x: 20, y: -8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR_IN, { x: -20, y: -8, ease: EASE_FOCUS }));
 	}
 
 	onBlur() {
 		this.setState({ isFocused: false });
 		this.tweens.forEach(t => t.kill());
-		this.tweens.push(TweenLite.to(this.refs.tl, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
-		this.tweens.push(TweenLite.to(this.refs.tr, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
-		this.tweens.push(TweenLite.to(this.refs.bl, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
-		this.tweens.push(TweenLite.to(this.refs.br, DUR, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
 	}
 
 	onTargetsActivated() {

@@ -98,12 +98,16 @@ export default class StatusIndicator extends Component {
 						strokeDasharray={this.state.screenDiameter}
 						strokeDashoffset={this.state.screenDiameter - (this.state.screenDiameter * focusControl)}
 						className="status-indicator__inner status-indicator__inner--focus"
+						rx="5"
+						ry="5"
 					/>
 					<rect
 						ref="audio"
 						strokeDasharray={this.state.screenDiameter}
 						strokeDashoffset={this.state.screenDiameter - (this.state.screenDiameter * this.state.audioControl)}
 						className="status-indicator__inner status-indicator__inner--audio"
+						rx="5"
+						ry="5"
 					/>
 				</svg>
 			</div>

@@ -21,7 +21,7 @@ class Anchor extends THREE.Mesh {
 
 		this._aId = id;
 
-		this.isTargetsActive = false;
+		this.isInside = false;
 		this.colors = colors;
 		this.anchorsToIds = jumpPoints;
 		this.anchorsTo = [];
@@ -62,6 +62,7 @@ class Anchor extends THREE.Mesh {
 	}
 
 	onEnter() {
+		this.isInside = true;
 		window.socket.on('audio-ended', this.onAudioEnded);
 		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.lighting });
 		this.material.transparent = true;
@@ -69,6 +70,7 @@ class Anchor extends THREE.Mesh {
 	}
 
 	onLeave() {
+		this.isInside = false;
 		this.deactivateTargets();
 		TweenLite.to(this.material, 0.5, { opacity: 1, onComplete: () => this.material.transparent = false });
 	}
@@ -89,6 +91,11 @@ class Anchor extends THREE.Mesh {
 		console.log('DEactivate targets');
 		this.children.forEach(c => c.deactivate());
 	}
+	
+	update(delta) {
+		if (!this.isInside) return;
+		this.children.forEach(c => c.update(delta));
+	} 
 }
 
 export default Anchor
