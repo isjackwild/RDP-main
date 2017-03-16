@@ -15,9 +15,10 @@ const unlockAudio = () => {
 	window.removeEventListener('touchstart', unlockAudio);
 	const buffer = context.createBuffer(1, 1, 22050);
 	const source = context.createBufferSource();
+	console.log(source);
 	source.buffer = buffer;
 	source.connect(context.destination);
-	source.noteOn(0);
+	source.start();
 
 	setTimeout(() => {
 		if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
@@ -48,6 +49,7 @@ export const createPanner = (buffer, { x, y, z }) => {
 	panner.coneInnerAngle = INNER_ANGLE;
 	panner.rollofFactor = ROLLOFF;
 	panner.refDistance = REF_DIST;
+	panner.maxDistance = 10000;
 	panner.distanceModel = DIST_MODEL;
 	panner.setPosition(x, y, z);
 
@@ -60,6 +62,7 @@ export const createPanner = (buffer, { x, y, z }) => {
 	source.buffer = buffer;
 	source.loop = true;
 	source.connect(panner);
+	console.log(panner);
 
 	return { source, panner, gainNode };
 }

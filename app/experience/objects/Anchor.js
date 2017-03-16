@@ -43,7 +43,7 @@ class Anchor extends THREE.Mesh {
 		this.onErrorDecodeSound = this.onErrorDecodeSound.bind(this);
 
 		this.sound = null;
-		this.loadSound()
+		if (Math.random() > 5) this.loadSound();
 	}
 	
 	setup() {

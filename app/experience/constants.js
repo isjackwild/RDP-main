@@ -32,10 +32,10 @@ export const LIGHTING_DARK = '#686868';
 export const INNER_ANGLE = 0;
 export const OUTER_ANGLE = 360;
 export const OUTER_GAIN = 0;
-export const ROLLOFF = 0;
-export const REF_DIST = 0;
+export const ROLLOFF = 0.7;
+export const REF_DIST = 100;
 export const DIST_MODEL = 'exponential';
-export const GAIN = 1;
+export const GAIN = 10;
 
 /*
 SOUND:

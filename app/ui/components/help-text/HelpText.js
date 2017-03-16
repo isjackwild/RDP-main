@@ -75,7 +75,7 @@ export default class HelpText extends Component {
 		return (
 			<span className={`help-text ${this.state.isVisible ? 'help-text--visible' : ''}`}>
 				<span className={`help-text__span ${this.state.isVisible ? 'help-text__span--visible' : ''}`}>Focus on a trigger to explore</span>
-				<span className={`help-text__span ${this.state.isVisible ? 'help-text__span--visible' : ''}`}>Put down device to reset</span>
+				<span className={`help-text__span ${this.state.isVisible ? 'help-text__span--visible' : ''}`}>Put down the device to reset</span>
 			</span>
 		);
 	}
