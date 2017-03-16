@@ -2,17 +2,23 @@ import _ from 'lodash';
 import io from 'socket.io-client';
 import TweenLite from 'gsap';
 import { lerpRGBColour, hexToRgb } from './lib/colour.js';
+import { LIGHTING_LIGHT, LIGHTING_DARK } from './experience/constants.js';
 window.app = window.app || {};
 
-const currentColor = { r: 255, g: 255, b: 255 };
+const light = hexToRgb(LIGHTING_LIGHT);
+const dark = hexToRgb(LIGHTING_DARK);
+const skyColor = hexToRgb(LIGHTING_DARK);
+const currentColor = hexToRgb(LIGHTING_DARK);
 const COLOUR_FADE_DURATION = 1.5;
-let audioTimeInterval = null;
+let audioTimeRAF = null;
+let audioPlaying = false;
 
 const kickIt = () => {
 	window.socket = io();
-
 	window.socket.on('play-audio', onPlayAudio);
 	window.socket.on('trigger-focus', onTriggerFocus);
+	window.socket.on('update-sky-color', onUpdateSkyColor);
+	updateColor();
 }
 
 const onResize = () => {
@@ -25,38 +31,52 @@ const addEventListeners = () => {
 }
 
 const onPlayAudio = (data) => {
-	console.log('play audio!!!', data.aId);
-	clearInterval(audioTimeInterval);
+	audioPlaying = true;
+	cancelAnimationFrame(audioTimeRAF);
 	const rgb = hexToRgb(data.color);
 	const audio = new Audio(`assets/audio/${data.aId}.mp3`);
 	audio.onended = onEndAudio;
 	
 	audio.onloadeddata = () => {
 		audio.play();
-		// console.log(audio.duration, audio.currentTime);
-		audioTimeInterval = setInterval(() => {
-			console.log(audio.currentTime / audio.duration);
+
+		const sendAudioTime = () => {
 			window.socket.emit('audio-time', audio.currentTime / audio.duration);
-		}, 16.666);
+			audioTimeRAF = requestAnimationFrame(sendAudioTime);
+		}
 	}
 
 	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: rgb.r, g: rgb.g, b: rgb.b, onUpdate: updateColor, ease: Power2.easeOut });
 }
 
 const onEndAudio = () => {
-	clearInterval(audioTimeInterval);
+	audioPlaying = false;
+	cancelAnimationFrame(audioTimeRAF);
 	window.socket.emit('audio-ended');
-	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: 255, g: 255, b: 255, onUpdate: updateColor, ease: Power2.easeIn });
+	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: skyColor.r, g: skyColor.r, b: skyColor.r, onUpdate: updateColor, ease: Power2.easeIn });
 }
 
 const onTriggerFocus = (data) => {
-	console.log('on trigger focus');
 	const rgb = hexToRgb(data.color);
 
 	const tl = new TimelineLite();
 	tl
 		.to(currentColor, 0.15, { r: rgb.r, g: rgb.g, b: rgb.b, onUpdate: updateColor, ease: Power2.easeOut })
-		.to(currentColor, 1.66, { r: 255, g: 255, b: 255, onUpdate: updateColor, ease: Sine.easeOut })
+		.to(currentColor, 1.8, { r: skyColor.r, g: skyColor.r, b: skyColor.r, onUpdate: updateColor, ease: Sine.easeOut })
+}
+
+const onUpdateSkyColor = (data) => {
+	const { r, g, b } = lerpRGBColour(data.control, dark, light);
+	skyColor.r = r;
+	skyColor.g = g;
+	skyColor.b = b;
+	
+	if (audioPlaying) return;
+	currentColor.r = r;
+	currentColor.g = g;
+	currentColor.b = b;
+	console.log(data.control, r);
+	updateColor();
 }
 
 const updateColor = () => {

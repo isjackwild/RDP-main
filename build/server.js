@@ -41,8 +41,11 @@ io.sockets.on('connection', (client) => {
 	});
 
 	client.on('trigger-focus', (data) => {
-		console.log('focus');
 		client.broadcast.emit('trigger-focus', data);
+	});
+
+	client.on('update-sky-color', (data) => {
+		client.broadcast.emit('update-sky-color', data);
 	});
 });
 

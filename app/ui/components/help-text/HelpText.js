@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
+import { SHOW_HELP_DURATION } from '../../../experience/constants.js';
 
 
 export default class HelpText extends Component {
@@ -54,7 +55,7 @@ export default class HelpText extends Component {
 		clearTimeout(this.showTO);
 		this.showTO = setTimeout(() => {
 			this.setState({ isVisible: true });
-		}, 3333);
+		}, SHOW_HELP_DURATION);
 	}
 
 	onTargetsActivated() {
@@ -62,7 +63,7 @@ export default class HelpText extends Component {
 		clearTimeout(this.showTO);
 		this.showTO = setTimeout(() => {
 			this.setState({ isVisible: true });
-		}, 3333);
+		}, SHOW_HELP_DURATION);
 	}
 
 	onTargetsDeactivated() {
@@ -73,7 +74,8 @@ export default class HelpText extends Component {
 	render() {
 		return (
 			<span className={`help-text ${this.state.isVisible ? 'help-text--visible' : ''}`}>
-				Hold focus on a trigger to explore a narrative
+				<span className={`help-text__span ${this.state.isVisible ? 'help-text__span--visible' : ''}`}>Focus on a trigger to explore</span>
+				<span className={`help-text__span ${this.state.isVisible ? 'help-text__span--visible' : ''}`}>Put down device to reset</span>
 			</span>
 		);
 	}

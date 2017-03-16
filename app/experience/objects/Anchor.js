@@ -40,7 +40,7 @@ class Anchor extends THREE.Mesh {
 	}
 	
 	setup() {
-		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 12, 12);
+		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 20, 20);
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.colors.anchor,
 			side: THREE.BackSide,
@@ -65,6 +65,7 @@ class Anchor extends THREE.Mesh {
 		this.isInside = true;
 		window.socket.on('audio-ended', this.onAudioEnded);
 		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.lighting });
+		PubSub.publish('audio.start');
 		this.material.transparent = true;
 		TweenLite.to(this.material, 0.5, { opacity: 0.93 });
 	}
@@ -79,6 +80,7 @@ class Anchor extends THREE.Mesh {
 		window.socket.off('audio-ended', this.onAudioEnded);
 		console.log('audio ended', aId);
 		PubSub.publish('target.activate');
+		PubSub.publish('audio.end');
 		if (this.children.length) this.activateTargets();
 	}
 

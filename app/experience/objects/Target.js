@@ -38,7 +38,7 @@ class Target extends THREE.Mesh {
 	}
 	
 	init() {
-		this.geometry = new THREE.SphereGeometry(TARGET_RADIUS, 12, 12);
+		this.geometry = new THREE.SphereGeometry(TARGET_RADIUS, 20, 20);
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.anchorTo.colors.jump,
 			side: THREE.BackSide,

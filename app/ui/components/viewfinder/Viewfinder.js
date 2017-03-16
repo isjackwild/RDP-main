@@ -4,8 +4,8 @@ import TweenLite from 'gsap';
 
 const EASE_FOCUS = Back.easeOut.config(2);
 const EASE_BLUR = Back.easeOut.config(2.3);
-const DUR_OUT = 0.55;
-const DUR_IN = 0.55;
+const DUR_OUT = 0.7;
+const DUR_IN = 0.7;
 
 export default class Viewfinder extends Component {
 	constructor(args) {
@@ -15,6 +15,7 @@ export default class Viewfinder extends Component {
 			isFocused: false,
 			targetsActivated: true,
 			isVisible: false,
+			isPlayingAudio: false,
 		}
 
 		this.subs = [];
@@ -25,6 +26,8 @@ export default class Viewfinder extends Component {
 		this.onTargetsActivated = this.onTargetsActivated.bind(this);
 		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
 		this.onIntroFinished = this.onIntroFinished.bind(this);
+		this.onAudioStart = this.onAudioStart.bind(this);
+		this.onAudioEnd = this.onAudioEnd.bind(this);
 		this.onReset = this.onReset.bind(this);
 
 	}
@@ -42,6 +45,8 @@ export default class Viewfinder extends Component {
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
+		this.subs.push(PubSub.subscribe('audio.start', this.onAudioStart));
+		this.subs.push(PubSub.subscribe('audio.end', this.onAudioEnd));
 		this.setState({ isVisible: true });
 	}
 
@@ -77,13 +82,24 @@ export default class Viewfinder extends Component {
 		this.setState({ isVisible: false });
 	}
 
+	onAudioStart() {
+		this.setState({ isPlayingAudio: true });
+	}
+
+	onAudioEnd() {
+		this.setState({ isPlayingAudio: false });
+	}
+
 	render() {
 		return (
-			<div className={`viewfinder ${this.state.isFocused ? 'viewfinder--focused' : ''} ${this.state.isVisible ? 'viewfinder--visible' : ''}`}>
-				<div className="viewfinder__part viewfinder__part--tl" ref="tl"></div>
-				<div className="viewfinder__part viewfinder__part--tr" ref="tr"></div>
-				<div className="viewfinder__part viewfinder__part--bl" ref="bl"></div>
-				<div className="viewfinder__part viewfinder__part--br" ref="br"></div>
+			<div>
+				<div className={`viewfinder ${this.state.isFocused ? 'viewfinder--focused' : ''} ${this.state.isVisible ? 'viewfinder--visible' : ''}`}>
+					<div className="viewfinder__part viewfinder__part--tl" ref="tl"></div>
+					<div className="viewfinder__part viewfinder__part--tr" ref="tr"></div>
+					<div className="viewfinder__part viewfinder__part--bl" ref="bl"></div>
+					<div className="viewfinder__part viewfinder__part--br" ref="br"></div>
+				</div>
+				<img className={`viewfinder__speaker ${this.state.isPlayingAudio ? 'viewfinder__speaker--visible' : ''}`} src="assets/images/speaker.svg" />
 			</div>
 		);
 	}
