@@ -9,6 +9,7 @@ import textLabel from './text-label.js';
 // import Artboard from './Artboard.js';
 // import { intersectableObjects } from '../input-handler.js';
 import Target from './target.js';
+import { decode, createPanner } from '../directional-audio.js';
 // import JumpPoint from './JumpPoint.js';
 import { ANCHOR_BASE_WIDTH, ANCHOR_WIDTH_PER_LINK, OPACITY, FOCUS_OPACITY, TARGET_SPREAD, TARGET_RADIUS, TARGET_TRIGGER_DURATION } from '../CONSTANTS.js';
 import TweenLite from 'gsap';
@@ -37,6 +38,12 @@ class Anchor extends THREE.Mesh {
 
 		this.onEnter = this.onEnter.bind(this);
 		this.onAudioEnded = this.onAudioEnded.bind(this);
+		this.onLoadSound = this.onLoadSound.bind(this);
+		this.onDecodeSound = this.onDecodeSound.bind(this);
+		this.onErrorDecodeSound = this.onErrorDecodeSound.bind(this);
+
+		this.sound = null;
+		this.loadSound()
 	}
 	
 	setup() {
@@ -59,6 +66,33 @@ class Anchor extends THREE.Mesh {
 			this.add(target);
 			position.applyAxisAngle(up, TARGET_SPREAD);
 		});
+	}
+
+	loadSound() {
+		const src = `assets/audio/${this._aId}.mp3`;
+		this.request = new XMLHttpRequest();
+		this.request.open('GET', src, true);
+		this.request.responseType = 'arraybuffer'
+		this.request.onload = this.onLoadSound;
+		this.request.send();
+	}
+
+	onLoadSound(e) {
+		if (e.target.readyState === 4 && e.target.status === 200) {
+			decode(e.target.response, this.onDecodeSound, this.onErrorDecodeSound);
+		} else if (e.target.readyState === 4) {
+			console.error('Error: Sound probably missing');
+		}
+	}
+
+	onDecodeSound(e) {
+		console.log('decoded sound');
+		this.sound = createPanner(e, this.position);
+		this.sound.source.start(0);
+	}
+
+	onErrorDecodeSound(e) {
+		console.error('Error decoding sound:', e);
 	}
 
 	onEnter() {

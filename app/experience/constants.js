@@ -27,6 +27,16 @@ export const SKYBOX_DARK = 0x303030;
 
 export const LIGHTING_LIGHT = '#ffffff';
 export const LIGHTING_DARK = '#686868';
+
+
+export const INNER_ANGLE = 0;
+export const OUTER_ANGLE = 360;
+export const OUTER_GAIN = 0;
+export const ROLLOFF = 0;
+export const REF_DIST = 0;
+export const DIST_MODEL = 'exponential';
+export const GAIN = 1;
+
 /*
 SOUND:
 
