@@ -30,19 +30,7 @@ export default class Intro extends Component {
 			}, )
 		}
 
-		TweenLite.to(this.refs.wrapper, 0.7, { scaleX: 1.1, scaleY: 1.1, opacity: 0, ease: Power4.easeIn, onComplete });
-
-		const clear = () => {
-
-			setTimeout(() => {
-				const statusIndicator = document.getElementsByClassName('status-indicator--wrapper')[0];
-				statusIndicator.style.transform = null;
-				statusIndicator.style.webkitTransform = null;
-				statusIndicator.style.opacity = null;
-			}, 333);
-		}
-		const statusIndicator = document.getElementsByClassName('status-indicator--wrapper')[0];
-		TweenLite.to(statusIndicator, 0.7, { scaleX: 1.1, scaleY: 1.1, opacity: 0, ease: Power4.easeIn, onComplete: clear });
+		TweenLite.to(this.refs.wrapper, 0.7, { scaleX: 1.1, scaleY: 1.1, opacity: 0, ease: Power4.easeIn, onComplete, force3D: true });
 	}
 
 	render() {

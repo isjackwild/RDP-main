@@ -44,6 +44,8 @@ const onPlayAudio = (data) => {
 			window.socket.emit('audio-time', audio.currentTime / audio.duration);
 			audioTimeRAF = requestAnimationFrame(sendAudioTime);
 		}
+
+		audioTimeRAF = requestAnimationFrame(sendAudioTime);
 	}
 
 	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: rgb.r, g: rgb.g, b: rgb.b, onUpdate: updateColor, ease: Power2.easeOut });

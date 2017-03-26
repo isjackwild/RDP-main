@@ -1,5 +1,7 @@
 const THREE = require('three');
 import { INNER_ANGLE, OUTER_ANGLE, OUTER_GAIN, ROLLOFF, REF_DIST, DIST_MODEL, GAIN } from './constants.js';
+import TweenLite from 'gsap';
+import PubSub from 'pubsub-js';
 
 let isUnlocked = false;
 
@@ -8,25 +10,35 @@ const context = new window.AudioContext();
 context.listener.setPosition(0, 0, 0);
 
 const globalGainNode = context.createGain();
-globalGainNode.gain.value = GAIN;
+globalGainNode.gain.value = 0;
 globalGainNode.connect(context.destination);
 
 const unlockAudio = () => {
 	window.removeEventListener('touchstart', unlockAudio);
 	const buffer = context.createBuffer(1, 1, 22050);
 	const source = context.createBufferSource();
-	console.log(source);
 	source.buffer = buffer;
 	source.connect(context.destination);
 	source.start();
+	PubSub.subscribe('audio.start', onAudioStart);
+	PubSub.subscribe('audio.end', onAudioEnd);
 
 	setTimeout(() => {
+		TweenLite.to(globalGainNode.gain, 2, { value: GAIN });
 		if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
 			isUnlocked = true;
 		}
 	}, 0);
 }
 window.addEventListener('touchstart', unlockAudio);
+
+const onAudioStart = () => {
+	TweenLite.to(globalGainNode.gain, 1.2, { value: 0 });
+}
+
+const onAudioEnd = () => {
+	TweenLite.to(globalGainNode.gain, 2, { value: GAIN });
+}
 
 export const decode = (response, onSuccess, onError) => {
 	context.decodeAudioData(response, onSuccess, onError);
@@ -62,7 +74,6 @@ export const createPanner = (buffer, { x, y, z }) => {
 	source.buffer = buffer;
 	source.loop = true;
 	source.connect(panner);
-	console.log(panner);
 
 	return { source, panner, gainNode };
 }

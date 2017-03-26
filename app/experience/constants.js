@@ -4,8 +4,8 @@ export const ANCHOR_RADIUS = 150;
 export const ANCHOR_BASE_WIDTH = 100;
 export const TARGET_RADIUS = 17;
 export const TARGET_WANDER = 15;
-export const TARGET_SPRING = 0.015;
-export const TARGET_DAMPING = 0.93;
+export const TARGET_SPRING = 0.012;
+export const TARGET_DAMPING = 0.9;
 
 export const JUMP_POINT_RADIUS = 5;
 export const ANCHOR_SPREAD = 1333;
@@ -32,11 +32,13 @@ export const LIGHTING_DARK = '#686868';
 export const INNER_ANGLE = 0;
 export const OUTER_ANGLE = 360;
 export const OUTER_GAIN = 0;
-export const ROLLOFF = 0.7;
+export const ROLLOFF = 0.4;
 export const REF_DIST = 100;
 export const DIST_MODEL = 'exponential';
-export const GAIN = 10;
+export const GAIN = 1.5;
 
+export const ANCHOR_NOISE_SPEED = 0.003;
+export const ANCHOR_NOISE_SCALE = 40;
 /*
 SOUND:
 
@@ -53,9 +55,6 @@ SOUND:
 
 UI:
 
-- have a sound playing icon on screen so people don't keep searching when an audio is playing
-- change background light of projector to match the background of the UI
-- make the contrast between light and dark more promenant
 - maybe nice to have some spheres with only ambient audio and / or images
 
  */

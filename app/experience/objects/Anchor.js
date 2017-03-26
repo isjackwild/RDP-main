@@ -11,8 +11,9 @@ import textLabel from './text-label.js';
 import Target from './target.js';
 import { decode, createPanner } from '../directional-audio.js';
 // import JumpPoint from './JumpPoint.js';
-import { ANCHOR_BASE_WIDTH, ANCHOR_WIDTH_PER_LINK, OPACITY, FOCUS_OPACITY, TARGET_SPREAD, TARGET_RADIUS, TARGET_TRIGGER_DURATION } from '../CONSTANTS.js';
+import { ANCHOR_BASE_WIDTH, ANCHOR_WIDTH_PER_LINK, OPACITY, FOCUS_OPACITY, TARGET_SPREAD, TARGET_RADIUS, TARGET_TRIGGER_DURATION, ANCHOR_NOISE_SPEED, ANCHOR_NOISE_SCALE } from '../CONSTANTS.js';
 import TweenLite from 'gsap';
+import { Noise } from 'noisejs';
 
 
 class Anchor extends THREE.Mesh {
@@ -31,6 +32,12 @@ class Anchor extends THREE.Mesh {
 		this.pathDirection = pathDirection;
 
 		this.position.copy(position);
+		this.originalPosition = new THREE.Vector3().copy(position);
+		this.noiseOffsetPosition = new THREE.Vector3();
+
+		this.noise = new Noise(Math.random());
+		this.noiseTime = 0;
+		this.noiseScalar = 1;
 
 		this.theme = theme;
 		this.threadTitle = threadTitle;
@@ -43,7 +50,7 @@ class Anchor extends THREE.Mesh {
 		this.onErrorDecodeSound = this.onErrorDecodeSound.bind(this);
 
 		this.sound = null;
-		if (Math.random() > 5) this.loadSound();
+		if (Math.random() > 0.66) this.loadSound();
 	}
 	
 	setup() {
@@ -86,7 +93,6 @@ class Anchor extends THREE.Mesh {
 	}
 
 	onDecodeSound(e) {
-		console.log('decoded sound');
 		this.sound = createPanner(e, this.position);
 		this.sound.source.start(0);
 	}
@@ -102,12 +108,14 @@ class Anchor extends THREE.Mesh {
 		PubSub.publish('audio.start');
 		this.material.transparent = true;
 		TweenLite.to(this.material, 0.5, { opacity: 0.93 });
+		TweenLite.to(this, 0.8, { noiseScalar: 0 });
 	}
 
 	onLeave() {
 		this.isInside = false;
 		this.deactivateTargets();
 		TweenLite.to(this.material, 0.5, { opacity: 1, onComplete: () => this.material.transparent = false });
+		TweenLite.to(this, 0.8, { noiseScalar: 1 });
 	}
 
 	onAudioEnded(aId) {
@@ -129,6 +137,14 @@ class Anchor extends THREE.Mesh {
 	}
 	
 	update(delta) {
+		this.noiseTime += (1 * delta);
+		this.noiseOffsetPosition.set(
+			this.noise.simplex2(this.noiseTime * ANCHOR_NOISE_SPEED, 0) * ANCHOR_NOISE_SCALE,
+			this.noise.simplex2(this.noiseTime * ANCHOR_NOISE_SPEED, 1000) * ANCHOR_NOISE_SCALE,
+			this.noise.simplex2(this.noiseTime * ANCHOR_NOISE_SPEED, 2000) * ANCHOR_NOISE_SCALE,
+		).multiplyScalar(this.noiseScalar);
+		this.position.copy(this.originalPosition).add(this.noiseOffsetPosition);
+		
 		if (!this.isInside) return;
 		this.children.forEach(c => c.update(delta));
 	} 

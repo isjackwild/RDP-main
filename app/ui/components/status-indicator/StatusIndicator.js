@@ -3,6 +3,7 @@ import _ from 'lodash';
 import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
 import { TARGET_TRIGGER_DURATION, TARGET_TRIGGER_OFF_DURATION } from '../../../experience/constants.js';
+import CubicBezier from '../../../vendor/CubicBezier.js';
 
 
 export default class StatusIndicator extends Component {
@@ -11,7 +12,7 @@ export default class StatusIndicator extends Component {
 
 		this.state = {
 			focusControl: 0,
-			audioControl: 1,
+			audioControl: 0,
 			screenDiameter: (window.innerWidth - 20) * 2 + (window.innerHeight - 20) * 2,
 			targetsActivated: true,
 		}
@@ -43,8 +44,8 @@ export default class StatusIndicator extends Component {
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
-		this.setState({ audioControl: 0 });
 		window.socket.on('audio-time', (control) => {
+			console.log(control, '<<< audio control')
 			this.setState({ audioControl: control });
 		});
 		window.socket.on('audio-ended', () => {
@@ -63,10 +64,11 @@ export default class StatusIndicator extends Component {
 	}
 
 	onFocus() {
+		console.log('focus');
 		if (this.focusTween) this.focusTween.kill();
 		const t = { control: this.state.focusControl }
 
-		this.focusTween = TweenLite.to(t, TARGET_TRIGGER_DURATION * 0.001, { control: 1, ease: Power1.easeOut, onUpdate: () => this.setState({ focusControl: t.control }) });
+		this.focusTween = TweenLite.to(t, TARGET_TRIGGER_DURATION * 0.001, { control: 1, ease: CubicBezier.config(0.13, 0, 0.3, 1), onUpdate: () => this.setState({ focusControl: t.control }) });
 	}
 
 	onBlur() {
@@ -87,6 +89,7 @@ export default class StatusIndicator extends Component {
 
 	render() {
 		const focusControl = this.state.targetsActivated === false ? 1 : this.state.focusControl;
+		console.log(focusControl, '<<< focus control');
 		return (
 			<div className="status-indicator--wrapper">
 				<svg

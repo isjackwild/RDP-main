@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
+import CubicBezier from '../../../vendor/CubicBezier.js';
 
-const EASE_FOCUS = Back.easeOut.config(2);
-const EASE_BLUR = Back.easeOut.config(2.3);
-const DUR_OUT = 0.7;
-const DUR_IN = 0.7;
+// const EASE_FOCUS = Back.easeOut.config(2);
+// const EASE_BLUR = Back.easeOut.config(2.3);
+const EASE_FOCUS = CubicBezier.config(0.38, 0.0, 0.1, 1.65);
+const EASE_BLUR = CubicBezier.config(0.38, 0.0, 0.1, 2);
+const DUR_OUT = 0.6;
+const DUR_IN = 0.5;
 
 export default class Viewfinder extends Component {
 	constructor(args) {
@@ -59,19 +62,19 @@ export default class Viewfinder extends Component {
 	onFocus(e, data) {
 		this.setState({ isFocused: true });
 		this.tweens.forEach(t => t.kill());
-		this.tweens.push(TweenLite.to(this.refs.tl, DUR_IN, { x: 20, y: 8, ease: EASE_FOCUS }));
-		this.tweens.push(TweenLite.to(this.refs.tr, DUR_IN, { x: -20, y: 8, ease: EASE_FOCUS }));
-		this.tweens.push(TweenLite.to(this.refs.bl, DUR_IN, { x: 20, y: -8, ease: EASE_FOCUS }));
-		this.tweens.push(TweenLite.to(this.refs.br, DUR_IN, { x: -20, y: -8, ease: EASE_FOCUS }));
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR_IN, { x: 20, y: 8, ease: EASE_FOCUS, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR_IN, { x: -20, y: 8, ease: EASE_FOCUS, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR_IN, { x: 20, y: -8, ease: EASE_FOCUS, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR_IN, { x: -20, y: -8, ease: EASE_FOCUS, force3D: true }));
 	}
 
 	onBlur() {
 		this.setState({ isFocused: false });
 		this.tweens.forEach(t => t.kill());
-		this.tweens.push(TweenLite.to(this.refs.tl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
-		this.tweens.push(TweenLite.to(this.refs.tr, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
-		this.tweens.push(TweenLite.to(this.refs.bl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
-		this.tweens.push(TweenLite.to(this.refs.br, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR }));
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
 	}
 
 	onTargetsActivated() {

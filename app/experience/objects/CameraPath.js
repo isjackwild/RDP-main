@@ -120,7 +120,8 @@ class CameraPath extends THREE.Mesh {
 		this.geometry.normalsNeedUpdate = true;
 
 		this.material = new THREE.MeshLambertMaterial({
-			color: this.to.colors.jump,
+			// color: this.to.colors.jump,
+			color: 0xffffff,
 			side: THREE.DoubleSide,
 		});
 	}

@@ -50,8 +50,8 @@ export default class InfoText extends Component {
 		const { theme, thread, subtitle } = data
 		TweenLite.set(this.refs.wrapper, { y: 18, opacity: 0 });
 		this.setState({ theme, thread, subtitle });
-		TweenLite.to(this.refs.wrapper, 0.66, { opacity: 1, ease: Sine.easeOut });
-		TweenLite.to(this.refs.wrapper, 1.85, { y: 0, ease: Power4.easeOut });
+		TweenLite.to(this.refs.wrapper, 0.66, { opacity: 1, ease: Sine.easeOut, force3D: true });
+		TweenLite.to(this.refs.wrapper, 1.85, { y: 0, ease: Power4.easeOut, force3D: true });
 	}
 
 	onBlur() {
