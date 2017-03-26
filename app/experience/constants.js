@@ -22,6 +22,8 @@ export const TARGET_TRIGGER_OFF_DURATION = 1000;
 
 export const SHOW_HELP_DURATION = 1800;
 
+export const RESET_DURATION = 5555;
+
 export const SKYBOX_LIGHT = 0xef7f7f7;
 export const SKYBOX_DARK = 0x303030;
 
@@ -37,7 +39,7 @@ export const REF_DIST = 100;
 export const DIST_MODEL = 'exponential';
 export const GAIN = 1.5;
 
-export const ANCHOR_NOISE_SPEED = 0.003;
+export const ANCHOR_NOISE_SPEED = 0.005;
 export const ANCHOR_NOISE_SCALE = 40;
 /*
 SOUND:

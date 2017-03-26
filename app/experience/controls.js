@@ -3,26 +3,61 @@ import TweenLite from 'gsap';
 require('../vendor/OrbitControls.js');
 require('../vendor/DeviceOrientationControls.js');
 import { camera } from './camera.js';
-import { CAMERA_MOVE_SPEED, ACTIVE_OPACITY, INACTIVE_OPACITY } from './constants.js';
+import { CAMERA_MOVE_SPEED, ACTIVE_OPACITY, INACTIVE_OPACITY, RESET_DURATION } from './constants.js';
 
 export let controls;
 let currentLevel = 0;
 let currentAnchor = null;
+// let lastAlpha = 0;
+// let lastBeta = 0;
+// let lastGamma = 0;
+let resetTO = undefined;
+// let isLandscape = window.innerWidth > window.innerHeight ? true : false;
+const el = document.getElementsByClassName('fuck-you-dev-tools')[0];
 
 export const init = () => {
 	controls = new THREE.OrbitControls(camera);
 	controls.target.set(0, 0, 0);
 	window.addEventListener('deviceorientation', setOrientationControls, true);
+	// window.addEventListener('orientationchange', onOrientationChange, true);
 }
 
 const setOrientationControls = (e) => {
 	window.removeEventListener('deviceorientation', setOrientationControls, true);
+	window.addEventListener('deviceorientation', onOrientation, true);
 	if (!e.alpha) return;
 	if (controls) controls.dispose();
 	controls = new THREE.DeviceOrientationControls(camera, true);
 	controls.connect();
 	controls.update();
 }
+
+const onOrientation = (e) => {
+	const { alpha, beta, gamma } = e;
+
+	// const changeAlpha = Math.abs(alpha - lastAlpha);
+	// const changeBeta = Math.abs(beta - lastBeta);
+	// const changeGamma = Math.abs(gamma - lastGamma);
+
+	// const totalChange = changeAlpha + changeBeta + changeGamma;
+	// // if (totalChange < 10) console.log('not moving');
+	// el.innerHTML = `${alpha}, ${beta}, ${gamma}`;
+
+	if (resetTO === undefined && Math.abs(beta <= 8) &&  Math.abs(gamma) <= 8) {
+		resetTO = setTimeout(() => {
+			alert('reset!');
+			resetTO = undefined;
+		}, 5555);
+	} else if (Math.abs(beta > 8) ||  Math.abs(gamma) > 8) {
+		clearTimeout(resetTO);
+		resetTO = undefined;
+	}
+
+	// lastAlpha = alpha;
+	// lastBeta = beta;
+	// lastGamma = gamma;
+}
+
 
 export const moveToPosition = (position, callback) => {
 	const dist = new THREE.Vector3().copy(position).sub(camera.position).length();

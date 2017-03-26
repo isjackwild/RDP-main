@@ -4,9 +4,9 @@ import TweenLite from 'gsap';
 import CubicBezier from '../../../vendor/CubicBezier.js';
 
 // const EASE_FOCUS = Back.easeOut.config(2);
-// const EASE_BLUR = Back.easeOut.config(2.3);
+const EASE_BLUR = Back.easeOut.config(2.3);
 const EASE_FOCUS = CubicBezier.config(0.38, 0.0, 0.1, 1.65);
-const EASE_BLUR = CubicBezier.config(0.38, 0.0, 0.1, 2);
+// const EASE_BLUR = CubicBezier.config(0.38, 0.0, 0.1, 2);
 const DUR_OUT = 0.6;
 const DUR_IN = 0.5;
 
