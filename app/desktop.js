@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import io from 'socket.io-client';
+import PubSub from 'pubsub-js';
 import TweenLite from 'gsap';
 import { lerpRGBColour, hexToRgb } from './lib/colour.js';
 import { LIGHTING_LIGHT, LIGHTING_DARK } from './experience/constants.js';
@@ -12,12 +13,14 @@ const currentColor = hexToRgb(LIGHTING_DARK);
 const COLOUR_FADE_DURATION = 1.5;
 let audioTimeRAF = null;
 let audioPlaying = false;
+let audio = undefined;
 
 const kickIt = () => {
 	window.socket = io();
 	window.socket.on('play-audio', onPlayAudio);
 	window.socket.on('trigger-focus', onTriggerFocus);
 	window.socket.on('update-sky-color', onUpdateSkyColor);
+	window.socket.on('reset', onResetApp);
 	updateColor();
 }
 
@@ -34,7 +37,7 @@ const onPlayAudio = (data) => {
 	audioPlaying = true;
 	cancelAnimationFrame(audioTimeRAF);
 	const rgb = hexToRgb(data.color);
-	const audio = new Audio(`assets/audio/${data.aId}.mp3`);
+	audio = new Audio(`assets/audio/${data.aId}.mp3`);
 	audio.onended = onEndAudio;
 	
 	audio.onloadeddata = () => {
@@ -79,6 +82,13 @@ const onUpdateSkyColor = (data) => {
 	currentColor.b = b;
 	console.log(data.control, r);
 	updateColor();
+}
+
+const onResetApp = () => {
+	cancelAnimationFrame(audioTimeRAF);
+	if (audio) audio.pause();
+	audioPlaying = false;
+	TweenLite.to(currentColor, COLOUR_FADE_DURATION, { r: skyColor.r, g: skyColor.r, b: skyColor.r, onUpdate: updateColor, ease: Power2.easeIn });
 }
 
 const updateColor = () => {

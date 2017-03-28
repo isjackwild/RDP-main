@@ -4,6 +4,7 @@ require('../vendor/OrbitControls.js');
 require('../vendor/DeviceOrientationControls.js');
 import { camera } from './camera.js';
 import { CAMERA_MOVE_SPEED, ACTIVE_OPACITY, INACTIVE_OPACITY, RESET_DURATION } from './constants.js';
+import PubSub from 'pubsub-js';
 
 export let controls;
 let currentLevel = 0;
@@ -12,13 +13,15 @@ let currentAnchor = null;
 // let lastBeta = 0;
 // let lastGamma = 0;
 let resetTO = undefined;
+let introFinished = false;
 // let isLandscape = window.innerWidth > window.innerHeight ? true : false;
-const el = document.getElementsByClassName('fuck-you-dev-tools')[0];
+// const el = document.getElementsByClassName('fuck-you-dev-tools')[0];
 
 export const init = () => {
 	controls = new THREE.OrbitControls(camera);
 	controls.target.set(0, 0, 0);
 	window.addEventListener('deviceorientation', setOrientationControls, true);
+	PubSub.subscribe('intro.finish', () => introFinished = true);
 	// window.addEventListener('orientationchange', onOrientationChange, true);
 }
 
@@ -33,6 +36,7 @@ const setOrientationControls = (e) => {
 }
 
 const onOrientation = (e) => {
+	if (!introFinished) return;
 	const { alpha, beta, gamma } = e;
 
 	// const changeAlpha = Math.abs(alpha - lastAlpha);
@@ -44,18 +48,36 @@ const onOrientation = (e) => {
 	// el.innerHTML = `${alpha}, ${beta}, ${gamma}`;
 
 	if (resetTO === undefined && Math.abs(beta <= 8) &&  Math.abs(gamma) <= 8) {
+		PubSub.publish('reset.start');
 		resetTO = setTimeout(() => {
-			alert('reset!');
+			resetApp();
 			resetTO = undefined;
 		}, 5555);
 	} else if (Math.abs(beta > 8) ||  Math.abs(gamma) > 8) {
 		clearTimeout(resetTO);
+		PubSub.publish('reset.cancel');
 		resetTO = undefined;
 	}
 
 	// lastAlpha = alpha;
 	// lastBeta = beta;
 	// lastGamma = gamma;
+}
+
+const resetApp = () => {
+	introFinished = false;
+	PubSub.publish('reset.complete');
+
+	TweenLite.to(
+		camera.position,
+		CAMERA_MOVE_SPEED,
+		{
+			x: 0,
+			y: 0,
+			z: 0,
+			ease: Sine.EaseInOut,
+		}
+	);
 }
 
 

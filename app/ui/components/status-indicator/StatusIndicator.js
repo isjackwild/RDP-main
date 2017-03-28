@@ -44,6 +44,7 @@ export default class StatusIndicator extends Component {
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
+		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
 		window.socket.on('audio-time', (control) => {
 			console.log(control, '<<< audio control')
 			this.setState({ audioControl: control });
@@ -54,9 +55,11 @@ export default class StatusIndicator extends Component {
 	}
 
 	onReset() {
+		window.socket.off('audio-time');
+		window.socket.off('audio-ended');
 		this.subs.forEach(s => PubSub.unsubscribe(s));
 		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
-		this.setState({ audioControl: 1 });
+		requestAnimationFrame(() => this.setState({ audioControl: 0 }));
 	}
 
 	onResize() {

@@ -17,6 +17,7 @@ let isActive = false;
 export const init = () => {
 	addEventListeners();
 	PubSub.subscribe('intro.finish', () => isActive = true);
+	PubSub.subscribe('reset.complete', () => isActive = false);
 }
 
 const addEventListeners = () => {

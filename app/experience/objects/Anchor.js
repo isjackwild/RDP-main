@@ -16,6 +16,9 @@ import TweenLite from 'gsap';
 import { Noise } from 'noisejs';
 
 
+// TODO: crack / mud / concrete texture on the spheres, but sharpened and contrast up and multiplied to look hyper-real. See photo from superstudio lecture
+
+
 class Anchor extends THREE.Mesh {
 	constructor(args) {
 		super(args);
@@ -48,12 +51,15 @@ class Anchor extends THREE.Mesh {
 		this.onLoadSound = this.onLoadSound.bind(this);
 		this.onDecodeSound = this.onDecodeSound.bind(this);
 		this.onErrorDecodeSound = this.onErrorDecodeSound.bind(this);
+		this.onResetApp = this.onResetApp.bind(this);
 
 		this.sound = null;
 		if (Math.random() > 0.66) this.loadSound();
 	}
 	
 	setup() {
+		PubSub.subscribe('reset.complete', this.onResetApp);
+
 		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 20, 20);
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.colors.anchor,
@@ -118,9 +124,8 @@ class Anchor extends THREE.Mesh {
 		TweenLite.to(this, 0.8, { noiseScalar: 1 });
 	}
 
-	onAudioEnded(aId) {
+	onAudioEnded() {
 		window.socket.off('audio-ended', this.onAudioEnded);
-		console.log('audio ended', aId);
 		PubSub.publish('target.activate');
 		PubSub.publish('audio.end');
 		if (this.children.length) this.activateTargets();
@@ -134,6 +139,15 @@ class Anchor extends THREE.Mesh {
 	deactivateTargets() {
 		console.log('DEactivate targets');
 		this.children.forEach(c => c.deactivate());
+	}
+
+	onResetApp() {
+		if (!this.isInside) return;
+
+		window.socket.off('audio-ended', this.onAudioEnded);
+		PubSub.publish('target.activate');
+		PubSub.publish('audio.end');
+		this.onLeave();
 	}
 	
 	update(delta) {

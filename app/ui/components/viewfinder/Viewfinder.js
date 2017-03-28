@@ -31,12 +31,13 @@ export default class Viewfinder extends Component {
 		this.onIntroFinished = this.onIntroFinished.bind(this);
 		this.onAudioStart = this.onAudioStart.bind(this);
 		this.onAudioEnd = this.onAudioEnd.bind(this);
-		this.onReset = this.onReset.bind(this);
+		this.onResetApp = this.onResetApp.bind(this);
 
 	}
 
 	componentDidMount() {
 		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
 	}
 
 	componentWillUnmount() {
@@ -53,10 +54,13 @@ export default class Viewfinder extends Component {
 		this.setState({ isVisible: true });
 	}
 
-	onReset() {
+	onResetApp() {
 		this.subs.forEach(s => PubSub.unsubscribe(s));
 		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
-		this.setState({ isVisible: false, targetsActivated: false, isFocused: false });
+		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
+		this.setState({ isVisible: false, targetsActivated: false });
+		this.onBlur();
+		this.onAudioEnd();
 	}
 
 	onFocus(e, data) {

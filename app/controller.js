@@ -1,4 +1,5 @@
 import MobileDetect from 'mobile-detect';
+import PubSub from 'pubsub-js';
 import { init as initLoop, renderer, onResize as onResizeRenderer } from './experience/loop.js';
 // import { init as initGUI } from './experience/GUI.js';
 import { onResize as onResizeCamera } from './experience/camera.js';
@@ -17,6 +18,7 @@ const kickIt = () => {
 	window.mobile = md.mobile() ? true : false;
 	window.socket = io();
 
+	PubSub.subscribe('reset.complete', () => window.socket.emit('reset'));
 
 	addEventListeners();
 	onResize();

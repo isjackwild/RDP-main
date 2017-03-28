@@ -13,9 +13,11 @@ export default class Intro extends Component {
 
 		this.subs = [];
 		this.onStart = this.onStart.bind(this);
+		this.onResetApp = this.onResetApp.bind(this);
 	}
 
 	componentDidMount() {
+		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
 	}
 
 	componentWillUnmount() {
@@ -33,13 +35,19 @@ export default class Intro extends Component {
 		TweenLite.to(this.refs.wrapper, 0.7, { scaleX: 1.1, scaleY: 1.1, opacity: 0, ease: Power4.easeIn, onComplete, force3D: true });
 	}
 
+	onResetApp() {
+		this.setState({ isVisible: true });
+		TweenLite.set(this.refs.wrapper, { scaleX: 1, scaleY: 1 });
+		TweenLite.to(this.refs.wrapper, 0.7, { opacity: 1, ease: Power4.easeOut });
+	}
+
 	render() {
 		return (
 			<div className={`intro ${this.state.isVisible ? 'intro--visible' : ''}`} ref="wrapper">
 				<div className="intro__inner">
 					<div className="intro__section">
 						<span className="intro__span intro__span--title">
-							Earthquake
+							Unstable Ground
 						</span>
 						<span className="intro__span intro__span--app">
 							Explore the interconnected stories of the 2009 L'Aquila earthquake

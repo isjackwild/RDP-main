@@ -19,12 +19,13 @@ export default class HelpText extends Component {
 		this.onTargetsActivated = this.onTargetsActivated.bind(this);
 		this.onTargetsDeactivated = this.onTargetsDeactivated.bind(this);
 		this.onIntroFinished = this.onIntroFinished.bind(this);
-		this.onReset = this.onReset.bind(this);
+		this.onResetApp = this.onResetApp.bind(this);
 		this.showTO = null;
 	}
 
 	componentDidMount() {
 		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
 	}
 
 	componentWillUnmount() {
@@ -39,10 +40,11 @@ export default class HelpText extends Component {
 		this.setState({ isVisible: true });
 	}
 
-	onReset() {
+	onResetApp() {
 		this.setState({ isVisible: false });
-		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
 		this.subs.forEach(s => PubSub.unsubscribe(s));
+		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
+		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
 	}
 
 	onFocus(e, data) {

@@ -47,6 +47,10 @@ io.sockets.on('connection', (client) => {
 	client.on('update-sky-color', (data) => {
 		client.broadcast.emit('update-sky-color', data);
 	});
+
+	client.on('reset', (data) => {
+		client.broadcast.emit('reset', data);
+	});
 });
 
 

@@ -1,5 +1,6 @@
 const THREE = require('three');
 import dat from '../vendor/dat.gui.min.js';
+import PubSub from 'pubsub-js';
 import _ from 'lodash';
 import { camera } from './camera.js';
 import { intersectableObjects } from './input-handler.js';
@@ -22,7 +23,11 @@ const randomAngle = () => {
 	return (Math.random() * Math.PI / 2 - Math.PI / 4);
 }
 
+
+
 export const init = () => {
+	PubSub.subscribe('reset.complete', onResetApp);
+
 	scene = new THREE.Scene();
 	scene.fog = new THREE.FogExp2(0x55524a, 0.0003);
 	scene.add(camera);
@@ -163,5 +168,9 @@ export const update = (delta) => {
 	}
 
 	startTargets.forEach(t => t.update(delta));
+}
+
+const onResetApp = () => {
+	startTargets.forEach(t => t.activate());
 }
 
