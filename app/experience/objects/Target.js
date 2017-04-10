@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { camera } from '../camera.js';
 import { moveToPosition, moveAlongJumpPath } from '../controls.js';
 import { intersectableObjects } from '../input-handler.js';
+import { textureLoader } from '../loader.js';
 import { TARGET_SPREAD, TARGET_RADIUS, TARGET_TRIGGER_DURATION, TARGET_WANDER, TARGET_SPRING, TARGET_DAMPING } from '../CONSTANTS.js';
 import TweenLite from 'gsap';
 
@@ -42,6 +43,8 @@ class Target extends THREE.Mesh {
 		this.material = new THREE.MeshLambertMaterial({
 			color: this.anchorTo.colors.jump,
 			side: THREE.BackSide,
+			// alphaMap: textureLoader.load('assets/maps/alpha-matte-test--4--s.jpg'),
+			// transparent: true,
 		});
 		this.material.side = THREE.DoubleSide;
 		if (!this.isActive) {
@@ -50,6 +53,8 @@ class Target extends THREE.Mesh {
 			this.scale.z = 0.001;
 			this.material.visible = false;
 		}
+		this.rotation.y += Math.random() * Math.PI * 2;
+		this.rotation.x += Math.random() * Math.PI * 2;
 		this.onClick = this.onTrigger;
 
 		intersectableObjects.push(this);
@@ -130,6 +135,8 @@ class Target extends THREE.Mesh {
 
 		this.positionVelocity.add(new THREE.Vector3().copy(this.targetPosition).sub(this.position).multiplyScalar(TARGET_SPRING).multiplyScalar(delta));
 		this.position.add(this.positionVelocity.multiplyScalar(TARGET_DAMPING));
+
+		// this.rotation.y += delta * 0.0015;
 	}
 }
 
