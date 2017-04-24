@@ -71,7 +71,9 @@ class Target extends THREE.Mesh {
 
 		window.socket.emit('trigger-focus', { color: this.anchorTo.colors.jump });
 
-		PubSub.publish('target.focus', data);
+		requestAnimationFrame(() => {
+			PubSub.publish('target.focus', data);
+		});
 		clearTimeout(this.triggerTimeout);
 		this.triggerTimeout = setTimeout(() => {
 			this.onTrigger(data.id);

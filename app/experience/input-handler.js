@@ -22,7 +22,7 @@ export const init = () => {
 
 const addEventListeners = () => {
 	if (window.mobile) {
-		window.addEventListener('deviceorientation', _.throttle(onDeviceOrientation, 16.666));
+		window.addEventListener('deviceorientation', _.throttle(onDeviceOrientation, 33.333));
 		// window.addEventListener('touchstart', onClick);
 	} else {
 		window.addEventListener('mousemove', _.throttle(onMouseMove, 16.666));

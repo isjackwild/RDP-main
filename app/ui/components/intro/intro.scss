@@ -12,6 +12,10 @@
 	align-items: center;
 	padding: 23px 22px 25px 27px;
 	transform-origin: 50% 50%;
+
+	@media (min-width: 768px) {
+		padding: 36px 27px 35px 34px;
+	}
 }
 
 .intro--visible {
@@ -50,38 +54,71 @@
 
 .intro__span--title {
 	font-family: 'Lato', sans-serif;
-	font-weight: 800;
-	font-size: 25px;
-	letter-spacing: 0.012em;
+	font-family: 'Work Sans';
+	font-weight: 700;
+	font-size: 27px;
+	letter-spacing: -0.01em;
 	line-height: 1em;
 	margin-bottom: 5px;
+	// background: linear-gradient(to right, #ffffff 0%,#F28E37 100%);
+	// -webkit-background-clip: text;
+	// -webkit-text-fill-color: transparent;
+	// 
+	@media (min-width: 768px) {
+		font-size: 34px;
+	}
 }
 
 .intro__span--event {
-	font-size: 17px;
-	font-weight: 400;
+	font-size: 19px;
+	// font-weight: 400;
 	margin-right: 6px;
-	font-family: 'Merriweather', serif;
-	line-height: 1.45em;
-	padding-right: 18%;
+	// font-family: 'Merriweather', serif;
+	font-family: 'BluuNext';
+	font-weight: 700;
+	// line-height: 1.45em;
+	// letter-spacing: 0.06em;
+	padding-right: 12%;
+	// background: linear-gradient(to right, #ffffff 0%,#F28E37 100%);
+	// -webkit-background-clip: text;
+	// -webkit-text-fill-color: transparent;
+	// 
+	
+	@media (min-width: 768px) {
+		font-size: 32px;
+		// max-width: 90%;
+		letter-spacing: 0.015em;
+	}
 }
 
 .intro__span--app {
 	font-size: 38px;
-	font-weight: 300;
+	font-weight: 200;
 	font-family: 'Lato', sans-serif;
+	font-family: 'Work Sans';
 	margin-bottom: 30px;
 	letter-spacing: -0.01em;
 	line-height: 1.05em;
 	padding-right: 10%;
+	// background: linear-gradient(to right, #ffffff 0%,#F28E37 100%);
+	// -webkit-background-clip: text;
+	// -webkit-text-fill-color: transparent;
+	// 
+	@media (min-width: 768px) {
+		font-size: 72px;
+		// letter-spacing: 0.012;
+		margin-bottom: 56px;
+		letter-spacing: -0.025em;
+	}
 }
 
 .intro__span--start {
 	// border: 1px solid rgba(255, 255, 255, 1);
 	display: inline-block;
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
 	font-family: 'Lato', sans-serif;
+	font-family: 'Work Sans';
 	line-height: 1em;
 	letter-spacing: 0.12em;
 	padding: 9px 14px 7px 17px;
@@ -96,6 +133,13 @@
 	border-radius: 2px;
 	box-shadow: 0 1px 5px rgba(#000000, 0.2), 0 2px 10px rgba(#000000, 0.2);
 	-webkit-tap-highlight-color: transparent;
+
+	@media (min-width: 768px) {
+		font-size: 17px;
+		font-weight: 600;
+		letter-spacing: 0.17em;
+		padding: 11px 19px 9px 22px;
+	}
 }
 
 .intro__span--start--touched {

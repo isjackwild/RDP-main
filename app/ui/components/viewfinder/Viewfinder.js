@@ -66,19 +66,19 @@ export default class Viewfinder extends Component {
 	onFocus(e, data) {
 		this.setState({ isFocused: true });
 		this.tweens.forEach(t => t.kill());
-		this.tweens.push(TweenLite.to(this.refs.tl, DUR_IN, { x: 20, y: 8, ease: EASE_FOCUS, force3D: true }));
-		this.tweens.push(TweenLite.to(this.refs.tr, DUR_IN, { x: -20, y: 8, ease: EASE_FOCUS, force3D: true }));
-		this.tweens.push(TweenLite.to(this.refs.bl, DUR_IN, { x: 20, y: -8, ease: EASE_FOCUS, force3D: true }));
-		this.tweens.push(TweenLite.to(this.refs.br, DUR_IN, { x: -20, y: -8, ease: EASE_FOCUS, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR_IN, { x: 20, y: 8, ease: EASE_FOCUS, force3D: false }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR_IN, { x: -20, y: 8, ease: EASE_FOCUS, force3D: false }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR_IN, { x: 20, y: -8, ease: EASE_FOCUS, force3D: false }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR_IN, { x: -20, y: -8, ease: EASE_FOCUS, force3D: false }));
 	}
 
 	onBlur() {
 		this.setState({ isFocused: false });
 		this.tweens.forEach(t => t.kill());
-		this.tweens.push(TweenLite.to(this.refs.tl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
-		this.tweens.push(TweenLite.to(this.refs.tr, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
-		this.tweens.push(TweenLite.to(this.refs.bl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
-		this.tweens.push(TweenLite.to(this.refs.br, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: true }));
+		this.tweens.push(TweenLite.to(this.refs.tl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: false }));
+		this.tweens.push(TweenLite.to(this.refs.tr, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: false }));
+		this.tweens.push(TweenLite.to(this.refs.bl, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: false }));
+		this.tweens.push(TweenLite.to(this.refs.br, DUR_OUT, { x: 0, y: 0, ease: EASE_BLUR, force3D: false }));
 	}
 
 	onTargetsActivated() {

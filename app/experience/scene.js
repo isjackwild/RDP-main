@@ -47,6 +47,8 @@ export const init = () => {
 		skybox = new Skybox({ radius: sceneRadius });
 		scene.add(skybox);
 
+		console.log(sceneRadius, 'scene radius');
+
 		addDots(sceneBox);
 	});
 }

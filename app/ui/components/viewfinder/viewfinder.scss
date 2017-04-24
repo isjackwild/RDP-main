@@ -10,6 +10,10 @@ $focus-transform-y: 8px;
 	transform: translate(-50%, -50%);
 	transition: opacity 0.33s ease-in-out;
 	opacity: 0;
+
+	@media (min-width: 768px) {
+		margin-top: -15px;
+	}
 }
 
 .viewfinder--visible {

@@ -4,6 +4,8 @@ require('../vendor/OrbitControls.js');
 require('../vendor/DeviceOrientationControls.js');
 import { camera } from './camera.js';
 import { CAMERA_MOVE_SPEED, ACTIVE_OPACITY, INACTIVE_OPACITY, RESET_DURATION } from './constants.js';
+import Easing from '../lib/easing-functions.js';
+import { convertToRange } from '../lib/maths.js';
 import PubSub from 'pubsub-js';
 
 export let controls;
@@ -116,7 +118,12 @@ export const moveToPosition = (position, callback) => {
 
 export const moveAlongJumpPath = (cameraPath, callback) => {
 	const dist = cameraPath.path.getLength();
-	const dur = dist / 300;
+	// const dur = dist / 300;
+	// console.log(dist);
+
+	const k = convertToRange(dist, [0, 10000], [0.4, 1])
+	const dur = Easing.Quadratic.EaseOut(k) * 6;
+
 
 	const control = { t: 0 };
 	const dir = new THREE.Vector3();

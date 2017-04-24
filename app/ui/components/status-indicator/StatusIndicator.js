@@ -44,9 +44,8 @@ export default class StatusIndicator extends Component {
 		this.subs.push(PubSub.subscribe('target.blur', this.onBlur));
 		this.subs.push(PubSub.subscribe('target.activate', this.onTargetsActivated));
 		this.subs.push(PubSub.subscribe('target.deactivate', this.onTargetsDeactivated));
-		this.subs.push(PubSub.subscribe('reset.complete', this.onResetApp));
+		this.subs.push(PubSub.subscribe('reset.complete', this.onReset));
 		window.socket.on('audio-time', (control) => {
-			console.log(control, '<<< audio control')
 			this.setState({ audioControl: control });
 		});
 		window.socket.on('audio-ended', () => {
@@ -59,7 +58,7 @@ export default class StatusIndicator extends Component {
 		window.socket.off('audio-ended');
 		this.subs.forEach(s => PubSub.unsubscribe(s));
 		this.subs.push(PubSub.subscribe('intro.finish', this.onIntroFinished));
-		requestAnimationFrame(() => this.setState({ audioControl: 0 }));
+		requestAnimationFrame(() => this.setState({ audioControl: 0, focusControl: 0, targetsActivated: true }));
 	}
 
 	onResize() {
@@ -99,6 +98,12 @@ export default class StatusIndicator extends Component {
 					xmlns="http://www.w3.org/2000/svg"
 					className="status-indicator"
 				>
+					<defs>
+						<linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%"   stopColor="#fff"/>
+							<stop offset="100%" stopColor="#CCE1FF"/>
+						</linearGradient>
+					</defs>
 					<rect
 						ref="focus"
 						strokeDasharray={this.state.screenDiameter}

@@ -18,36 +18,61 @@
 
 .info-text__text--thread {
 	margin-bottom: 4px;
-	font-size: 20px;
+	font-size: 22px;
 	line-height: 1em;
+
+	font-family: 'BluuNext';
+	font-weight: 700;
+
+	@media (min-width: 768px) {
+		font-size: 26px;
+	}
 }
 
 .info-text__thread--title {
-	font-weight: 700;
+	// font-weight: 700;
 	margin-right: 6px;
 	font-size: 1em;
 	line-height: 1em;
-	font-family: 'Merriweather', serif;
-	letter-spacing: 0.012em;
+	// font-family: 'Merriweather', serif;
+
+	
+
+	
+
+	// letter-spacing: 0.012em;
 }
 
 .info-text__thread--subtitle {
-	font-weight: 400;
+	// font-weight: 400;
 	font-size: 0.76em;
 	line-height: 1em;
-	font-family: 'Merriweather', serif;
+	// font-family: 'Merriweather', serif;
+
+	// font-family: 'Bagnard';
+	// font-weight: 700;
+
 	opacity: 0.9;
 	// text-transform: uppercase;
 	letter-spacing: -0.01em;
+
+	@media (min-width: 768px) {
+		font-size: 0.7em;
+		opacity: 0.85;
+	}
 }
 
 .info-text__text--theme {
 	font-size: 30px;
-	font-weight: 300;
+	font-weight: 200;
 	font-family: 'Work Sans', sans-serif;
-	font-family: 'Open Sans', sans-serif;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-family: 'Lato', sans-serif;
+	// font-family: 'Open Sans', sans-serif;
+	// font-family: 'Source Sans Pro', sans-serif;
+	// font-family: 'Lato', sans-serif;
 	line-height: 0.9em;
 	// letter-spacing: -0.001em;
+	// 
+	@media (min-width: 768px) {
+		font-size: 38px;
+	}
 }
