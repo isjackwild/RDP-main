@@ -3,244 +3,270 @@
 export const threads = [
 	{	
 		title: "Jaynie and Leaonado",
-		subtitle: "Local business owners",
+		subtitle: "Restaurant owners",
+		volume: 0.8,
 		colors: {
 			// anchor: '#9094a0',
 			anchor: '#6c61ad',
 			jump: '#5545b2', //blue
-			lighting: '#5545b2', //blue
+			lighting: '#7860ff', //blue
 			renderer: '#243869',
 			line: '#ffffff',
 		},
 		anchors: [
 			{	
 				id:'J1',
-				theme: 'More than moving walls',
+				theme: 'Before the disaster struck',
 				depth: 0,
-				jumpPoints: []
+				jumpPoints: ['J2', 'T28'],
 			},
 			{	
 				id:'J2',
-				theme: 'Everything is moving',
-				depth: 0.05,
-				jumpPoints: []
+				theme: 'Impact of the disaster',
+				depth: 0.1,
+				jumpPoints: ['J3', 'J4', 'T13', 'T18', 'A8'],
 			},
 			{	
 				id:'J3',
-				theme: 'Restoring the architecture',
+				theme: 'Rebuilding a home',
 				depth: 0.12,
-				jumpPoints: []
+				jumpPoints: ['J4', 'J9', 'T13', 'S13'],
 			},
 			{	
 				id:'J4',
-				theme: 'Respecting cultural heritage',
-				depth: 0.18,
-				jumpPoints: []
+				theme: 'Dust, tremor and voice',
+				depth: 0.05,
+				jumpPoints: ['J13', 'A2', 'S7'],
 			},
-			{	
-				id:'J5',
-				theme: 'Preserving monuments',
-				depth: 0.2,
-				jumpPoints: []
-			},
-			{	
-				id:'J6',
-				theme: 'Staying in the wonderful landscape',
-				depth: 0.23,
-				jumpPoints: []
-			},
-			{	
-				id:'J7',
-				theme: 'Cannot forget',
-				depth: 0.25,
-				jumpPoints: []
-			},
-			{	
-				id:'J8',
-				theme: 'Private and public buildings',
-				depth: 0.4,
-				jumpPoints: []
-			},
+			// {	
+			// 	id:'J5',
+			// 	theme: 'The support of friends',
+			// 	depth: 0.5,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'J6',
+			// 	theme: 'Potential in the positive',
+			// 	depth: 0.51,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'J7',
+			// 	theme: 'Potential of the surroundings',
+			// 	depth: 0.53,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'J8',
+			// 	theme: 'Back to nature',
+			// 	depth: 0.56,
+			// 	jumpPoints: [],
+			// },
 			{	
 				id:'J9',
-				theme: 'Seperating work and memories',
-				depth: 0.5,
-				jumpPoints: []
+				theme: 'Pride in the personal',
+				depth: 0.58,
+				jumpPoints: ['J10', 'T28', 'T10', 'S14'],
 			},
 			{	
 				id:'J10',
-				theme: 'We have to go on',
-				depth: 0.6,
-				jumpPoints: []
+				theme: 'The real needs',
+				depth: 0.06,
+				jumpPoints: ['J13', 'A25', 'A16'],
 			},
-			{	
-				id:'J11',
-				theme: 'Moving on from the past',
-				depth: 0.65,
-				jumpPoints: []
-			},
+			// {	
+			// 	id:'J11',
+			// 	theme: 'Lost home',
+			// 	depth: 0.07,
+			// 	jumpPoints: [],
+			// },
 			{	
 				id:'J12',
-				theme: 'Learning something useful',
-				depth: 0.69,
-				jumpPoints: []
+				theme: 'The reality of money in reconstruction',
+				depth: 0.08,
+				jumpPoints: ['J13', 'T27'],
 			},
 			{	
 				id:'J13',
-				theme: 'A duty of reconstruction',
-				depth: 0.72,
-				jumpPoints: []
+				theme: 'Rising from the rubble',
+				depth: 0.09,
+				jumpPoints: ['J14', 'J15', 'A35'],
 			},
 			{	
 				id:'J14',
-				theme: 'Building a new community',
-				depth: 0.8,
-				jumpPoints: []
+				theme: 'Volunteers’ impact',
+				depth: 0.14,
+				jumpPoints: ['J15', 'A16'],
 			},
 			{	
 				id:'J15',
-				theme: 'Generational differences',
-				depth: 0.86,
-				jumpPoints: []
+				theme: 'Following disaster',
+				depth: 0.7,
+				jumpPoints: ['J16', 'S14'],
 			},
 			{	
 				id:'J16',
-				theme: 'Social value of culture',
-				depth: 0.95,
-				jumpPoints: ['S17']
+				theme: 'Losses in support',
+				depth: 0.71,
+				jumpPoints: ['J17', 'A8'],
 			},
 			{	
 				id:'J17',
-				theme: 'Importance of environment',
-				depth: 1,
-				jumpPoints: []
-			}
-		]
-	},
-	{
-		title: "Cecilia",
-		subtitle: "Mayor of Fonteca",
-		colors: {
-			// anchor: '#c4a7a1', //orange
-			anchor: '#e27d66',
-			lighting: '#f97240',
-			jump: '#f97240',
-			renderer: '#243869',
-			line: '#ffffff',
-		},
-		anchors: [
+				theme: 'Volunteer support',
+				depth: 0.14,
+				jumpPoints: ['J18', 'J20', 'A16'],
+			},
 			{	
-				id:'C1',
-				theme: 'A community helping one-another',
-				depth: 0,
-				jumpPoints: ['C2', 'C5', 'C9']
+				id:'J18',
+				theme: 'Support from overseas',
+				depth: 0.15,
+				jumpPoints: ['J20', 'T27'],
 			},
-			{
-				id: 'C2',
-				theme: 'A project for the community',
-				depth: 0.2,
-				jumpPoints: ['C3', 'C14', 'S2']
-			},
-			{
-				id: 'C3',
-				theme: 'No public funding',
-				depth: 0.25,
-				jumpPoints: ['C4', 'C5', 'C7']
-			},
-			{
-				id: 'C4',
-				theme: 'Building temporary homes',
-				depth: 0.3,
-				jumpPoints: ['C5', 'C15']
-			},
-			{
-				id: 'C5',
-				theme: 'Volunteer workers',
-				depth: 0.35,
-				jumpPoints: ['C6', 'S7']
-			},
-			{
-				id: 'C6',
-				theme: 'A new community',
-				depth: 0.4,
-				jumpPoints: ['C7', 'C12']
-			},
-			{
-				id: 'C7',
-				theme: 'Challenges in building',
-				depth: 0.45,
-				jumpPoints: ['C8', 'S9']
-			},
-			{
-				id: 'C8', 
-				theme: 'Houses made of straw',
-				depth: 0.5,
-				jumpPoints: ['C9', 'C10']
-			},
-			{
-				id: 'C9',
-				theme: 'Moving to the earthquake zone',
-				depth: 0.55,
-				jumpPoints: ['C10', 'S12']
-			},
-			{
-				id: 'C10',
-				theme: 'Rebuilding homes',
-				depth: 0.6,
-				jumpPoints: ['C11', 'C14', 'C12']
-			},
-			{
-				id: 'C11',
-				theme: 'Rebuilding lives',
-				depth: 0.65,
-				jumpPoints: ['C12', 'S2', 'S16']
-			},
-			{
-				id: 'C12',
-				theme: 'Changes in occupancy',
-				depth: 0.7,
-				jumpPoints: ['C13', 'C17']
-			},
-			{
-				id: 'C13',
-				theme: 'Building more new houses',
-				depth: 0.75,
-				jumpPoints: ['C14', 'S17']
-			},
-			{
-				id: 'C14',
-				theme: 'Common property of the village',
+			{	
+				id:'J19',
+				theme: 'Opening up again',
 				depth: 0.8,
-				jumpPoints: ['C15', 'C17']
+				jumpPoints: ['J20', 'T25', 'A35'],
 			},
-			{
-				id: 'C15',
-				theme: 'From temporary to permanent',
-				depth: 0.9,
-				jumpPoints: ['C16']
+			{	
+				id:'J20',
+				theme: 'Connections through friends',
+				depth: 0.85,
+				jumpPoints: ['A20', 'A25', 'S1'],
 			},
-			{
-				id: 'C16',
-				theme: 'Removing temporary accommodation',
-				depth: 0.95,
-				jumpPoints: ['C17']
-			},
-			{
-				id: 'C17',
-				theme: 'Sharing property and profits',
-				depth: 1,
-				jumpPoints: ['S17']
-			},
-		]
+			// {	
+			// 	id:'J21',
+			// 	theme: 'The Government’s support',
+			// 	depth: 0.75,
+			// 	jumpPoints: [],
+			// }
+		]// J&L
 	},
-	{
+	// {
+	// 	title: "Cecilia",
+	// 	subtitle: "Mayor of Fonteca",
+	// 	colors: {
+	// 		// anchor: '#c4a7a1', //orange
+	// 		anchor: '#e27d66',
+	// 		lighting: '#f97240',
+	// 		jump: '#f97240',
+	// 		renderer: '#243869',
+	// 		line: '#ffffff',
+	// 	},
+	// 	anchors: [
+	// 		{	
+	// 			id:'C1',
+	// 			theme: 'A community helping one-another',
+	// 			depth: 0,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C2',
+	// 			theme: 'A project for the community',
+	// 			depth: 0.2,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C3',
+	// 			theme: 'No public funding',
+	// 			depth: 0.25,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C4',
+	// 			theme: 'Building temporary homes',
+	// 			depth: 0.3,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C5',
+	// 			theme: 'Volunteer workers',
+	// 			depth: 0.35,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C6',
+	// 			theme: 'A new community',
+	// 			depth: 0.4,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C7',
+	// 			theme: 'Challenges in building',
+	// 			depth: 0.45,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C8', 
+	// 			theme: 'Houses made of straw',
+	// 			depth: 0.5,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C9',
+	// 			theme: 'Moving to the earthquake zone',
+	// 			depth: 0.55,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C10',
+	// 			theme: 'Rebuilding homes',
+	// 			depth: 0.6,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C11',
+	// 			theme: 'Rebuilding lives',
+	// 			depth: 0.65,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C12',
+	// 			theme: 'Changes in occupancy',
+	// 			depth: 0.7,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C13',
+	// 			theme: 'Building more new houses',
+	// 			depth: 0.75,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C14',
+	// 			theme: 'Common property of the village',
+	// 			depth: 0.8,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C15',
+	// 			theme: 'From temporary to permanent',
+	// 			depth: 0.9,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C16',
+	// 			theme: 'Removing temporary accommodation',
+	// 			depth: 0.95,
+	// 			jumpPoints: [],
+	// 		},
+	// 		{
+	// 			id: 'C17',
+	// 			theme: 'Sharing property and profits',
+	// 			depth: 1,
+	// 			jumpPoints: [],
+	// 		},
+	// 	]
+	// },
+	{ //Sab
 		title: "Sabrina",
 		subtitle: "Architect",
+		volume: 1,
 		colors: {
 			// anchor: '#85968c',
 			anchor: '#99ddda',
-			lighting: '#76e2cd',
-			jump: '#76e2cd', //green
+			lighting: '#4bfcda',
+			jump: '#37ceb1', //green
 			renderer: '#243869',
 			line: '#ffffff',
 		},
@@ -249,241 +275,397 @@ export const threads = [
 				id:'S1',
 				theme: 'More than moving walls',
 				depth: 0,
-				jumpPoints: ['S2', 'C2']
+				jumpPoints: ['S3', 'J2', 'J4', 'A2'],
 			},
-			{	
-				id:'S2',
-				theme: 'Everything is moving',
-				depth: 0.05,
-				jumpPoints: ['S3', 'S15']
-			},
+			// {	
+			// 	id:'S2',
+			// 	theme: 'Everything is moving',
+			// 	depth: 0.05,
+			// 	jumpPoints: [],
+			// },
 			{	
 				id:'S3',
 				theme: 'Restoring the architecture',
 				depth: 0.12,
-				jumpPoints: ['S4', 'S5', 'C7']
+				jumpPoints: ['S5', 'T4'],
 			},
-			{	
-				id:'S4',
-				theme: 'Respecting cultural heritage',
-				depth: 0.18,
-				jumpPoints: ['S5', 'C9']
-			},
+			// {	
+			// 	id:'S4',
+			// 	theme: 'Respecting cultural heritage',
+			// 	depth: 0.18,
+			// 	jumpPoints: [],
+			// },
 			{	
 				id:'S5',
 				theme: 'Preserving monuments',
 				depth: 0.2,
-				jumpPoints: ['S6', 'S13']
+				jumpPoints: ['S6', 'T25', 'A30'],
 			},
 			{	
 				id:'S6',
 				theme: 'Staying in the wonderful landscape',
 				depth: 0.23,
-				jumpPoints: ['S7', 'S16']
+				jumpPoints: ['S7', 'T3'],
 			},
 			{	
 				id:'S7',
 				theme: 'Cannot forget',
 				depth: 0.25,
-				jumpPoints: ['S8']
+				jumpPoints: ['T9', 'J4'],
 			},
-			{	
-				id:'S8',
-				theme: 'Private and public buildings',
-				depth: 0.4,
-				jumpPoints: ['S9', 'S14', 'C8']
-			},
+			// {	
+			// 	id:'S8',
+			// 	theme: 'Private and public buildings',
+			// 	depth: 0.4,
+			// 	jumpPoints: [],
+			// },
 			{	
 				id:'S9',
-				theme: 'Seperating work and memories',
+				theme: 'Separating work and memories',
 				depth: 0.5,
-				jumpPoints: ['S10']
+				jumpPoints: ['S10', 'T2', 'A17'],
 			},
 			{	
 				id:'S10',
 				theme: 'We have to go on',
 				depth: 0.6,
-				jumpPoints: ['S11', 'C11']
+				jumpPoints: ['S11', 'T8', 'A17'],
 			},
 			{	
 				id:'S11',
 				theme: 'Moving on from the past',
 				depth: 0.65,
-				jumpPoints: ['S12', 'S15']
+				jumpPoints: ['S12', 'T8'],
 			},
 			{	
 				id:'S12',
 				theme: 'Learning something useful',
 				depth: 0.69,
-				jumpPoints: ['S13', 'C16']
+				jumpPoints: ['S13', 'T4'],
 			},
 			{	
 				id:'S13',
 				theme: 'A duty of reconstruction',
 				depth: 0.72,
-				jumpPoints: ['S14', 'S17']
+				jumpPoints: ['S16', 'T10'],
 			},
 			{	
 				id:'S14',
 				theme: 'Building a new community',
 				depth: 0.8,
-				jumpPoints: ['S15']
+				jumpPoints: ['T18', 'J3', 'T27', 'A20'],
 			},
-			{	
-				id:'S15',
-				theme: 'Generational differences',
-				depth: 0.86,
-				jumpPoints: ['S16', 'C11']
-			},
+			// {	
+			// 	id:'S15',
+			// 	theme: 'Generational differences',
+			// 	depth: 0.86,
+			// 	jumpPoints: [],
+			// },
 			{	
 				id:'S16',
 				theme: 'Social value of culture',
 				depth: 0.95,
-				jumpPoints: ['S17']
+				jumpPoints: ['J10', 'J13', 'A44'],
 			},
 			{	
 				id:'S17',
 				theme: 'Importance of environment',
 				depth: 1,
-				jumpPoints: ['C17']
+				jumpPoints: ['T26', 'A46', 'T28'],
 			}
 		]
 	},
 	{
-		title: "Marco and Valerio",
-		subtitle: "Military officer",
+		title: "Teresa",
+		subtitle: "Architect",
+		volume: 0.7,
 		colors: {
 			// anchor: '#a8959d',
 			anchor: '#d18398',
 			jump: '#ce333b', //rasberry
-			lighting: '#ce333b', //rasberry
+			lighting: '#ff444e', //rasberry
 			renderer: '#ffffff',
 			line: '#ffffff',
 		},
 		anchors: [
 			{	
-				id:'J1',
-				theme: 'More than moving walls',
+				id:'T1',
+				theme: 'Reasons for moving',
 				depth: 0,
-				jumpPoints: []
+				jumpPoints: ['T2', 'T3', 'S12'],
 			},
 			{	
-				id:'J2',
-				theme: 'Everything is moving',
-				depth: 0.05,
-				jumpPoints: []
+				id:'T2',
+				theme: 'Reconstruction studies',
+				depth: 0.01,
+				jumpPoints: ['T3', 'S13'],
 			},
 			{	
-				id:'J3',
-				theme: 'Restoring the architecture',
+				id:'T3',
+				theme: 'Reasons for staying',
+				depth: 0.02,
+				jumpPoints: ['T4', 'T8', 'S10'],
+			},
+			{	
+				id:'T4',
+				theme: 'A learning experience',
+				depth: 0.03,
+				jumpPoints: ['T13', 'A30'],
+			},
+			// {	
+			// 	id:'T5',
+			// 	theme: 'Difficulties living',
+			// 	depth: 0.04,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T6',
+			// 	theme: 'Impact of friendship',
+			// 	depth: 0.005,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T7',
+			// 	theme: 'Cultural differences',
+			// 	depth: 0.06,
+			// 	jumpPoints: [],
+			// },
+			{	
+				id:'T8',
+				theme: 'Opportunity in disaster',
+				depth: 0.07,
+				jumpPoints: ['T10', 'S14', 'A35', 'A45'],
+			},
+			{	
+				id:'T9',
+				theme: 'Beauty of a lost city',
+				depth: 0.08,
+				jumpPoints: ['S5', 'A30', 'A44', 'A46'],
+			},
+			{	
+				id:'T10',
+				theme: 'Opportunities from the earthquake',
+				depth: 0.09,
+				jumpPoints: ['T9', 'S13', 'T19', 'A45'],
+			},
+			// {	
+			// 	id:'T11',
+			// 	theme: 'social projects',
+			// 	depth: 0.1,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T12',
+			// 	theme: 'Making guidelines',
+			// 	depth: 0.11,
+			// 	jumpPoints: [],
+			// },
+			{	
+				id:'T13',
+				theme: 'Frustrations for the people',
 				depth: 0.12,
-				jumpPoints: []
+				jumpPoints: ['T27', 'J12', 'J10', 'A26', 'A52'],
+			},
+			// {	
+			// 	id:'T14',
+			// 	theme: 'Social rebuild',
+			// 	depth: 0.13,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T15',
+			// 	theme: 'Straw houses',
+			// 	depth: 0.14,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T16',
+			// 	theme: 'Development methods',
+			// 	depth: 0.3,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T17',
+			// 	theme: 'Sustainable project',
+			// 	depth: 0.31,
+			// 	jumpPoints: [],
+			// },
+			{	
+				id:'T18',
+				theme: 'Creating connections',
+				depth: 0.32,
+				jumpPoints: ['T19', 'J20', 'A25'],
 			},
 			{	
-				id:'J4',
-				theme: 'Respecting cultural heritage',
-				depth: 0.18,
-				jumpPoints: []
+				id:'T19',
+				theme: 'Tourism project',
+				depth: 0.33,
+				jumpPoints: ['J19', 'A45', 'S16'],
 			},
+			// {	
+			// 	id:'T20',
+			// 	theme: 'Off-site art intervention',
+			// 	depth: 0.35,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T21',
+			// 	theme: 'Downfall for the project',
+			// 	depth: 0.36,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T22',
+			// 	theme: 'Rehousing the locals',
+			// 	depth: 0.4,
+			// 	jumpPoints: [],
+			// },
+			// {	
+			// 	id:'T23',
+			// 	theme: 'Artist’s responses',
+			// 	depth: 0.34,
+			// 	jumpPoints: [],
+			// },
 			{	
-				id:'J5',
-				theme: 'Preserving monuments',
-				depth: 0.2,
-				jumpPoints: []
-			},
-			{	
-				id:'J6',
-				theme: 'Staying in the wonderful landscape',
-				depth: 0.23,
-				jumpPoints: []
-			},
-			{	
-				id:'J7',
-				theme: 'Cannot forget',
-				depth: 0.25,
-				jumpPoints: []
-			},
-			{	
-				id:'J8',
-				theme: 'Private and public buildings',
-				depth: 0.4,
-				jumpPoints: []
-			},
-			{	
-				id:'J9',
-				theme: 'Seperating work and memories',
-				depth: 0.5,
-				jumpPoints: []
-			},
-			{	
-				id:'J10',
-				theme: 'We have to go on',
+				id:'T24',
+				theme: 'Holding onto the past',
 				depth: 0.6,
-				jumpPoints: []
+				jumpPoints: ['T25', 'S5', 'A30', 'T8'],
 			},
 			{	
-				id:'J11',
-				theme: 'Moving on from the past',
+				id:'T25',
+				theme: 'Reconstructing history',
 				depth: 0.65,
-				jumpPoints: []
+				jumpPoints: ['S3', 'S5', 'A30'],
 			},
 			{	
-				id:'J12',
-				theme: 'Learning something useful',
-				depth: 0.69,
-				jumpPoints: []
-			},
-			{	
-				id:'J13',
-				theme: 'A duty of reconstruction',
-				depth: 0.72,
-				jumpPoints: []
-			},
-			{	
-				id:'J14',
-				theme: 'Building a new community',
+				id:'T26',
+				theme: 'The future of Fontecchio',
 				depth: 0.8,
-				jumpPoints: []
+				jumpPoints: ['T27', 'T28', 'A35', 'A45', 'A46'],
 			},
 			{	
-				id:'J15',
-				theme: 'Generational differences',
-				depth: 0.86,
-				jumpPoints: []
+				id:'T27',
+				theme: 'The restrictions',
+				depth: 0.9,
+				jumpPoints: ['J12', 'A35'],
 			},
 			{	
-				id:'J16',
-				theme: 'Social value of culture',
-				depth: 0.95,
-				jumpPoints: ['S17']
-			},
-			{	
-				id:'J17',
-				theme: 'Importance of environment',
+				id:'T28',
+				theme: 'The designer’s potential',
 				depth: 1,
-				jumpPoints: []
+				jumpPoints: ['S17', 'J1'],
 			}
 		]
 	},
+	{
+		title: "Alessio & Louisa",
+		subtitle: "Fontecchio residents",
+		volume: 0.8,
+		colors: {
+			anchor: '#e27d66',
+			lighting: '#ff895e',
+			jump: '#f97240', //orange
+			renderer: '#243869',
+			line: '#ffffff',
+		},
+		anchors: [
+			{	
+				id:'A2',
+				theme: 'The night of the disaster',
+				depth: 0,
+				jumpPoints: ['A7', 'J2', 'S1'],
+			},
+			{	
+				id:'A7',
+				theme: 'Discovering the devastation',
+				depth: 0.04,
+				jumpPoints: ['A8', 'J4', 'T9', 'S7'],
+			},
+			{	
+				id:'A8',
+				theme: 'Under the rubble',
+				depth: 0.07,
+				jumpPoints: ['A16', 'A30', 'J4'],
+			},
+			{	
+				id:'A16',
+				theme: 'Government support',
+				depth: 0.2,
+				jumpPoints: ['A35', 'J12', 'T27', 'S16'],
+			},
+			{	
+				id:'A17',
+				theme: 'Work life lost',
+				depth: 0.23,
+				jumpPoints: ['A20', 'J2'],
+			},
+			{	
+				id:'A20',
+				theme: 'Social structures',
+				depth: 0.27,
+				jumpPoints: ['A23', 'A25', 'A30'],
+			},
+			{	
+				id:'A23',
+				theme: 'The gossip',
+				depth: 0.3,
+				jumpPoints: ['A24', 'A25', 'J4'],
+			},
+			{	
+				id:'A24',
+				theme: 'People of ghosts',
+				depth: 0.31,
+				jumpPoints: ['A25', 'J4'],
+			},
+			{	
+				id:'A25',
+				theme: 'Connections with people',
+				depth: 0.033,
+				jumpPoints: ['A26', 'J20'],
+			},
+			{	
+				id:'A26',
+				theme: 'Sneaking home',
+				depth: 0.35,
+				jumpPoints: ['A30', 'T24', 'T27'],
+			},
+			{	
+				id:'A30',
+				theme: 'Restoration of Fontecchio',
+				depth: 0.42,
+				jumpPoints: ['A35', 'A44', 'T26', 'S5', 'S6'],
+			},
+			{	
+				id:'A35',
+				theme: 'Changes in the system',
+				depth: 0.6,
+				jumpPoints: ['A45', 'A46', 'J9', 'T28'],
+			},
+			{	
+				id:'A44',
+				theme: 'Realising the value',
+				depth: 0.77,
+				jumpPoints: ['A45', 'A52', 'S3', 'S16', 'T10'],
+			},
+			{	
+				id:'A45',
+				theme: 'Developing economies',
+				depth: 0.78,
+				jumpPoints: ['A46', 'T10', 'T19'],
+			},
+			{	
+				id:'A46',
+				theme: 'Discovering the devastation',
+				depth: 1,
+				jumpPoints: ['A52', 'T28'],
+			},
+			{	
+				id:'A52',
+				theme: 'Realisation of fragility',
+				depth: 0.9,
+				jumpPoints: ['S17', 'T28'],
+			},
+		]
+	},
 ]
-
-// export const groups = [
-// 	[
-// 		paths[0],
-// 		paths[1],
-// 		paths[2],
-// 		paths[3],
-// 	],
-// ];
-// 
-// 
-
-
-
-export const structure = [
-	{id: 'c0', depth: 0, jumpPoints: ['c1', 'c2', 'c3']},
-	{id: 'c1', depth: 1, jumpPoints: ['c4']},
-	{id: 'c2', depth: 1, jumpPoints: ['c4']},
-	{id: 'c3', depth: 1, jumpPoints: []},
-	{id: 'c4', depth: 2, jumpPoints: []},
-];

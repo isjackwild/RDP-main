@@ -17,6 +17,7 @@ const kickIt = () => {
 	const md = new MobileDetect(window.navigator.userAgent);
 	window.mobile = md.mobile() ? true : false;
 	window.socket = io();
+	window.socket.emit('mobile-client');
 
 	PubSub.subscribe('reset.complete', () => window.socket.emit('reset'));
 

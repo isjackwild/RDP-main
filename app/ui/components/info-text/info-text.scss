@@ -2,8 +2,12 @@
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	padding: 28px 30px;
+	padding: 26px 28px;
 	opacity: 0;
+
+	@media (min-width: 768px) {
+		padding: 39px 43px;
+	}
 }
 
 .info-text__text {
@@ -25,7 +29,8 @@
 	font-weight: 700;
 
 	@media (min-width: 768px) {
-		font-size: 26px;
+		font-size: 40px;
+		margin-bottom: 0px;
 	}
 }
 
@@ -65,7 +70,7 @@
 .info-text__text--theme {
 	font-size: 30px;
 	font-weight: 200;
-	font-family: 'Work Sans', sans-serif;
+	font-family: 'WorkSans', sans-serif;
 	// font-family: 'Open Sans', sans-serif;
 	// font-family: 'Source Sans Pro', sans-serif;
 	// font-family: 'Lato', sans-serif;
@@ -73,6 +78,7 @@
 	// letter-spacing: -0.001em;
 	// 
 	@media (min-width: 768px) {
-		font-size: 38px;
+		font-size: 58px;
+		letter-spacing: -0.02em;
 	}
 }

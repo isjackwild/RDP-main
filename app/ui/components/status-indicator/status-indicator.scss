@@ -5,6 +5,10 @@
 	position: relative;
 	pointer-events: none;
 	opacity: 1;
+
+	@media (min-width: 768px) {
+		padding: 18px;
+	}
 }
 
 .status-indicator {
@@ -21,8 +25,12 @@
 	fill: rgba(0, 0, 0, 0);
 	stroke: #fff;
 	opacity: 1;
+
+	@media (min-width: 768px) {
+		stroke-width: 16px;
+	}
 }
 
 .status-indicator__inner--focus {
-	opacity: 0.4;
+	opacity: 0.33;
 }

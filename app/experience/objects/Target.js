@@ -14,12 +14,13 @@ import TweenLite from 'gsap';
 class Target extends THREE.Mesh {
 	constructor(args) {
 		super(args);
-		const { position, anchorTo, cameraPath, isActive } = args;
+		const { position, anchorTo, cameraPath, isActive, isStartTarget } = args;
 
 		this.isActive = isActive || false;
 		this.isFocused = false;
 		this.anchorTo = anchorTo;
 		this.cameraPath = cameraPath;
+		this.isStartTarget = isStartTarget ? true : false;
 		this.triggerTimeout = undefined;
 
 		this.position.copy(position);
@@ -34,13 +35,16 @@ class Target extends THREE.Mesh {
 		this.activate = this.activate.bind(this);
 		this.deactivate = this.deactivate.bind(this);
 
-
+		this.tmpVec = new THREE.Vector3();
 		this.init();
+
+		console.log(this.position.length());
 	}
 	
 	init() {
-		this.geometry = new THREE.SphereGeometry(TARGET_RADIUS, 20, 20);
-		this.material = new THREE.MeshLambertMaterial({
+		const tmpGeom = new THREE.SphereGeometry(TARGET_RADIUS, 32, 32);
+		this.geometry = new THREE.BufferGeometry().fromGeometry(tmpGeom);
+		this.material = new THREE.MeshBasicMaterial({
 			color: this.anchorTo.colors.jump,
 			side: THREE.BackSide,
 			// alphaMap: textureLoader.load('assets/maps/alpha-matte-test--4--s.jpg'),
@@ -53,11 +57,12 @@ class Target extends THREE.Mesh {
 			this.scale.z = 0.001;
 			this.material.visible = false;
 		}
-		this.rotation.y += Math.random() * Math.PI * 2;
-		this.rotation.x += Math.random() * Math.PI * 2;
 		this.onClick = this.onTrigger;
 
 		intersectableObjects.push(this);
+
+		if (this.isStartTarget) PubSub.subscribe('target.startTargetTriggered', this.deactivate);
+		if (this.isStartTarget) PubSub.subscribe('intro.finish', this.activate);
 	}
 
 	onFocus() {
@@ -92,6 +97,8 @@ class Target extends THREE.Mesh {
 		if (!this.isActive) return;
 		clearTimeout(this.triggerTimeout);
 		PubSub.publish('target.deactivate');
+		if (this.isStartTarget) PubSub.publish('target.startTargetTriggered');
+
 		if (this.cameraPath) {
 			moveAlongJumpPath(this.cameraPath, () => this.anchorTo.onEnter());
 		} else {
@@ -135,7 +142,7 @@ class Target extends THREE.Mesh {
 		}
 
 
-		this.positionVelocity.add(new THREE.Vector3().copy(this.targetPosition).sub(this.position).multiplyScalar(TARGET_SPRING).multiplyScalar(delta));
+		this.positionVelocity.add(this.tmpVec.copy(this.targetPosition).sub(this.position).multiplyScalar(TARGET_SPRING).multiplyScalar(delta));
 		this.position.add(this.positionVelocity.multiplyScalar(TARGET_DAMPING));
 
 		// this.rotation.y += delta * 0.0015;

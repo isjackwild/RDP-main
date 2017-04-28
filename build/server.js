@@ -26,30 +26,43 @@ const port = Number(process.env.PORT || 4000);
 
 io.sockets.on('connection', (client) => {
 
-	console.log('new client connected');
+	// console.log('new client connected');
+
+	client.on('desktop-client', (data) => {
+		client.join('desktops');
+	});
+
+	client.on('mobile-client', (data) => {
+		client.join('mobiles');
+	});
+
 
 	client.on('play-audio', (data) => {
-		client.broadcast.emit('play-audio', data);
+		client.to('desktops').emit('play-audio', data);
 	});
 
 	client.on('audio-ended', (aId) => {
-		client.broadcast.emit('audio-ended', aId);
+		client.to('mobiles').emit('audio-ended', aId);
 	});
 
 	client.on('audio-time', (control) => {
-		client.broadcast.emit('audio-time', control);
+		client.to('mobiles').emit('audio-time', control);
 	});
 
 	client.on('trigger-focus', (data) => {
-		client.broadcast.emit('trigger-focus', data);
+		client.to('desktops').emit('trigger-focus', data);
 	});
 
 	client.on('update-sky-color', (data) => {
-		client.broadcast.emit('update-sky-color', data);
+		client.to('desktops').emit('update-sky-color', data);
 	});
 
 	client.on('reset', (data) => {
-		client.broadcast.emit('reset', data);
+		client.to('desktops').emit('reset', data);
+	});
+
+	client.on('position-listener', (data) => {
+		client.to('desktops').emit('position-listener', data);
 	});
 });
 

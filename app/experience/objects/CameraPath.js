@@ -59,12 +59,16 @@ class CameraPath extends THREE.Mesh {
 	setup() {
 		this.path = createCurvedLine(this.from.position, this.to.position);
 
-		const segs = Math.ceil(this.path.getLength() / 10);
+		const segs = Math.ceil(this.path.getLength() / 20);
 		const points = this.path.getPoints(segs);
 
-		this.geometry = new THREE.Geometry({
+
+
+		let tmpGeom = new THREE.Geometry({
 			dynamic: true,
 		});
+
+
 		const tmp = new THREE.Vector3(0, 0, 0);
 		const tmp2 = new THREE.Vector3(0, 0, 0);
 		const up = new THREE.Vector3(0, 1, 0);
@@ -89,7 +93,8 @@ class CameraPath extends THREE.Mesh {
 			const valY = noise.simplex3(tmp.x * SCALE, tmp.y * SCALE, tmp.z * SCALE);
 			const valZ = noise.simplex3(tmp.x * SCALE + 100, tmp.y * SCALE + 100, tmp.z * SCALE + 100);
 			const offset = new THREE.Vector3(valX, valY, valZ).multiplyScalar(NOISE_OFFSET_MAX);
-			tmp.add(offset);
+			
+			if (i !== points.length -1) tmp.add(offset);
 
 			const control = (Math.cos(((i * step) - Math.PI)) / 2) + 0.5;
 			const thisWidth = maxWidth * Easing.Sinusoidal.EaseInOut(control);
@@ -98,30 +103,33 @@ class CameraPath extends THREE.Mesh {
 			tmp2.multiplyScalar(thisWidth / 2);
 			const v1 = new THREE.Vector3().copy(tmp).add(tmp2);
 			const v2 = new THREE.Vector3().copy(tmp).sub(tmp2);
-			this.geometry.vertices.push(v1, v2);
+			tmpGeom.vertices.push(v1, v2);
 		});
 
-		for (let i = 0; i < this.geometry.vertices.length; i++) {
+		for (let i = 0; i < tmpGeom.vertices.length; i++) {
 			if (i % 2 == 0 && i > 1) {
 				const face1 = new THREE.Face3(i - 2, i, i + 1);
 				const face2 = new THREE.Face3(i - 2, i - 1, i + 1);
-				this.geometry.faces.push(face1, face2);
+				tmpGeom.faces.push(face1, face2);
 			} 
 		}
 
-		assignUVs(this.geometry);
-		this.geometry.computeFaceNormals();
-		this.geometry.computeVertexNormals();
-		this.geometry.computeVertexNormals();
+		assignUVs(tmpGeom);
+		tmpGeom.computeFaceNormals();
+		tmpGeom.computeVertexNormals();
+		tmpGeom.computeVertexNormals();
 		// this.geometry.computeFlatVertexNormals();
-		this.geometry.verticesNeedUpdate = true;
-		this.geometry.elementsNeedUpdate = true;
-		this.geometry.uvsNeedUpdate = true;
-		this.geometry.normalsNeedUpdate = true;
+		tmpGeom.verticesNeedUpdate = true;
+		tmpGeom.elementsNeedUpdate = true;
+		tmpGeom.uvsNeedUpdate = true;
+		tmpGeom.normalsNeedUpdate = true;
 
+		this.geometry = new THREE.BufferGeometry().fromGeometry(tmpGeom);
+
+		tmpGeom = undefined;
 		this.material = new THREE.MeshLambertMaterial({
-			// color: this.to.colors.jump,
-			color: 0xffffff,
+			color: this.to.colors.jump,
+			// color: 0xffffff,
 			side: THREE.DoubleSide,
 		});
 	}

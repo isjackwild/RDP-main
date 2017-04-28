@@ -23,12 +23,13 @@ import { Noise } from 'noisejs';
 class Anchor extends THREE.Object3D {
 	constructor(args) {
 		super(args);
-		const { position, id, jumpPoints, colors, theme, threadTitle, threadSubtitle, pathDirection } = args;
+		const { position, id, jumpPoints, colors, theme, threadTitle, threadSubtitle, pathDirection, volume } = args;
 
 		this._aId = id;
 
 		this.isInside = false;
 		this.colors = colors;
+		this.volume = volume;
 		this.anchorsToIds = jumpPoints;
 		this.anchorsTo = [];
 		this.anchorsFrom = [];
@@ -56,13 +57,13 @@ class Anchor extends THREE.Object3D {
 		this.onResetApp = this.onResetApp.bind(this);
 
 		this.sound = null;
-		// if (Math.random() > 0.66) this.loadSound();
+		// if (Math.random() > 0.8) this.loadSound();
 	}
 	
 	setup() {
 		PubSub.subscribe('reset.complete', this.onResetApp);
 
-		this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 12, 12);
+		// this.geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 12, 12);
 		// this.material = new THREE.MeshLambertMaterial({
 		// 	color: this.colors.anchor,
 		// 	side: THREE.BackSide,
@@ -71,12 +72,13 @@ class Anchor extends THREE.Object3D {
 		// 	alphaMap: textureLoader.load('assets/maps/alpha-matte-test--3.jpg'),
 		// });
 
-		const geometry = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 12, 12);
-		const material = new THREE.MeshLambertMaterial({
+		const tmpGeom = new THREE.SphereGeometry(ANCHOR_BASE_WIDTH, 20, 20);
+		const geometry = new THREE.BufferGeometry().fromGeometry(tmpGeom);
+		const material = new THREE.MeshBasicMaterial({
 			color: this.colors.anchor,
 			side: THREE.BackSide,
 			transparent: true,
-			opacity: 0.7,
+			opacity: 0.15,
 			alphaMap: textureLoader.load('assets/maps/alpha-matte-test--3.jpg'),
 		});
 
@@ -89,7 +91,7 @@ class Anchor extends THREE.Object3D {
 
 	addTargets() {
 		const up = new THREE.Vector3(0, 1, 0);
-		const position = new THREE.Vector3().copy(this.pathDirection).multiplyScalar(ANCHOR_BASE_WIDTH * 0.8);
+		const position = new THREE.Vector3().copy(this.pathDirection).multiplyScalar(ANCHOR_BASE_WIDTH * 0.66);
 		const totalSpread = TARGET_SPREAD * (this.anchorsTo.length - 1);
 		position.applyAxisAngle(up, totalSpread * -0.5);
 
@@ -130,17 +132,20 @@ class Anchor extends THREE.Object3D {
 	onEnter() {
 		this.isInside = true;
 		window.socket.on('audio-ended', this.onAudioEnded);
-		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.lighting });
+		window.socket.emit('play-audio', { aId: this._aId, color: this.colors.lighting, volume: this.volume });
 		PubSub.publish('audio.start');
 		// this.material.transparent = true;
-		TweenLite.to(this.sphere.material, 1.5, { opacity: 0.88 });
+		TweenLite.to(this.sphere.material, 1.5, { opacity: 0.95 });
+		this.sphere.material.transparent = true;
 		TweenLite.to(this, 3, { noiseScalar: 0 });
 	}
 
 	onLeave() {
 		this.isInside = false;
+		// this.sphere.material.transparent = false;
 		this.deactivateTargets();
 		TweenLite.to(this, 3, { noiseScalar: 1 });
+		TweenLite.to(this.sphere.material, 1.5, { opacity: 0.15 });
 	}
 
 	onAudioEnded() {

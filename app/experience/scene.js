@@ -63,7 +63,8 @@ const addDots = (sceneBox) => {
 		for (let y = sceneBox.min.y; y < sceneBox.max.y; y += SPACING) {
 			for (let z = sceneBox.min.z; z < sceneBox.max.z; z += SPACING){
 				const dot = new THREE.Mesh();
-				dot.geometry = new THREE.SphereGeometry(5);
+				const tmpGeom = new THREE.SphereGeometry(5, 6, 6);
+				dot.geometry = new THREE.BufferGeometry().fromGeometry(tmpGeom);
 				dot.material = new THREE.MeshBasicMaterial({
 					color: 0xffffff,
 					fog: false,
@@ -111,7 +112,7 @@ const addAnchors = () => {
 			let position;
 			position = conicalSpiral.getPoint(point);
 			position.add(new THREE.Vector3().copy(pathDirection).multiplyScalar(Math.random() * 1000 - 500));
-			position.y += (Math.random() * 2000) - 1000;
+			position.y += (Math.random() * 1000) - 500;
 
 			const args = {
 				...anchorData,
@@ -120,13 +121,14 @@ const addAnchors = () => {
 				threadTitle: thread.title,
 				threadSubtitle: thread.subtitle,
 				colors: thread.colors,
+				volume: thread.volume,
 			}
 			const anchor = new Anchor(args);
 			anchorRefs[anchorData.id] = anchor;
 			scene.add(anchor);
 		
 			if (iA === 0) {
-				const target = new Target({ position: new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD), anchorTo: anchor, isActive: true });
+				const target = new Target({ position: new THREE.Vector3().copy(pathDirection).multiplyScalar(ANCHOR_START_SPREAD), anchorTo: anchor, isActive: true, isStartTarget: true });
 				scene.add(target)
 				startTargets.push(target);
 			}

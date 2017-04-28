@@ -121,8 +121,8 @@ export const moveAlongJumpPath = (cameraPath, callback) => {
 	// const dur = dist / 300;
 	// console.log(dist);
 
-	const k = convertToRange(dist, [0, 10000], [0.4, 1])
-	const dur = Easing.Quadratic.EaseOut(k) * 6;
+	const k = convertToRange(dist, [0, 10000], [0.5, 1])
+	const dur = Easing.Quadratic.EaseOut(k) * 10;
 
 
 	const control = { t: 0 };

@@ -14,7 +14,8 @@ class Skybox extends THREE.Mesh {
 	}
 
 	setup() {
-		this.geometry = new THREE.SphereGeometry(this.radius, 10, 10);
+		const tmpGeom = new THREE.SphereGeometry(this.radius, 6, 6);
+		this.geometry = new THREE.BufferGeometry().fromGeometry(tmpGeom);
 		this.material = new THREE.MeshLambertMaterial({
 			color: SKYBOX_DARK,
 			side: THREE.BackSide,
