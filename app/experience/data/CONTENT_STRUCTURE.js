@@ -4,7 +4,7 @@ export const threads = [
 	{	
 		title: "Jaynie and Leaonado",
 		subtitle: "Restaurant owners",
-		volume: 0.8,
+		volume: 0.35,
 		colors: {
 			// anchor: '#9094a0',
 			anchor: '#6c61ad',
@@ -29,7 +29,7 @@ export const threads = [
 			{	
 				id:'J3',
 				theme: 'Rebuilding a home',
-				depth: 0.12,
+				depth: 0.15,
 				jumpPoints: ['J4', 'J9', 'T13', 'S13'],
 			},
 			{	
@@ -83,19 +83,19 @@ export const threads = [
 			{	
 				id:'J12',
 				theme: 'The reality of money in reconstruction',
-				depth: 0.08,
+				depth: 0.1,
 				jumpPoints: ['J13', 'T27'],
 			},
 			{	
 				id:'J13',
 				theme: 'Rising from the rubble',
-				depth: 0.09,
+				depth: 0.08,
 				jumpPoints: ['J14', 'J15', 'A35'],
 			},
 			{	
 				id:'J14',
 				theme: 'Volunteers’ impact',
-				depth: 0.14,
+				depth: 0.15,
 				jumpPoints: ['J15', 'A16'],
 			},
 			{	
@@ -113,13 +113,13 @@ export const threads = [
 			{	
 				id:'J17',
 				theme: 'Volunteer support',
-				depth: 0.14,
+				depth: 0.2,
 				jumpPoints: ['J18', 'J20', 'A16'],
 			},
 			{	
 				id:'J18',
 				theme: 'Support from overseas',
-				depth: 0.15,
+				depth: 0.5,
 				jumpPoints: ['J20', 'T27'],
 			},
 			{	
@@ -378,7 +378,7 @@ export const threads = [
 	{
 		title: "Teresa",
 		subtitle: "Architect",
-		volume: 0.7,
+		volume: 0.35,
 		colors: {
 			// anchor: '#a8959d',
 			anchor: '#d18398',
@@ -561,7 +561,7 @@ export const threads = [
 	{
 		title: "Alessio & Louisa",
 		subtitle: "Fontecchio residents",
-		volume: 0.8,
+		volume: 0.35,
 		colors: {
 			anchor: '#e27d66',
 			lighting: '#ff895e',

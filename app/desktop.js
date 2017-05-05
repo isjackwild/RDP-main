@@ -135,6 +135,7 @@ const onPlayAudio = (data) => {
 	audio = new Audio(`assets/audio/${data.aId}.mp3`);
 	audio.onended = onEndAudio;
 	audio.volume = data.volume || 1;
+	console.log(audio.volume, 'vol <<');
 	
 	audio.onloadeddata = () => {
 		audio.play();

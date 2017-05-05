@@ -62,7 +62,6 @@ export const positionListener = (position, forward) => {
 	// 	);
 	right.copy(forward).cross(globalUp);
 	up.copy(right).cross(forward).normalize();
-	console.log(forward, up);
 	context.listener.setOrientation(forward.x, forward.y, forward.z, up.x, up.y, up.z);
 }
 

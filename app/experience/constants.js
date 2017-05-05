@@ -22,7 +22,7 @@ export const TARGET_TRIGGER_OFF_DURATION = 1000;
 
 export const SHOW_HELP_DURATION = 1800;
 
-export const RESET_DURATION = 5555;
+export const RESET_DURATION = 4000;
 
 export const SKYBOX_LIGHT = 0xef7f7f7;
 export const SKYBOX_DARK = 0x303030;
@@ -32,12 +32,12 @@ export const LIGHTING_DARK = '#424242';
 
 
 export const INNER_ANGLE = 0;
-export const OUTER_ANGLE = 114;
+export const OUTER_ANGLE = 85;
 export const OUTER_GAIN = 0;
 export const ROLLOFF = 0.2;
 export const REF_DIST = 500;
 export const DIST_MODEL = 'exponential';
-export const GAIN = 0.2;
+export const GAIN = 0.185;
 
 export const ANCHOR_NOISE_SPEED = 0.005;
 export const ANCHOR_NOISE_SCALE = 40;
